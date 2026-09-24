@@ -9,6 +9,7 @@ build/
 data/
 results/
 checkpoints/
+artifacts/
 
 # Local secrets and credentials
 .env

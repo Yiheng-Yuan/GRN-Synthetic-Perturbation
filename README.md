@@ -66,6 +66,7 @@ D_c\!\left(\mathcal M_c(\boldsymbol\theta),\widehat P_c\right)
 - `ambiguity.py` 与 `selection.py`：现阶段实现的是**竞争边结构**的辅助分析：用第三重复筛选不同结构，并在未知效率下选择能区分结构的条件；无合格竞争结构时回退均匀顺序。它们**不是**问题二要求的相容参数集构建或参数导向主动选样。
 - `baselines.py`：终点响应、黑盒动力学，以及已知精确方程形式但未知所有参数/网络/效率的模型。最后一种目前只有点估计训练接口，是问题二的起点，不是未经训练就成立的数学性能上界。
 - `metrics.py`：不配对分布误差、对照校正响应误差、边存在性 AP（平均精确率）、符号 F1、局部导数与稳态误差、区间覆盖率、固定登记**边结构**的排除比例，以及以 20 张网络为单位保留双生成形式配对的自助法区间；尚无参数集收缩指标。细胞不能冒充独立网络样本。
+- `artifacts.py`：提供带 Git/协议/依赖锁哈希的运行清单、文件校验和、逐策略采样日志及恢复检查。这是供未来运行器使用的本地记录组件；它本身不核验 90 条候选网格和观测内容的条件语义，尚未接入完整训练循环，也不提供进程隔离或跨设备文件同步。
 
 `BlindStore` 的 Python 私有字段和方法门禁只是防**意外**泄漏的程序约定，不是对能读取同一进程内存和磁盘的研究者/代理的安全隔离。正式盲测应把原始候选池、测试快照和真值放在独立评分进程或受限账户；学习训练进程只接收已开放快照。当前仓库还没有该跨进程评分服务，因此**不应声称已经执行可信盲测**。
 
@@ -75,21 +76,30 @@ D_c\!\left(\mathcal M_c(\boldsymbol\theta),\widehat P_c\right)
 - **Windows 笔记本：**以 ChatGPT Windows 桌面应用为 Codex Remote（远程连接）主机，把 Codex 的*代理运行环境*切至 Ubuntu/WSL2；RTX 4070 用于小规模试运行、环境兼容性和显存检查。终端选用 WSL 与代理实际运行于 WSL 是两个独立设置。Windows 需要开机、联网且桌面应用运行，远程任务才可访问。
 - **云端 Linux：**由 Mac 通过 SSH（安全外壳远程登录）添加远程项目，承担正式批量实验。云服务器无需 ChatGPT 桌面应用，但需普通用户、SSH 密钥、可在登录 shell 找到的 `codex` 命令以及相应计算环境。跨网络访问应通过 VPN（虚拟专用网络）或网状网络，不直接公开 Codex 服务端口。
 
-三端使用**同一个私有 Git 仓库同步代码和版本记录**，实验数据、结果和检查点另行存储，不靠同一 ChatGPT 账号同步本地文件。若使用 Codex 的任务交接，目标主机还须保存同一 Git 仓库的项目。Mac 本地 `GRN` 项目使用私有 Git 远端保存代码；Windows 与云端项目仍需单独配置。不要把这份部署设计误读为三端均已连接或可启动正式实验。
+三端使用**同一个私有 Git 仓库同步代码和版本记录**，实验数据、结果和检查点另行存储，不靠同一 ChatGPT 账号同步本地文件。若使用 Codex 的任务交接，目标主机还须保存同一 Git 仓库的项目。
 
-接入顺序：先在 Windows 设置代理运行于 WSL、重启应用并配对 Remote，用一个临时 WSL 项目只读检查 `pwd` 和 `/usr/lib/wsl/lib/nvidia-smi`；Mac 代码稳定后建立私有 Git 远程仓库、提交并在 Windows 的 `~/code/GRN` 克隆，随后保存真正的 `GRN` 项目；最后购置/配置云服务器、验证普通用户 SSH 登录，再添加云端项目。这样无需在私有仓库建立前先创建另一个同名但历史不同的 Windows 仓库。
+截至 2026-09-24，Mac 的 `GRN` 项目和 Windows Ubuntu/WSL2 中的 `/home/research/code/GRN-Synthetic-Perturbation` 已接入同一私有仓库；Windows 项目已保存并可从 Mac 远程访问。Windows 的另一个 `GeneRegulatoryNetwork` 目录是不同的旧项目，不应与本仓库混用。云端服务器尚未配置，正式实验运行器、数据同步与可信盲测也尚未完成。
+
+云端接入时，应先以普通用户验证 SSH 登录和计算环境，再克隆同一仓库并保存云端项目。实验数据与检查点必须有独立于 Git 的存储和校验机制，不能因三端使用同一 Git 仓库就认为数据也已同步。
 
 官方设置参考：[Windows 应用的 WSL 运行环境](https://learn.chatgpt.com/docs/windows/windows-app)、[Codex Remote、SSH 项目与任务交接](https://learn.chatgpt.com/docs/remote-connections)。
 
 ## 当前可做的验证
 
-在本机的已有环境中：
+仓库提供 `uv.lock` 固定依赖版本。Linux 上的 PyTorch 来自 CUDA 13.0 索引，其他系统使用 PyPI 对应平台构建。当前锁定的 PyTorch macOS wheel 面向 Apple Silicon（arm64），没有 Intel Mac wheel；在 Mac 上同步前必须核对芯片与 Python 版本。已有环境可直接运行：
 
 ```bash
 .venv/bin/python -m pytest -q
 ```
 
-在 Windows 的 Ubuntu/WSL2 中克隆同一私有 Git 仓库后，可创建独立 Python 环境、安装 `.[dev]` 并运行相同测试。请把仓库放在 WSL2 的 Linux 文件系统（例如 `~/code/GRN`），避免 `/mnt/c` 路径带来的 I/O 与权限问题。正式 24 网络实验尚无自动启动命令；不要把单元测试理解为已经完成性能评价。
+安装了 `uv` 的受支持环境可以用锁定依赖创建隔离环境并测试：
+
+```bash
+uv sync --locked --extra dev
+uv run --locked --extra dev python -m pytest -q
+```
+
+Windows 的代码放在 WSL2 的 Linux 文件系统（例如 `~/code/GRN-Synthetic-Perturbation`），避免 `/mnt/c` 路径带来的 I/O 与权限问题。WSL 的 RTX 4070 已通过小张量 CUDA 检查；Codex 的受限执行沙箱可能看不到 GPU，因此正式 GPU 任务还需检查其实际运行权限。正式 24 网络实验尚无自动启动命令；单元测试不是性能评价。
 
 ## 正式实验前仍须冻结
 
@@ -98,6 +108,6 @@ D_c\!\left(\mathcal M_c(\boldsymbol\theta),\widehat P_c\right)
 3. 固定竞争结构提议数量、检验重复的分布/效应容差、最小实际局部作用，以及重复采样和多次训练的次数；三策略使用同一份初始登记结构。等拟合结论只对这些约定的模型类、噪声容忍度和数据预算成立。
 4. 固定选样效率网格、模型选择分数、边阈值、预测区间的构造/校准规则，以及网络级配对统计方案。当前效率包络仅是敏感性范围，不能直接当成名义 95% 置信区间。
 5. 为问题二另行设计**参数相容集**或其预登记的有限近似、参数范围/预测分歧指标及主动选样准则；在开发网络固定参数归一化或明确可辨识组合。现有已知形式模型只会拟合一个点，现有边结构登记不能充当参数集收缩证据。
-6. 实现评分进程与磁盘权限隔离、完整训练/主动循环编排、断点恢复和结果摘要后，才启动正式生成与盲测。项目内 `data/`、`results/`、`checkpoints/` 默认不纳入 Git。
+6. 将已有的运行记录组件接入完整训练/主动循环，增加独立评分进程、磁盘权限隔离、真正的断点恢复和结果摘要后，才启动正式生成与盲测。项目内 `data/`、`results/`、`checkpoints/`、`artifacts/` 默认不纳入 Git。
 
 方案的相关先例：[Steiert 等（2012）](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0040052) 是已知网络下参数重拟合及信息性实验选择；[Mélykúti 等（2010）](https://link.springer.com/article/10.1186/1752-0509-4-38) 更直接对应区分竞争网络模型。本研究不把“主动区分网络”本身称为首创。
