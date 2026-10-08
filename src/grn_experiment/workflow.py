@@ -1,5 +1,8 @@
 """Auditable experiment sequencing without producing or inspecting truth.
 
+Legacy two-family workflow, not the one-mechanism scmultisim-v1 runner.
+The approved runner must use the new plan and stationary prediction gates.
+
 The manifest precommits 4 development and 20 blind *network units*.  Each
 unit has both generator families, using the same network and split seeds.
 ``CaseWorkflow`` then creates three independent, budget-matched selection

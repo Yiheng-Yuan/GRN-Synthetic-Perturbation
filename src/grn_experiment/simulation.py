@@ -1,5 +1,8 @@
 """Ground-truth networks and positive, contractive RNA dynamics.
 
+Legacy sigmoid/Hill fixture, not the scmultisim-v1 scientific generator.
+Retained for regression tests; see docs/protocol/scmultisim-v1.md.
+
 ``weights[i, j]`` means regulator ``j`` acts on target gene ``i``.  The
 simulator owns these weights and the fixed, target-specific intervention
 efficiencies; neither belongs in the learner's training input.

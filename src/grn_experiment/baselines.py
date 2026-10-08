@@ -1,5 +1,8 @@
 """Predeclared prediction comparators fitted from released snapshots only.
 
+Legacy comparators for the self-built sigmoid/Hill fixtures. In particular,
+KnownFormRNAODE is not the scmultisim-v1 known-architecture forward model.
+
 The endpoint comparator has no kinetic or GRN interpretation.  The neural ODE
 has kinetics but no explicit sparse network.  ``KnownFormRNAODE`` is an
 *oracle-form* comparator: it is told which of the two equation families to use,
