@@ -1,0 +1,126 @@
+{
+  "schema_version": "scmultisim-v1",
+  "status": "approved_design_not_calibrated",
+  "provenance": {
+    "source_package": "scMultiSim",
+    "baseline_version": "1.8.0",
+    "generator_identity": "scmultisim_based_continuous_time_extension",
+    "scmultisim_source_commit": null,
+    "implementation_commit": null
+  },
+  "network": {
+    "development_count": 4,
+    "blind_count": 20,
+    "genes": 24,
+    "perturbable_regulators": 16,
+    "signed_directed_edges": 40,
+    "weight_orientation": "target_by_regulator"
+  },
+  "target_split": {
+    "initial": 6,
+    "active": 6,
+    "validation": 2,
+    "test": 2
+  },
+  "main_protocol": {
+    "intervention_start": "t=0+",
+    "intervention_duration": "sustained",
+    "common_preintervention_baseline_time": 0,
+    "common_baseline_cells": 384,
+    "initial_doses": [0.3, 0.7],
+    "initial_times": [0.25, 1.0, 4.0],
+    "initial_condition_count": 36,
+    "candidate_doses": [0.3, 0.5, 0.7],
+    "candidate_times": [0.125, 0.25, 0.5, 1.0, 4.0],
+    "candidate_condition_count": 90,
+    "validation_doses": [0.3, 0.7],
+    "validation_times": [0.25, 1.0, 4.0],
+    "validation_condition_count": 12,
+    "active_conditions_per_strategy": 12,
+    "active_conditions_unique": true,
+    "strategies": ["active", "random", "uniform"],
+    "strategies_share_initial_data_and_candidate_pool": true,
+    "replicates": 3,
+    "fit_replicate_indices": [0, 1],
+    "check_replicate_index": 2,
+    "cells_per_replicate_per_arm": 128,
+    "cells_per_targeted_condition": 768,
+    "treated_and_control_cells_unpaired": true,
+    "timepoints_independently_sampled": true,
+    "efficiency_range": [0.6, 1.0],
+    "efficiency_sharing": "fixed_per_target_across_dose_time_and_replicates",
+    "validation_open_after_acquisitions": 12,
+    "final_predictions_lock_before_scoring": true,
+    "sealed_control_times": [2.0, 8.0],
+    "all_steady_observations": "sealed_for_final_scoring_only",
+    "final_test_grids": {
+      "new_target": {"target_group": "test", "doses": [0.7], "times": [1.0]},
+      "new_dose": {"target_group": "initial", "doses": [0.9], "times": [1.0]},
+      "new_time_interpolation": {"target_group": "initial", "doses": [0.7], "times": [2.0]},
+      "new_time_extrapolation": {"target_group": "initial", "doses": [0.7], "times": [8.0]},
+      "combination": {"target_group": "test", "doses": [0.9], "times": [8.0]}
+    }
+  },
+  "supplementary_protocol": {
+    "status": "planned_disabled",
+    "timecourse_candidates": 90,
+    "paid_steady_candidates": 18,
+    "total_candidates": 108,
+    "steady_free_with_timecourse": false,
+    "shares_primary_inference": false
+  },
+  "generator": {
+    "regulator_scale_reference": "common_development_no_feedback",
+    "regulator_scale_scope": "one_shared_scalar_all_regulators_and_networks",
+    "mapping": "positive_frozen_pure_function",
+    "promoter_events": "exact",
+    "rna_between_events": "exact_segment",
+    "feedback_update": "synchronous",
+    "feedback_tau_candidate": 0.03125,
+    "feedback_tau_halving_required": true,
+    "euler_step": null,
+    "knockdown_location": "target_production_after_mapping_and_scaling",
+    "observation_species": "spliced_rna",
+    "integerization": "floor_once_at_final_observation",
+    "primary_technical_noise": "none",
+    "technical_noise": "stress_test_only"
+  },
+  "research_questions": {
+    "q1": {
+      "unknown_generator_form": true,
+      "latent_dimension_candidates": [48, 96],
+      "training_objective": "unpaired_snapshot_distribution_loss",
+      "regulatory_mask": "shared_local_mask",
+      "generator_family_label_visible": false
+    },
+    "q2": {
+      "known_architecture": "continuous_time_extension",
+      "unknown_parameters": ["effective_A", "b", "kon", "koff", "beta", "gamma", "rho"],
+      "network_and_efficiency_truth_visible": false
+    }
+  },
+  "calibration": {
+    "mapping": null,
+    "K": null,
+    "final_tau": null,
+    "burnin": null,
+    "parameter_bounds": null,
+    "compatibility_thresholds": null,
+    "model_config": null,
+    "runtime_checks": null
+  },
+  "evidence": {
+    "baseline_archive": null,
+    "mapping": null,
+    "K": null,
+    "final_tau": null,
+    "burnin": null,
+    "parameter_bounds": null,
+    "compatibility_thresholds": null,
+    "model_config": null,
+    "runtime_checks": null,
+    "development_acceptance": null,
+    "blind_scorer_isolation": null,
+    "frozen_manifest": null
+  }
+}

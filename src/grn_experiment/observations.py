@@ -1,5 +1,8 @@
 """Independent, unpaired RNA snapshots from a hidden simulator.
 
+Legacy observation fixture for the self-built generator, not the approved
+scMultiSim adapter. Its noise and rate heterogeneity are not v1 defaults.
+
 This module belongs on the *simulator/scorer side* of the information
 barrier.  Give learners only ``BlindStore`` views of the returned
 ``ReplicatedSnapshot`` objects, never the ``SnapshotSampler`` or its
