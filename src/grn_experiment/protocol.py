@@ -11,7 +11,7 @@ from __future__ import annotations
 from copy import deepcopy
 from dataclasses import dataclass, field
 import math
-from numbers import Integral
+from numbers import Integral, Real
 import random
 from typing import Mapping
 
@@ -71,6 +71,40 @@ class Condition:
 
 
 COMMON_BASELINE = Condition(None, 0, 0)
+
+
+@dataclass(frozen=True)
+class SteadyKey:
+    """An independently sealed stationary-distribution observation.
+
+    This key has no sampling time: it does not encode ``time=infinity`` or
+    certify that a generator reached stationarity.  ``target=None, dose=0``
+    denotes the sole untreated stationary reference, not the t=0 baseline.
+    A targeted key denotes a sustained intervention with a positive dose.
+    """
+
+    target: int | None
+    dose: float
+
+    def __post_init__(self) -> None:
+        if isinstance(self.dose, bool) or not isinstance(self.dose, Real):
+            raise ValueError("A stationary dose must be a finite real number")
+        dose = float(self.dose)
+        if not math.isfinite(dose):
+            raise ValueError("A stationary dose must be finite")
+        if self.target is None:
+            if dose != 0:
+                raise ValueError("An untreated stationary reference must have dose zero")
+        else:
+            if isinstance(self.target, bool) or not isinstance(self.target, Integral) or self.target < 0:
+                raise ValueError("A stationary target must be a nonnegative integer")
+            if not 0 < dose <= 1:
+                raise ValueError("A targeted stationary dose must be in (0, 1]")
+            object.__setattr__(self, "target", int(self.target))
+        object.__setattr__(self, "dose", dose)
+
+
+UNTREATED_STATIONARY = SteadyKey(None, 0)
 
 
 @dataclass(frozen=True)
@@ -151,6 +185,28 @@ def required_test_conditions(split: Split) -> tuple[Condition, ...]:
     return tuple(dict.fromkeys(conditions))
 
 
+def stationary_grid(split: Split) -> tuple[SteadyKey, ...]:
+    """The 17 final stationary predictions, independent of acquisitions.
+
+    Removing time from the 22 targeted final time-course conditions leaves
+    16 distinct target-dose pairs.  Their matched controls stay inside each
+    snapshot; one additional key represents the untreated reference.
+    Initial, candidate and validation stationary responses are never free
+    training data and are not part of the 90-condition acquisition pool.
+    """
+
+    keys = [SteadyKey(condition.target, condition.dose)
+            for grid in test_grids(split).values() for condition in grid]
+    keys.append(UNTREATED_STATIONARY)
+    return tuple(dict.fromkeys(keys))
+
+
+def steady_grid(split: Split) -> tuple[SteadyKey, ...]:
+    """Alias for :func:`stationary_grid`; no infinite-time condition is made."""
+
+    return stationary_grid(split)
+
+
 @dataclass(frozen=True, eq=False)
 class ReplicatedSnapshot:
     """Independent cell snapshots with two fit and one check replicate.
@@ -220,6 +276,14 @@ class BlindStore:
     condition (including its matched control) and charges its full cell cost.
     Three replicates remain available for the predeclared fit/check division;
     the check replicate is not a final independent test set.
+
+    Optional stationary observations have a separate, final-scoring-only
+    barrier.  No stationary response, including an initial or acquired
+    target, opens during time-course fitting or acquisition.  All 17 final
+    stationary predictions must be committed after time-course predictions
+    are locked before any final time-course or stationary observations are
+    visible.  Without stationary data, the legacy time-course gate remains
+    unchanged.
     """
 
     split: Split
@@ -228,6 +292,8 @@ class BlindStore:
     cells_per_replicate: int = CELLS_PER_REPLICATE
     _acquired: list[Condition] = field(init=False, default_factory=list, repr=False)
     _committed_predictions: dict[Condition, np.ndarray] | None = field(init=False, default=None, repr=False)
+    _stationary_observations: dict[SteadyKey, ReplicatedSnapshot] = field(init=False, default_factory=dict, repr=False)
+    _committed_stationary_predictions: dict[SteadyKey, np.ndarray] | None = field(init=False, default=None, repr=False)
 
     def __init__(
         self,
@@ -236,7 +302,11 @@ class BlindStore:
         *,
         n_genes: int = N_GENES,
         cells_per_replicate: int = CELLS_PER_REPLICATE,
+        stationary_observations: Mapping[SteadyKey, ReplicatedSnapshot] | None = None,
+        steady_observations: Mapping[SteadyKey, ReplicatedSnapshot] | None = None,
     ) -> None:
+        if stationary_observations is not None and steady_observations is not None:
+            raise ValueError("Supply either stationary_observations or steady_observations, not both")
         if n_genes < 1 or cells_per_replicate < 1:
             raise ValueError("n_genes and cells_per_replicate must be positive")
         self.split = split
@@ -244,6 +314,8 @@ class BlindStore:
         self.cells_per_replicate = cells_per_replicate
         self._acquired = []
         self._committed_predictions = None
+        self._committed_stationary_predictions = None
+        self._stationary_observations = {}
         allowed = self._all_protocol_conditions(split)
         copied: dict[Condition, ReplicatedSnapshot] = {}
         for condition, snapshot in observations.items():
@@ -265,6 +337,31 @@ class BlindStore:
             raise ValueError(f"Missing {len(absent_initial)} initial conditions")
         self._observations = copied
 
+        stationary_source = stationary_observations if stationary_observations is not None else steady_observations
+        if stationary_source is not None:
+            stationary_allowed = self._all_stationary_keys(split)
+            stationary_copied: dict[SteadyKey, ReplicatedSnapshot] = {}
+            for key, snapshot in stationary_source.items():
+                if not isinstance(key, SteadyKey) or key not in stationary_allowed:
+                    raise ValueError(f"Stationary key outside protocol: {key}")
+                if key in stationary_copied:
+                    raise ValueError("A stationary observation key may be supplied only once")
+                if not isinstance(snapshot, ReplicatedSnapshot):
+                    raise TypeError("Stationary observations must be ReplicatedSnapshot instances")
+                if snapshot.treated.shape[1:] != (cells_per_replicate, n_genes):
+                    raise ValueError("Stationary observation shape does not match store dimensions")
+                if key.target is not None and snapshot.matched_control is None:
+                    raise ValueError("Every targeted stationary observation requires a matched control")
+                if key.target is None and snapshot.matched_control is not None:
+                    raise ValueError("The untreated stationary reference must not contain a second control")
+                # Revalidate as well as copy: a caller can make a NumPy
+                # array writable even after constructing a frozen snapshot.
+                stationary_copied[key] = ReplicatedSnapshot(snapshot.treated, snapshot.matched_control)
+            absent = set(stationary_grid(split)) - stationary_copied.keys()
+            if absent:
+                raise ValueError(f"Missing {len(absent)} final stationary observations")
+            self._stationary_observations = stationary_copied
+
     @staticmethod
     def _all_protocol_conditions(split: Split) -> set[Condition]:
         all_conditions = {COMMON_BASELINE}
@@ -273,6 +370,13 @@ class BlindStore:
         all_conditions.update(validation_grid(split))
         all_conditions.update(required_test_conditions(split))
         return all_conditions
+
+    @staticmethod
+    def _all_stationary_keys(split: Split) -> set[SteadyKey]:
+        # Optional extra stationary outcomes may be stored scorer-side, but
+        # even initial/active/validation keys are sealed until final locks.
+        return {SteadyKey(condition.target, condition.dose)
+                for condition in BlindStore._all_protocol_conditions(split)}
 
     @property
     def acquired_conditions(self) -> tuple[Condition, ...]:
@@ -298,6 +402,10 @@ class BlindStore:
     def predictions_locked(self) -> bool:
         return self._committed_predictions is not None
 
+    @property
+    def stationary_predictions_locked(self) -> bool:
+        return self._committed_stationary_predictions is not None
+
     def _may_read(self, condition: Condition) -> bool:
         if condition == COMMON_BASELINE or condition in initial_grid(self.split):
             return True
@@ -306,13 +414,34 @@ class BlindStore:
         if condition in validation_grid(self.split):
             return self.validation_open
         if condition in required_test_conditions(self.split):
-            return self.predictions_locked
+            # In stationary-enabled runs, held-out t=2/t=8 observations must
+            # not become training data for uncommitted long-term predictions.
+            return self.predictions_locked and (
+                not self._stationary_observations or self.stationary_predictions_locked
+            )
         return False
 
     def available_conditions(self) -> tuple[Condition, ...]:
         """List *only* visible observations; hidden keys never appear here."""
 
         return tuple(condition for condition in self._observations if self._may_read(condition))
+
+    def available_stationary_keys(self) -> tuple[SteadyKey, ...]:
+        """List supplied stationary outcomes only after both prediction locks."""
+
+        if not self.stationary_predictions_locked:
+            return ()
+        return tuple(self._stationary_observations)
+
+    def steady_get(self, key: SteadyKey) -> ReplicatedSnapshot:
+        """Return an isolated stationary snapshot after final prediction locks."""
+
+        if not self.stationary_predictions_locked or key not in self._all_stationary_keys(self.split):
+            raise PermissionError("This stationary observation is not yet available")
+        try:
+            return deepcopy(self._stationary_observations[key])
+        except KeyError:
+            raise KeyError("Visible stationary observation was not supplied") from None
 
     def get(self, condition: Condition) -> ReplicatedSnapshot:
         """Return an isolated copy of a currently visible observation."""
@@ -341,7 +470,12 @@ class BlindStore:
         return self.get(condition)
 
     def lock_predictions(self, predictions: Mapping[Condition, np.ndarray]) -> None:
-        """Commit nonnegative cell-population predictions before final reveal."""
+        """Commit nonnegative cell-population predictions before final reveal.
+
+        In a stationary-enabled run, final time-course observations remain
+        sealed until ``lock_stationary_predictions`` also succeeds.  The
+        default store without stationary data retains its original gate.
+        """
 
         if not self.validation_open:
             raise RuntimeError("Complete all 12 acquisitions before final scoring")
@@ -371,3 +505,53 @@ class BlindStore:
         if self._committed_predictions is None:
             raise PermissionError("Predictions are not locked")
         return deepcopy(self._committed_predictions[condition])
+
+    def lock_stationary_predictions(self, predictions: Mapping[SteadyKey, np.ndarray]) -> None:
+        """Lock all 17 long-term predictions before revealing any such data.
+
+        This is independent of ``lock_predictions``: opening validation or
+        scoring time-course predictions never releases stationary samples.
+        Predictions are distributions represented as finite, nonnegative
+        cells-by-genes arrays, not observations or stationarity certificates.
+        """
+
+        if not self.validation_open:
+            raise RuntimeError("Complete all 12 acquisitions before stationary scoring")
+        if not self.predictions_locked:
+            raise RuntimeError("Lock time-course predictions before stationary predictions")
+        if self.stationary_predictions_locked:
+            raise RuntimeError("Stationary predictions have already been locked")
+        if not self._stationary_observations:
+            raise RuntimeError("No stationary observations were supplied")
+        if set(predictions) != set(stationary_grid(self.split)):
+            raise ValueError("Prediction keys must exactly match all 17 final stationary keys")
+        committed: dict[SteadyKey, np.ndarray] = {}
+        for key, prediction in predictions.items():
+            try:
+                if np.iscomplexobj(prediction):
+                    raise ValueError("Stationary predictions must be real-valued")
+                cells = np.asarray(prediction, dtype=np.float64)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"Invalid stationary prediction for {key}") from exc
+            if (
+                cells.ndim != 2
+                or cells.shape[0] < 1
+                or cells.shape[1] != self.n_genes
+                or not np.isfinite(cells).all()
+                or (cells < 0).any()
+            ):
+                raise ValueError("Each stationary prediction must be finite nonnegative cells-by-genes")
+            committed[key] = cells.copy()
+        self._committed_stationary_predictions = committed
+
+    def lock_steady_predictions(self, predictions: Mapping[SteadyKey, np.ndarray]) -> None:
+        """Alias for :meth:`lock_stationary_predictions`."""
+
+        self.lock_stationary_predictions(predictions)
+
+    def committed_stationary_prediction(self, key: SteadyKey) -> np.ndarray:
+        """Read an isolated copy of a previously committed long-term prediction."""
+
+        if self._committed_stationary_predictions is None:
+            raise PermissionError("Stationary predictions are not locked")
+        return self._committed_stationary_predictions[key].copy()

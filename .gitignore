@@ -1,4 +1,6 @@
 .venv/
+venv/
+env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -9,6 +11,17 @@ build/
 data/
 results/
 checkpoints/
+truth/
+private/
+
+# R session state and machine-specific package libraries (keep renv.lock)
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+renv/library/
+renv/staging/
+renv/cache/
 
 # Local secrets and credentials
 .env

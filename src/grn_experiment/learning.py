@@ -1,5 +1,8 @@
 """Interpretable RNA ODE learner trained only on unpaired snapshots.
 
+Legacy structured learner; this is not the scmultisim-v1 latent ODE or the
+complete stochastic known-architecture parameter estimator.
+
 Importing this module never imports the simulator.  True vector fields and
 Jacobians are accepted only by the isolated development audit function.
 """
