@@ -1,0 +1,22 @@
+{
+  "phase": "development",
+  "seed": 20261014,
+  "network_seed": 101,
+  "split_seed": 20261014,
+  "cells_per_replicate": 4,
+  "tau": 0.03125,
+  "scope": "initial",
+  "stationary": false,
+  "stationarity": {
+    "min_time": 16.0,
+    "max_time": 128.0,
+    "window": 8.0,
+    "consecutive_windows": 3,
+    "mean_rtol": 0.15,
+    "variance_rtol": 0.25,
+    "distribution_tol": 0.2,
+    "atol": 0.1,
+    "diagnostic_cells": 256,
+    "samples_per_window": 3
+  }
+}
