@@ -1,0 +1,7 @@
+**
+!src/
+!src/grn_experiment/
+!src/grn_experiment/*.py
+!configs/
+!configs/scmultisim-development.json
+!Dockerfile.scmultisim

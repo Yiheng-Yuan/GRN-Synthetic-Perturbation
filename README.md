@@ -2,13 +2,16 @@
 
 本项目研究两个问题：未知真实方程时，能否从有限 RNA（核糖核酸）快照学习可泛化的有效动力学；已知方程架构但参数未知时，新增哪些实验能缩小参数与网络解释的歧义。采用基于 scMultiSim 动力学机制的持续扰动扩展，不使用 SNN（脉冲神经网络）。
 
-**状态：科学设计已批准，数值配置尚未校准，正式实验尚未开始。** 本次更新交付协议、准备配置和信息开放规则，不代表持续扰动内核、主学习器或实验结果已通过验收。
+**状态：持续扰动内核、快照适配器、平稳分布诊断和开发数据生成入口已实现；正式实验仍未开始。** 当前是基于 scMultiSim 机制独立实现的 Python 扩展，不是修改后发布的官方 R 包，也不声称与原包逐值等价。正式数值校准、主学习器和 20 网络盲测仍待完成。
+
+直接生成第一张开发网络数据：`python -m grn_experiment.generate_scmultisim --config configs/scmultisim-development.json --output results/scmultisim-dev-101`。默认输出 24 基因、16 调控者、40 边网络的初始、90 个候选、验证、最终时序及独立长期分布。命令不训练模型；生成过程使用 CPU（中央处理器），无需 GPU（图形处理器）。[镜像与运行说明](docs/scmultisim-runtime.md)
 
 - [完整实验协议](docs/protocol/scmultisim-v1.md)
 - [实施与验收清单](docs/protocol/implementation-checklist.md)
 - [可检查的主实验配置](configs/scmultisim-main.json)
 - [基线源码核查与适配边界](docs/protocol/scmultisim-source-audit.md)
 - [本次准备层测试记录](docs/validation/scmultisim-preparation-2026-10-08.md)
+- [持续扰动内核与镜像实际执行记录](docs/validation/scmultisim-kernel-2026-10-14.md)
 
 ## 1. 两个研究问题
 
@@ -34,7 +37,7 @@ G_i\in\{0,1\},\quad U_i,M_i\ge0,\qquad
 \dot M_i=\beta_iU_i-\gamma_iM_i.
 ~~~
 
-G 是离散开关，U 是未剪接 RNA，M 是已剪接 RNA；降解率用 gamma，避免与剂量 d 混淆。内核拟采用启动子事件抽样、恒定产生段的解析 RNA 推进和同步反馈更新。反馈间隔是数值近似，不是生物传播延迟；从 1/32 协议时间单位开始减半校准，不另设 Euler（欧拉积分）步长。内部保留连续值，只在最终观测时进行非负整数截断。
+G 是离散开关，U 是未剪接 RNA，M 是已剪接 RNA；降解率用 gamma，避免与剂量 d 混淆。内核采用启动子事件抽样、恒定产生段的解析 RNA 推进和同步反馈更新。反馈间隔是数值近似，不是生物传播延迟；从 1/32 协议时间单位开始减半校准，不另设 Euler（欧拉积分）步长。内部保留连续值，只在最终观测时进行非负整数截断。
 
 ~~~math
 s_i(\mathbf M)=g\!\left(b_i+\sum_j A_{ij}\frac{M_j}{M_j+K}\right)>0,
@@ -45,7 +48,7 @@ A[i,j] 表示调控者 j 作用于目标 i，吸收全局调控增益的乘积�
 
 生成效率在 [0.6,1] 抽取，每靶点跨时间、剂量和重复固定；学习器只知范围。扰动均在 t=0+ 启动并持续，t 仅为无量纲采样时间。共同 t=0 是扰动前基线。发育伪时间不作为干预经过时间；原包最终合成率不能当背景再次叠加 GRN。[原包动力学源码](https://github.com/ZhangLabGT/scMultiSim/blob/563c3b542ada289fb4d9789bb1bc944229e78699/R/2_sim.R)
 
-这些是需要逐项验收的适配，不是原包现成的持续敲低功能。
+这些扩展现已编码；开发诊断与正式校准分别记录，不把原包引用当作新内核已获得生物学验证的证据。
 
 ## 3. 划分、预算与封存
 
@@ -105,7 +108,9 @@ C_k=\{\theta:D_c(P_{\theta,c},\widehat P_c)\le\epsilon_c,
 | 本协议、设计配置与校准前阻断检查 | 本次交付，实际检查结果见交付说明 |
 | 90 时序条件、12 次预算、重复划分 | 已有协议工具 |
 | 平稳键与单独预测封存门禁 | 本次新增；不证明平稳生成已完成 |
-| R 持续扰动内核、参数提取和适配器 | 待实现、待验收 |
+| Python 持续扰动内核与快照适配器 | 已实现，见运行说明及测试记录；未调用 R 包 |
+| 完整状态、启动子事件与反馈相位检查点 | 已实现，JSON 恢复与采样请求不变性已测试 |
+| 开发数据生成与 Docker（容器）入口 | 已实现，支持按条件续跑和文件校验 |
 | g、K、反馈间隔、烧入、参数边界与阈值 | 待校准，配置保留 null |
 | 潜变量主学习器与完整参数辨识 | 待实现 |
 | 正式数据、训练和 20 网络结果 | 未运行 |
@@ -126,7 +131,7 @@ python -m grn_experiment.experiment_plan --config configs/scmultisim-main.json -
 
 第三条在校准未完成时应返回非零，这是预期阻断。它只检查准备材料，不运行 R、生成数据或训练模型。单元测试的小型人工夹具不是研究预实验。
 
-Windows 首个任务是核实 R 和包版本并实现四基因内核。基线选择 scMultiSim 1.8.0；包版本、实际归档和 GitHub 源码提交分开登记。R 锁文件由实际安装环境生成，不假造。[官方包](https://bioconductor.org/packages/release/bioc/html/scMultiSim.html)
+本轮运行时为 Python + NumPy，不依赖 Windows 的 R 安装。scMultiSim 1.8.0 归档和固定官方源码是机制审计依据；运行记录保存本项目源文件哈希和真实 Python／NumPy 版本，明确 `R_package_called=false`。若以后接入官方 R 包的参数输出，须独立验证参数映射，不把已含 GRN 的最终产生率当背景重复叠加。[官方包](https://bioconductor.org/packages/release/bioc/html/scMultiSim.html)
 
 ## 7. Mac／Windows 交接
 

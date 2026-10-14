@@ -1,6 +1,6 @@
 # scMultiSim 动力学内核持续扰动实验协议 v1
 
-状态：**设计已获批准，设计配置与信息开放门禁已编写；生成器、适配器、学习器及校准尚未实现或验收；未生成正式数据，也未进行研究模型训练。** 本文规定拟实施的主实验，不把开发期预期写成结果。README 现已说明获批的 scMultiSim 方案；现存 `simulation.py`、旧 GNW 与自建生成器仍是历史实现，不得混入本协议的正式数据。实现门禁见 [实施清单](implementation-checklist.md)，本次软件测试见 [验证记录](../validation/scmultisim-preparation-2026-10-08.md)。
+状态（2026-10-14）：**持续扰动 Python 内核、适配器、开发数据入口及分布诊断已实现；正式校准、学习器和盲测仍待完成。** 实现保持本文动力学与观测契约，运行时选择 Python + NumPy；未调用或声称修改了官方 R 包。开发参数不替代下文尚未冻结的正式配置。`simulation.py` 中只复用已有拓扑构造器，不调用其中的旧 sigmoid/Hill 动力学。实现门禁见 [实施清单](implementation-checklist.md)，运行方式见 [运行说明](../scmultisim-runtime.md)。
 
 ## 1. 研究问题与可声称的结论
 

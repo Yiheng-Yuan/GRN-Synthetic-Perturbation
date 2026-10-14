@@ -1,0 +1,10 @@
+# Registry manifest resolved and pulled on 2026-10-14. Build with --platform linux/amd64.
+FROM python:3.12.15-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app/src \
+    OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+WORKDIR /app
+RUN python -m pip install --no-cache-dir --only-binary=:all: numpy==2.2.6
+COPY src/grn_experiment/ /app/src/grn_experiment/
+COPY configs/scmultisim-development.json /app/configs/scmultisim-development.json
+# CPU-only data generation; no CUDA runtime or model training is required.
+CMD ["python", "-m", "grn_experiment.generate_scmultisim", "--config", "/app/configs/scmultisim-development.json", "--output", "/output/scmultisim-dev-101"]
