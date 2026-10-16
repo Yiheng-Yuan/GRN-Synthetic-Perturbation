@@ -79,8 +79,31 @@ class PositiveMapping:
         return out
 
     def to_dict(self) -> dict[str, float]:
+        """Legacy parameter-file representation, preserved for existing data."""
         return {"log10_offset": self.log10_offset, "log10_slope": self.log10_slope,
                 "scale": self.scale}
+
+    def to_config(self) -> dict[str, str | float]:
+        """Canonical typed calibration definition of the implemented function."""
+        return {"kind": "positive_log_linear", **self.to_dict()}
+
+    @classmethod
+    def from_config(cls, value: Any) -> PositiveMapping:
+        """Reconstruct exactly the calibrated map, with no family substitution.
+
+        Parameter files continue to use ``to_dict``/``KineticParameters.from_dict``.
+        Formal calibration uses this typed schema so an interpolated lookup
+        table cannot silently stand in for the exponential map used at runtime.
+        """
+        expected = {"kind", "log10_offset", "log10_slope", "scale"}
+        if not isinstance(value, dict):
+            raise ValueError("mapping must be an object")
+        if set(value) != expected:
+            raise ValueError("mapping requires exactly kind, log10_offset, log10_slope, scale")
+        if value["kind"] != "positive_log_linear":
+            raise ValueError("mapping.kind must be positive_log_linear")
+        return cls(log10_offset=value["log10_offset"],
+                   log10_slope=value["log10_slope"], scale=value["scale"])
 
 
 @dataclass(frozen=True, eq=False)
@@ -318,9 +341,9 @@ class Simulator:
                  tau: float, target: int | None = None, dose: float = 0) -> None:
         self.parameters = parameters
         self.tau = _positive(tau, "tau")
-        self.target = target
-        self.dose = float(dose)
-        parameters._multiplier(target, dose)
+        self.target = None if target is None else _integer(target, "target")
+        self.dose = _positive(dose, "dose", zero=True)
+        parameters._multiplier(self.target, self.dose)
         if initial.M.shape[1] != parameters.n_genes:
             raise ValueError("initial state gene dimension does not match parameters")
         self._state = initial.copy()
@@ -397,7 +420,8 @@ class Simulator:
         obj = cls.__new__(cls)
         obj.parameters = KineticParameters.from_dict(value["parameters"])
         obj.tau = _positive(value["tau"], "tau")
-        obj.target, obj.dose = value["target"], value["dose"]
+        obj.target = None if value["target"] is None else _integer(value["target"], "target")
+        obj.dose = _positive(value["dose"], "dose", zero=True)
         obj.parameters._multiplier(obj.target, obj.dose)
         obj.time = _positive(value["time"], "time", zero=True)
         obj._tick = _integer(value["feedback_tick"], "feedback_tick")

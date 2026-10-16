@@ -12,6 +12,11 @@
 - [基线源码核查与适配边界](docs/protocol/scmultisim-source-audit.md)
 - [本次准备层测试记录](docs/validation/scmultisim-preparation-2026-10-08.md)
 - [持续扰动内核与镜像实际执行记录](docs/validation/scmultisim-kernel-2026-10-14.md)
+- [M-only 参数等价关系与评分约定](docs/protocol/parameter-equivalence.md)
+- [审核后修复与实际检查](docs/validation/scmultisim-review-followup-2026-10-16.md)
+- [第一张开发网络的扰动信号报告](docs/validation/scmultisim-signal-2026-10-16/README.md)
+
+2026-10-16 进展：第一张开发网络的 180 项全量数据已返回。初始条件诊断发现直接靶基因的晚时间响应清楚，但尚未建立足够的下游传播信号；当前优先级是修复配置衔接、按等价类评分并开展开发校准，主学习器尚未训练。
 
 ## 1. 两个研究问题
 
@@ -26,6 +31,8 @@
 ~~~
 
 先用四基因逐步放开未知量，再在 24 基因开发网络尝试完整集合；条件于已知部分参数的结果单独标注。不给真边掩码，不承诺所有参数唯一恢复。核心待检验假设是：考虑未知效率后，主动采样能否在相同观测成本下更有效地减少参数或网络歧义。预测、参数和结构收益分别报告。
+
+只观测成熟 RNA 时，当前机制存在已明确登记的剪接率／降解率交换等价：同时转换背景产生输入与隐藏初态，可以得到相同的成熟 RNA 路径。因而原始参数误差、等价类误差和可比的不变量分别评分；不要求主动实验消除理论上无法由这类观测区分的解释。[评分细则](docs/protocol/parameter-equivalence.md)
 
 ## 2. 数据生成机制
 

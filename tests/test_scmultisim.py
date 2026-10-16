@@ -187,6 +187,24 @@ class StochasticKernelTests(unittest.TestCase):
         for name in ("G", "U", "M"):
             np.testing.assert_array_equal(getattr(actual, name), getattr(expected, name))
 
+    def test_numpy_integer_target_normalizes_and_resumes_through_json(self):
+        params = development_parameters(11, n_genes=4)
+        state = initial_state(8, 4)
+        reference = Simulator(params, state, seed=309, tau=1 / 32,
+                              target=1, dose=0.5).advance(1.1)
+        for target in (np.int32(1), np.int64(1), np.uint64(1)):
+            with self.subTest(target_type=type(target).__name__):
+                simulator = Simulator(params, state, seed=309, tau=1 / 32,
+                                      target=target, dose=np.float64(0.5))
+                simulator.advance(0.137)
+                checkpoint = simulator.checkpoint()
+                self.assertIs(type(checkpoint["target"]), int)
+                self.assertIs(type(checkpoint["dose"]), float)
+                restored = Simulator.from_checkpoint(json.loads(json.dumps(checkpoint, allow_nan=False)))
+                actual = restored.advance(1.1)
+                for name in ("G", "U", "M"):
+                    np.testing.assert_array_equal(getattr(actual, name), getattr(reference, name))
+
     def test_same_seed_reproducible_and_distinct_seed_changes_events(self):
         params = development_parameters(5, n_genes=4)
         state = initial_state(64, 4)

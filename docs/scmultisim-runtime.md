@@ -17,11 +17,24 @@ python -m grn_experiment.generate_scmultisim --config /app/configs/scmultisim-de
 普通 Docker 启动：
 
 ```bash
-mkdir -p output
+mkdir -p outputs logs
 docker run --rm --platform linux/amd64 \
-  --mount type=bind,source="$(pwd)/output",target=/output \
-  grn-scmultisim:20261014-dev1
+  --mount type=bind,source="$(pwd)/outputs",target=/output \
+  grn-scmultisim:20261014-dev1 > logs/generate.log 2>&1
 ```
+
+### 每次交付都必须写明的回传范围
+
+上面的示例将容器内 `/output/scmultisim-dev-101` 映射到宿主项目下 `outputs/scmultisim-dev-101/`，日志保存到 `logs/`。交给计算同学的说明须明确填写该平台上这两个目录的**实际绝对路径**，并附待回传文件名和打包命令。平台代管日志时，须导出任务的标准输出／标准错误到指定日志目录。
+
+本任务在宿主项目根目录打包：
+
+```bash
+tar -czf scmultisim-dev-101-results.tar.gz \
+  outputs/scmultisim-dev-101/ logs/
+```
+
+只回传这个结果包即可。`outputs/scmultisim-dev-101/` 内的 `manifest.json`、`observations/`、`sealed/`、`private/` 都属于完整生成结果；后两者由生成／评分侧保管，训练时另行隔离。Python 环境、缓存、镜像、源码均无需随每次结果重新压缩。一次任务若只完成部分条件，也保留相同回传范围及失败日志，便于依据清单恢复。
 
 建议首次申请 2 个 CPU 核、4 GB 内存、5 GB 可写磁盘，任务时限先留 2 小时。这是预留配置，不是 H200 平台实测耗时。本程序单进程生成数据，不使用 CUDA 或 GPU；若平台必须分配一张 H200，该卡在本任务中不会参与计算。无需额外申请多卡。Slurm 分区、账号和平台镜像仓库命名由平台提供，不预设站点专属参数。
 
@@ -55,6 +68,8 @@ docker run --rm --platform linux/amd64 \
 反馈间隔内保持产生率，按事件解析推进 U/M；整个反馈网络仍是数值近似。观测时刻只读取副本，不改变后续路径。没有欧拉更新、负数截断或中间取整。极短分段及 β=γ 的解析极限有独立高精度参考测试。
 
 开发映射明确选为 `g(z)=10^(1+0.25*z)`，`A` 的正负号决定局部产生率敏感度的符号。这是当前开发假设。生成入口从 101、102、103、104 四张开发参数参考的无反馈解析平均 M 中计算公共 K：所有参考基因平均 M 的中位数。映射、参考输入、计算规则和哈希均保存，未使用待测网络的反馈终点反求 K。显式 `parameter_file` 可载入另外登记的参数 JSON，此时必须自行提供已经确定的公共映射与 K。
+
+正式映射配置采用 `{"kind":"positive_log_linear","log10_offset":1.0,"log10_slope":0.25,"scale":1.0}`，由实际 `PositiveMapping` 类直接保存／重建与验证；这个示例只展示格式，不代表当前三项数值已获正式校准。既有生成参数 JSON 的三个原始字段保持兼容。M-only 参数恢复还须遵守[等价类评分规则](protocol/parameter-equivalence.md)，不能将某个剪接／降解标签选取当作唯一真值恢复的必要条件。
 
 `scmultisim_stationary.py` 对全关／零 RNA 与全开／高 RNA 两组独立谱系检查多个连续窗口，比较联合 G/U/M 的均值、方差、边缘及固定投影分布距离。默认最少运行 16、窗口长度 8、连续 3 次通过、最长 128；这些是开发判据，不是校准过的统计置信检验。生成细胞重新独立运行，不复用诊断池。初始分布不通过就停止；扰动长期条件不通过就登记失败，不输出冒充平稳的样本，不用 t=8 替代。
 

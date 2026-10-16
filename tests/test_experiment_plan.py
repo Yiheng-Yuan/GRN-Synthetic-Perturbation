@@ -2,6 +2,7 @@
 
 from contextlib import redirect_stdout
 from copy import deepcopy
+from dataclasses import replace
 import hashlib
 from io import StringIO
 import json
@@ -9,6 +10,8 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+
+import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +26,11 @@ from grn_experiment.experiment_plan import (  # noqa: E402
     validate_plan,
 )
 from grn_experiment import protocol as protocol_api  # noqa: E402
+from grn_experiment.scmultisim import (  # noqa: E402
+    KineticParameters,
+    PositiveMapping,
+    development_parameters,
+)
 
 
 CONFIG = ROOT / "configs" / "scmultisim-main.json"
@@ -193,17 +201,69 @@ class ExperimentPlanTests(unittest.TestCase):
                 with self.assertRaises(PlanValidationError):
                     validate_plan(fake)
 
-    def test_mapping_rejects_flat_response_segment(self) -> None:
+    def test_calibration_uses_implemented_mapping_schema(self) -> None:
         fake = deepcopy(self.plan)
-        fake["calibration"]["mapping"] = {
-            "kind": "positive_monotone_lookup",
-            "x_knots": [-1.0, 0.0, 1.0],
-            "y_knots": [0.1, 0.2, 0.3],
-        }
+        actual = PositiveMapping(log10_offset=-0.7, log10_slope=0.4, scale=2.5)
+        fake["calibration"]["mapping"] = actual.to_config()
         validate_plan(fake)
-        fake["calibration"]["mapping"]["y_knots"] = [0.1, 0.2, 0.2]
-        with self.assertRaises(PlanValidationError):
-            validate_plan(fake)
+        reconstructed = PositiveMapping.from_config(fake["calibration"]["mapping"])
+        self.assertEqual(reconstructed, actual)
+        self.assertEqual(reconstructed.to_config(), fake["calibration"]["mapping"])
+
+    def test_mapping_calibration_rejects_invalid_and_unsupported_definitions(self) -> None:
+        base = PositiveMapping().to_config()
+        invalid = (
+            {"kind": "positive_monotone_lookup", "x_knots": [-1, 1], "y_knots": [0.1, 1]},
+            PositiveMapping().to_dict(),  # Missing the calibration family tag.
+            {**base, "unused": 1},
+            {**base, "kind": "other"},
+            {**base, "log10_slope": 0},
+            {**base, "log10_slope": -0.1},
+            {**base, "scale": 0},
+            {**base, "scale": float("inf")},
+            {**base, "log10_offset": float("nan")},
+            {**base, "log10_offset": True},
+            {**base, "log10_slope": True},
+            {**base, "scale": True},
+            {**base, "log10_offset": "1"},
+        )
+        for definition in invalid:
+            with self.subTest(definition=definition):
+                fake = deepcopy(self.plan)
+                fake["calibration"]["mapping"] = definition
+                with self.assertRaises(PlanValidationError):
+                    validate_plan(fake)
+                with self.assertRaises((ValueError, TypeError)):
+                    PositiveMapping.from_config(definition)
+
+    def test_frozen_mapping_roundtrip_preserves_rates_and_local_derivatives(self) -> None:
+        actual = PositiveMapping(log10_offset=-0.7, log10_slope=0.4, scale=2.5)
+        fake = deepcopy(self.plan)
+        # JSON serialization is the same path used to freeze the calibration.
+        fake["calibration"]["mapping"] = json.loads(json.dumps(actual.to_config()))
+        validate_plan(fake)
+        rebuilt = PositiveMapping.from_config(fake["calibration"]["mapping"])
+        z = np.array([-100, -10, -1, 0, 1, 10, 100], dtype=float)
+        np.testing.assert_array_equal(actual(z), rebuilt(z))
+        params = replace(development_parameters(123, n_genes=4), mapping=actual)
+        reconstructed = replace(params, mapping=rebuilt)
+        M = np.array([[0, 0.001, 1, 10], [10, 100, 1000, 0], [1e6] * 4])
+        for target, dose in ((None, 0), (0, 0.3), (1, 0.7), (2, 0.9)):
+            with self.subTest(target=target, dose=dose):
+                np.testing.assert_array_equal(
+                    params.production(M, target, dose),
+                    reconstructed.production(M, target, dose),
+                )
+                np.testing.assert_array_equal(
+                    params.production_jacobian(M, target, dose),
+                    reconstructed.production_jacobian(M, target, dose),
+                )
+        # Existing returned parameter JSON stays readable and byte-schema
+        # compatible: family tags are for calibration, not a silent migration.
+        stored = params.to_dict()
+        self.assertEqual(set(stored["mapping"]), {"log10_offset", "log10_slope", "scale"})
+        legacy_rebuilt = KineticParameters.from_dict(json.loads(json.dumps(stored)))
+        np.testing.assert_array_equal(params.production(M), legacy_rebuilt.production(M))
 
     def test_parameter_bounds_allow_signed_background_but_not_narrowed_rho(self) -> None:
         fake = deepcopy(self.plan)
