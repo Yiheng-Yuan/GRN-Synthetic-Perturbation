@@ -16,6 +16,8 @@ from pathlib import Path, PurePosixPath
 import re
 from typing import Any
 
+from .scmultisim import PositiveMapping
+
 
 SCHEMA_VERSION = "scmultisim-v1"
 STATUSES = {
@@ -211,17 +213,12 @@ def _hex(value: Any, path: str, *, minimum: int, maximum: int) -> str:
 def _validate_calibration(calibration: dict[str, Any]) -> None:
     mapping = calibration["mapping"]
     if mapping is not None:
-        mapping = _object(mapping, {"kind", "x_knots", "y_knots"}, "calibration.mapping")
-        _match_fixed(mapping["kind"], "positive_monotone_lookup", "calibration.mapping.kind")
-        xs, ys = mapping["x_knots"], mapping["y_knots"]
-        if not isinstance(xs, list) or not isinstance(ys, list) or len(xs) != len(ys) or len(xs) < 2:
-            raise PlanValidationError("calibration.mapping needs at least two paired knots")
-        xs = [_finite_number(x, "calibration.mapping.x_knots") for x in xs]
-        ys = [_finite_number(y, "calibration.mapping.y_knots", positive=True) for y in ys]
-        if any(right <= left for left, right in zip(xs, xs[1:])) or any(
-            right <= left for left, right in zip(ys, ys[1:])
-        ):
-            raise PlanValidationError("calibration.mapping knots must strictly increase in x and y")
+        try:
+            # Reconstruct the actual runtime class: the formal schema must not
+            # accept an approximate lookup table for a different function.
+            PositiveMapping.from_config(mapping)
+        except (ValueError, TypeError, OverflowError) as exc:
+            raise PlanValidationError(f"calibration.mapping: {exc}") from exc
 
     k_value = calibration["K"]
     if k_value is not None:
