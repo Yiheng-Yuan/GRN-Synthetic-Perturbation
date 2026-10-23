@@ -59,12 +59,15 @@ class SnapshotSampler:
         tau: float,
         baseline_stationarity: StationarityResult,
         cells_per_replicate: int = 128,
+        save_production_jacobians: bool = True,
     ) -> None:
         if isinstance(cells_per_replicate, bool) or not isinstance(cells_per_replicate, Integral) or cells_per_replicate < 1:
             raise ValueError("cells_per_replicate must be a positive integer")
         stream_seed(seed, "validate")
         if not np.isfinite(tau) or tau <= 0:
             raise ValueError("tau must be finite and positive")
+        if not isinstance(save_production_jacobians, bool):
+            raise ValueError("save_production_jacobians must be boolean")
         if not baseline_stationarity.passed or baseline_stationarity.burnin is None:
             raise ValueError("Baseline stationarity diagnostics must pass before sampling")
         self._check_diagnostic(params, tau, baseline_stationarity, None, 0.)
@@ -73,6 +76,7 @@ class SnapshotSampler:
         self.tau = float(tau)
         self.cells_per_replicate = int(cells_per_replicate)
         self.burnin = float(baseline_stationarity.burnin)
+        self.save_production_jacobians = save_production_jacobians
 
     @staticmethod
     def _check_diagnostic(params, tau, result, target, dose):
@@ -131,7 +135,8 @@ class SnapshotSampler:
                 # Protocol J^s is the UNPERTURBED production sensitivity at
                 # this reference M, distinct from the KD-scaled instantaneous
                 # derivative of a treated cell's production rate.
-                production_jacobians.append(self._params.production_jacobian(final.M))
+                if self.save_production_jacobians:
+                    production_jacobians.append(self._params.production_jacobian(final.M))
                 for stage, state in (("initial", initial), ("final", final)):
                     for species in ("G", "U", "M"):
                         states[f"{stage}_{species}"].append(getattr(state, species))
@@ -139,13 +144,16 @@ class SnapshotSampler:
                                 "initial_seed": str(initial_seed), "trajectory_seed": str(trajectory_seed)})
             observations[arm] = np.stack(counts)
             truth.update({f"{arm}_{name}": np.stack(values) for name, values in states.items()})
-            truth[f"{arm}_production_jacobian"] = np.stack(production_jacobians)
+            if self.save_production_jacobians:
+                truth[f"{arm}_production_jacobian"] = np.stack(production_jacobians)
         return GeneratedSnapshot(
             ReplicatedSnapshot(observations["treated"], observations.get("control")),
             truth,
             {"condition": record, "burnin": self.burnin, "duration": duration,
              "tau": self.tau, "streams": streams, "paired_cells_visible": False,
-             "production_jacobian_definition": "unperturbed_ds0_dM_at_final_continuous_M"},
+             "production_jacobian_definition": "unperturbed_ds0_dM_at_final_continuous_M",
+             "production_jacobians_saved": self.save_production_jacobians,
+             "production_jacobian_reconstruction": "parameters.production_jacobian(arm_final_M)"},
         )
 
     def sample_condition(self, condition: Condition) -> ReplicatedSnapshot:

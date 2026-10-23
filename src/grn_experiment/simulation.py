@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass
+from numbers import Integral
 from typing import Literal
 
 import numpy as np
@@ -34,6 +35,8 @@ class NetworkSpec:
     weights: np.ndarray
     regulators: tuple[int, ...]
     seed: int
+    isolated_genes: tuple[int, ...] = ()
+    modules: tuple[tuple[int, ...], ...] = ()
 
     def __post_init__(self) -> None:
         weights = np.array(self.weights, dtype=float, copy=True)
@@ -51,9 +54,31 @@ class NetworkSpec:
         nonregulators = set(range(weights.shape[0])) - set(regulators)
         if nonregulators and np.any(weights[:, sorted(nonregulators)] != 0):
             raise ValueError("non-regulator genes cannot have outgoing edges")
+        isolated = tuple(self.isolated_genes)
+        if any(isinstance(gene, (bool, np.bool_)) or not isinstance(gene, Integral)
+               for gene in isolated):
+            raise ValueError("isolated_genes must contain integer gene indices")
+        isolated = tuple(int(gene) for gene in isolated)
+        if (len(set(isolated)) != len(isolated) or any(
+                gene < 0 or gene >= weights.shape[0] for gene in isolated)
+                or set(isolated) & set(regulators)):
+            raise ValueError("isolated_genes must be distinct valid non-regulators")
+        if isolated and (np.any(weights[list(isolated), :]) or np.any(weights[:, list(isolated)])):
+            raise ValueError("explicit isolated genes must have no incoming or outgoing edges")
+        raw_modules = tuple(tuple(module) for module in self.modules)
+        if any(isinstance(gene, (bool, np.bool_)) or not isinstance(gene, Integral)
+               for module in raw_modules for gene in module):
+            raise ValueError("modules must contain integer gene indices")
+        modules = tuple(tuple(int(gene) for gene in module) for module in raw_modules)
+        assigned = tuple(gene for module in modules for gene in module)
+        if modules and (any(not module for module in modules) or len(set(assigned)) != len(assigned)
+                        or set(assigned) != set(range(weights.shape[0])) - set(isolated)):
+            raise ValueError("modules must partition all non-isolated genes")
         weights.setflags(write=False)
         object.__setattr__(self, "weights", weights)
         object.__setattr__(self, "regulators", regulators)
+        object.__setattr__(self, "isolated_genes", isolated)
+        object.__setattr__(self, "modules", modules)
 
     @property
     def n_genes(self) -> int:
@@ -242,6 +267,84 @@ def make_network(
     return network
 
 
+def make_modular_network(seed: int) -> NetworkSpec:
+    """Construct the predeclared 64-gene DEVELOPMENT topology, without RNA.
+
+    Six distinct ten-gene modules contain eight regulators and two sink genes
+    each.  Every module has a directed regulator ring, both feedback signs,
+    a feed-forward motif and seed-dependent extra edges, for 20 internal edges.
+    Eight bridges link A->B (four), B->C (two), C->D (two); E/F and four isolated
+    genes are disconnected from the other modules.  Gene labels are randomly
+    permuted so the learner's index order does not encode module membership.
+
+    This guarantees structural paths, not detectable propagation, a particular
+    attractor, or statistical recoverability.  Module labels are scorer truth.
+    """
+    if isinstance(seed, (bool, np.bool_)) or not isinstance(seed, Integral) or seed < 0:
+        raise ValueError("seed must be a nonnegative integer")
+    rng = np.random.default_rng(int(seed))
+    labels = rng.permutation(64)
+    modules = tuple(tuple(int(gene) for gene in labels[start:start + 10])
+                    for start in range(0, 60, 10))
+    isolated = tuple(int(gene) for gene in labels[60:])
+    regulators = tuple(gene for module in modules for gene in module[:8])
+    weights = np.zeros((64, 64), dtype=float)
+
+    for module in modules:
+        r = module[:8]
+        # The regulator ring gives every perturbable gene a distinct two-hop
+        # downstream node, including genes without any inter-module bridge.
+        edges = {(r[(index + 1) % 8], r[index]): None for index in range(8)}
+        edges.update({(r[0], r[1]): +1, (r[2], r[3]): -1, (r[2], r[0]): -1})
+        edges[(r[1], r[0])] = +1
+        edges[(r[3], r[2])] = +1
+        for sink in module[8:]:
+            edges[(sink, int(rng.choice(r)))] = None
+        # Degree-constrained random extras alter the topology, rather than
+        # merely relabeling six copies of one module template.
+        while len(edges) < 20:
+            indegree = {gene: sum(target == gene for target, _ in edges) for gene in module}
+            outdegree = {gene: sum(source == gene for _, source in edges) for gene in r}
+            candidates = [(target, source) for source in r for target in module
+                          if target != source and (target, source) not in edges
+                          and indegree[target] < _MAX_INDEGREE and outdegree[source] < 4]
+            if not candidates:
+                raise RuntimeError("modular scaffold exhausted its degree capacity")
+            edges[candidates[int(rng.integers(len(candidates)))]] = None
+        fixed_positive = sum(sign == +1 for sign in edges.values() if sign is not None)
+        fixed_negative = sum(sign == -1 for sign in edges.values() if sign is not None)
+        signs = np.array([+1] * (10 - fixed_positive) + [-1] * (10 - fixed_negative))
+        rng.shuffle(signs)
+        undecided = iter(signs)
+        for (target, source), sign in edges.items():
+            actual_sign = int(next(undecided)) if sign is None else sign
+            weights[target, source] = actual_sign * rng.uniform(0.4, 1.2)
+
+    local_masks = {weights[np.ix_(module, module)].astype(bool).tobytes() for module in modules}
+    if len(local_masks) != len(modules):
+        raise RuntimeError("seed produced duplicate local module topologies")
+
+    for source_module, target_module, count in ((0, 1, 4), (1, 2, 2), (2, 3, 2)):
+        bridge_signs = np.array([+1] * (count // 2) + [-1] * (count // 2))
+        rng.shuffle(bridge_signs)
+        for sign in bridge_signs:
+            indegree = np.count_nonzero(weights, axis=1)
+            outdegree = np.count_nonzero(weights, axis=0)
+            candidates = [(target, source) for source in modules[source_module][:8]
+                          for target in modules[target_module]
+                          if indegree[target] < _MAX_INDEGREE and outdegree[source] < 4
+                          and weights[target, source] == 0]
+            if not candidates:
+                raise RuntimeError("modular bridge placement exhausted its degree capacity")
+            target, source = candidates[int(rng.integers(len(candidates)))]
+            weights[target, source] = int(sign) * rng.uniform(0.4, 1.2)
+
+    network = NetworkSpec(weights, regulators, int(seed), isolated, modules)
+    validate_network(network, n_edges=128, require_motifs=True,
+                     require_regulator_propagation=True)
+    return network
+
+
 def network_diagnostics(network: NetworkSpec) -> dict[str, object]:
     """Report edge counts, degree caps, coverage, signs, and motifs."""
 
@@ -279,6 +382,7 @@ def network_diagnostics(network: NetworkSpec) -> dict[str, object]:
         "indegree": np.count_nonzero(present, axis=1),
         "outdegree": np.count_nonzero(present, axis=0),
         "nonregulators": tuple(gene for gene in range(network.n_genes) if gene not in network.regulators),
+        "isolated_genes": network.isolated_genes,
         "has_chain": has_chain,
         "has_feedforward": has_feedforward,
         "has_positive_feedback": has_positive_feedback,
@@ -287,7 +391,8 @@ def network_diagnostics(network: NetworkSpec) -> dict[str, object]:
 
 
 def validate_network(
-    network: NetworkSpec, *, n_edges: int | None = None, require_motifs: bool = True
+    network: NetworkSpec, *, n_edges: int | None = None, require_motifs: bool = True,
+    require_regulator_propagation: bool = False,
 ) -> dict[str, object]:
     """Raise for a malformed predeclared network; otherwise return diagnostics."""
 
@@ -298,8 +403,18 @@ def validate_network(
         raise ValueError("indegree exceeds three")
     if np.any(report["outdegree"] > _MAX_OUTDEGREE):
         raise ValueError("regulator outdegree exceeds five")
-    if any(report["indegree"][gene] == 0 for gene in report["nonregulators"]):
+    if any(report["indegree"][gene] == 0 for gene in report["nonregulators"]
+           if gene not in network.isolated_genes):
         raise ValueError("each non-regulator must have an incoming edge")
+    if require_regulator_propagation:
+        present = network.weights != 0
+        for source in network.regulators:
+            direct = np.flatnonzero(present[:, source])
+            if not len(direct) or not any(
+                target not in (source, middle)
+                for middle in direct for target in np.flatnonzero(present[:, middle])
+            ):
+                raise ValueError("each regulator must have an outgoing edge and distinct two-hop path")
     count = report["n_edges"]
     if count == 0 or not (0.4 <= report["n_positive"] / count <= 0.6):
         raise ValueError("positive/negative edge balance must be within 40--60%")

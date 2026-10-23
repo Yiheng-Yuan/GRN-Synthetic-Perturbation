@@ -8,7 +8,7 @@ import pytest
 
 from grn_experiment import generate_scmultisim as batch
 from grn_experiment.protocol import COMMON_BASELINE, Condition
-from grn_experiment.scmultisim import parameter_digest
+from grn_experiment.scmultisim import development_parameters, parameter_digest
 
 
 def config():
@@ -79,6 +79,53 @@ def test_formal_and_unknown_config_rejected_before_creating_output(tmp_path):
         with pytest.raises(ValueError):
             batch.generate(changed, output)
         assert not output.exists()
+
+
+@pytest.mark.parametrize("parameter_file", [False, True, 0, 1, 0.0, None, "", " \t\n", [], {}])
+def test_invalid_explicit_parameter_file_cannot_fall_back_to_generated_network(
+    tmp_path, monkeypatch, parameter_file
+):
+    def no_fallback(*args, **kwargs):
+        raise AssertionError("An invalid explicit parameter path must not select a default network")
+
+    monkeypatch.setattr(batch, "development_parameters", no_fallback)
+    output = tmp_path / "not-created"
+    with pytest.raises(ValueError, match="parameter_file must be a nonempty path string"):
+        batch.generate({**config(), "parameter_file": parameter_file}, output)
+    assert not output.exists()
+
+
+def test_explicit_parameter_file_preserves_parameters_and_does_not_calibrate_defaults(tmp_path, monkeypatch):
+    use_short_fixture(monkeypatch)
+    expected = development_parameters(102).to_dict()
+    expected["K"] = 7.25
+    parameter_path = tmp_path / "fixed-parameters.json"
+    parameter_path.write_text(json.dumps(expected))
+
+    def no_fallback(*args, **kwargs):
+        raise AssertionError("Explicit parameters must not construct or calibrate a default network")
+
+    monkeypatch.setattr(batch, "development_parameters", no_fallback)
+    monkeypatch.setattr(batch, "calibrate_common_K", no_fallback)
+    output = tmp_path / "data"
+    result = batch.generate({**config(), "parameter_file": parameter_path.name}, output,
+                            config_directory=tmp_path)
+    assert result["status"] == "complete"
+    provenance = json.loads((output / "private/generator.json").read_text())
+    assert provenance["parameters"] == expected
+    assert "development_K_reference" not in provenance
+
+
+def test_imported_network_cannot_bypass_full_registered_topology_validation(tmp_path):
+    values = development_parameters(101).to_dict()
+    values["A"] = np.abs(values["A"]).tolist()
+    parameter_path = tmp_path / "all-positive.json"
+    parameter_path.write_text(json.dumps(values))
+    output = tmp_path / "not-created"
+    with pytest.raises(ValueError, match="positive/negative edge balance"):
+        batch.generate({**config(), "parameter_file": parameter_path.name}, output,
+                       config_directory=tmp_path)
+    assert not output.exists()
 
 
 def test_interrupted_condition_resumes_completed_files(tmp_path, monkeypatch):

@@ -124,6 +124,7 @@ class KineticParameters:
     regulators: tuple[int, ...]
     K: float
     mapping: PositiveMapping = field(default_factory=PositiveMapping)
+    isolated_genes: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
         A = np.array(self.A, dtype=np.float64, copy=True)
@@ -138,9 +139,16 @@ class KineticParameters:
             raise ValueError("nonregulators cannot have outgoing edges")
         if np.any(np.diag(A)):
             raise ValueError("self-loops are excluded by this protocol")
+        isolated = tuple(_integer(gene, "isolated gene") for gene in self.isolated_genes)
+        if (len(set(isolated)) != len(isolated) or any(gene >= n for gene in isolated)
+                or set(isolated) & set(regulators)):
+            raise ValueError("isolated_genes must be distinct valid non-regulators")
+        if isolated and (np.any(A[list(isolated), :]) or np.any(A[:, list(isolated)])):
+            raise ValueError("explicit isolated genes must have no incoming or outgoing edges")
         A.setflags(write=False)
         object.__setattr__(self, "A", A)
         object.__setattr__(self, "regulators", regulators)
+        object.__setattr__(self, "isolated_genes", isolated)
         object.__setattr__(self, "K", _positive(self.K, "K"))
         if not isinstance(self.mapping, PositiveMapping):
             raise TypeError("mapping must be a frozen PositiveMapping")
@@ -210,9 +218,13 @@ class KineticParameters:
                 self.beta * state.U - self.gamma * state.M)
 
     def to_dict(self) -> dict[str, Any]:
-        return {**{name: getattr(self, name).tolist() for name in
-                   ("A", "b", "kon", "koff", "beta", "gamma", "rho")},
-                "regulators": list(self.regulators), "K": self.K, "mapping": self.mapping.to_dict()}
+        value = {**{name: getattr(self, name).tolist() for name in
+                    ("A", "b", "kon", "koff", "beta", "gamma", "rho")},
+                 "regulators": list(self.regulators), "K": self.K, "mapping": self.mapping.to_dict()}
+        # Preserve the serialized form (and parameter hash) of legacy fixtures.
+        if self.isolated_genes:
+            value["isolated_genes"] = list(self.isolated_genes)
+        return value
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> KineticParameters:
@@ -457,10 +469,15 @@ def development_parameters(seed: int, n_genes: int = 24) -> KineticParameters:
     The 24-gene graph reuses only the existing topology constructor. No old
     sigmoid/Hill Dynamics or their stability rescaling is used. The four-gene
     fixture has a signed feed-forward chain and one uncoupled negative control.
-    K=20 and the explicit rate ranges below still need development calibration.
+    The 64-gene profile uses a sparse modular topology and the already fixed
+    24-gene development K reference (5.081441499910911); it does not recalibrate
+    K from held-out responses. This reference is not evidence of 64-gene
+    calibration. Other fixtures retain K=20 and their previous rate ranges.
     """
     seed = _integer(seed, "seed")
     n_genes = _integer(n_genes, "n_genes", minimum=1)
+    isolated: tuple[int, ...] = ()
+    K = 20.0
     if n_genes == 24:
         from .simulation import make_network
         network = make_network(seed)
@@ -469,8 +486,14 @@ def development_parameters(seed: int, n_genes: int = 24) -> KineticParameters:
         A = np.zeros((4, 4))
         A[1, 0], A[2, 1], A[2, 0] = 0.8, -0.8, 0.5
         regulators = (0, 1, 2, 3)
+    elif n_genes == 64:
+        from .simulation import make_modular_network
+        network = make_modular_network(seed)
+        A, regulators = network.weights.copy(), network.regulators
+        isolated = network.isolated_genes
+        K = 5.081441499910911
     else:
-        raise ValueError("development fixtures support 4 or 24 genes; provide explicit parameters otherwise")
+        raise ValueError("development fixtures support 4, 24 or 64 genes; provide explicit parameters otherwise")
     rng = np.random.default_rng(stable_seed(seed, "development-kinetics-v1"))
     return KineticParameters(A=A, b=rng.uniform(-0.2, 0.2, n_genes),
                              kon=rng.uniform(0.7, 1.3, n_genes),
@@ -478,4 +501,4 @@ def development_parameters(seed: int, n_genes: int = 24) -> KineticParameters:
                              beta=rng.uniform(0.7, 1.3, n_genes),
                              gamma=rng.uniform(0.7, 1.3, n_genes),
                              rho=rng.uniform(0.6, 1, n_genes),
-                             regulators=regulators, K=20.0)
+                             regulators=regulators, K=K, isolated_genes=isolated)

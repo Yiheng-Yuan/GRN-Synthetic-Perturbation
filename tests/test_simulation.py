@@ -9,12 +9,65 @@ from grn_experiment.simulation import (
     dynamics_diagnostics,
     make_dynamics,
     make_network,
+    make_modular_network,
     network_diagnostics,
     validate_network,
 )
 
 
 class NetworkTests(unittest.TestCase):
+    def test_modular_development_network_has_sparse_modules_bridges_and_isolates(self) -> None:
+        for seed in (0, 7, 101, 20261023):
+            with self.subTest(seed=seed):
+                network = make_modular_network(seed)
+                report = validate_network(network, n_edges=128, require_regulator_propagation=True)
+                self.assertEqual(network.n_genes, 64)
+                self.assertEqual(len(network.regulators), 48)
+                self.assertEqual(len(network.isolated_genes), 4)
+                self.assertEqual((report["n_positive"], report["n_negative"]), (64, 64))
+                self.assertLessEqual(int(np.max(report["outdegree"])), 4)
+                np.testing.assert_array_equal(network.weights, make_modular_network(seed).weights)
+                for module in network.modules:
+                    self.assertEqual(len(module), 10)
+                    self.assertEqual(len(set(module) & set(network.regulators)), 8)
+                    self.assertEqual(np.count_nonzero(network.weights[np.ix_(module, module)]), 20)
+                for target_index, target_module in enumerate(network.modules):
+                    for source_index, source_module in enumerate(network.modules):
+                        if target_index == source_index:
+                            continue
+                        expected = {(1, 0): 4, (2, 1): 2, (3, 2): 2}.get(
+                            (target_index, source_index), 0)
+                        self.assertEqual(np.count_nonzero(
+                            network.weights[np.ix_(target_module, source_module)]), expected)
+                np.testing.assert_array_equal(network.weights[list(network.isolated_genes)], 0)
+                np.testing.assert_array_equal(network.weights[:, list(network.isolated_genes)], 0)
+                # Random extras change the local edge masks, not just labels.
+                masks = {network.weights[np.ix_(module, module)].astype(bool).tobytes()
+                         for module in network.modules}
+                self.assertEqual(len(masks), 6)
+
+    def test_explicit_isolates_do_not_exempt_other_uncovered_sinks(self) -> None:
+        network = make_modular_network(5)
+        values = network.weights.copy()
+        sink = next(gene for gene in network.modules[0] if gene not in network.regulators)
+        values[sink, :] = 0
+        with self.assertRaisesRegex(ValueError, "non-regulator"):
+            validate_network(NetworkSpec(values, network.regulators, 5, network.isolated_genes),
+                             require_motifs=False)
+        values = network.weights.copy()
+        values[network.isolated_genes[0], network.regulators[0]] = 1
+        with self.assertRaisesRegex(ValueError, "isolated"):
+            NetworkSpec(values, network.regulators, 5, network.isolated_genes)
+        for isolated in ((True,), (1.5,), (network.regulators[0],), (64,), (-1,)):
+            with self.subTest(isolated=isolated), self.assertRaisesRegex(ValueError, "isolated"):
+                NetworkSpec(network.weights, network.regulators, 5, isolated)
+
+    def test_propagation_qualification_is_optional_for_legacy_networks(self) -> None:
+        network = make_network(101)
+        validate_network(network, n_edges=40)
+        with self.assertRaisesRegex(ValueError, "two-hop"):
+            validate_network(network, n_edges=40, require_regulator_propagation=True)
+
     def test_seeded_network_has_signed_motifs_and_degree_bound(self) -> None:
         for seed in (0, 7, 31):
             network = make_network(seed, n_genes=8, n_regulators=5, n_edges=12)

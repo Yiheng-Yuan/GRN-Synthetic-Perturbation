@@ -1,0 +1,23 @@
+{
+  "phase": "development",
+  "profile": "q1-modular-64-v1",
+  "seed": 20261023,
+  "network_seed": 201,
+  "split_seed": 20261023,
+  "cells_per_replicate": 128,
+  "tau": 0.03125,
+  "dose": 0.7,
+  "sampling_times": [0.25, 1.0, 2.0, 4.0, 8.0],
+  "stationarity": {
+    "min_time": 16.0,
+    "max_time": 128.0,
+    "window": 8.0,
+    "consecutive_windows": 3,
+    "mean_rtol": 0.15,
+    "variance_rtol": 0.25,
+    "distribution_tol": 0.2,
+    "atol": 0.1,
+    "diagnostic_cells": 256,
+    "samples_per_window": 3
+  }
+}
