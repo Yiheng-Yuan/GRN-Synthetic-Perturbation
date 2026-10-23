@@ -1,0 +1,19 @@
+# Independent allowlist for Dockerfile.q1; no data/results/private files or Git.
+**
+!Dockerfile.q1
+!Dockerfile.q1.dockerignore
+!src/
+!src/grn_experiment/
+!src/grn_experiment/__init__.py
+!src/grn_experiment/protocol.py
+!src/grn_experiment/q1_pilot.py
+!src/grn_experiment/q1_pilot_data.py
+!src/grn_experiment/q1_pilot_evaluation.py
+!tests/
+!tests/test_q1_pilot.py
+!tests/test_q1_pilot_data.py
+!tests/test_q1_pilot_evaluation.py
+!tools/
+!tools/scmultisim/
+!tools/scmultisim/run_q1_h200.sh
+!tools/scmultisim/q1_h200_smoke.py
