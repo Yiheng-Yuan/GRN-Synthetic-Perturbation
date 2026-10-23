@@ -40,6 +40,33 @@ def test_snapshot_is_order_independent_and_controls_use_distinct_lineages():
     assert "G" not in vars(first.snapshot) and "rho" not in vars(first.snapshot)
 
 
+def test_omitting_quadratic_truth_keeps_identical_counts_and_reconstructible_jacobians():
+    generator = sampler()
+    condition = Condition(0, 0.7, 0.25)
+    full = generator.sample_with_truth(condition)
+    generator.save_production_jacobians = False
+    compact = generator.sample_with_truth(condition)
+    assert compact.provenance["production_jacobians_saved"] is False
+    for arm, observed in (("treated", "treated"), ("control", "matched_control")):
+        np.testing.assert_array_equal(getattr(full.snapshot, observed), getattr(compact.snapshot, observed))
+        assert f"{arm}_production_jacobian" not in compact.truth
+        for species in ("G", "U", "M"):
+            for stage in ("initial", "final"):
+                name = f"{arm}_{stage}_{species}"
+                np.testing.assert_array_equal(full.truth[name], compact.truth[name])
+        reconstructed = development_parameters(7, n_genes=4).production_jacobian(compact.truth[f"{arm}_final_M"])
+        np.testing.assert_array_equal(reconstructed, full.truth[f"{arm}_production_jacobian"])
+
+
+def test_sampler_rejects_nonboolean_truth_option():
+    params = development_parameters(7, n_genes=4)
+    report = {"parameter_sha256": parameter_digest(params), "tau": .125, "target": None, "dose": 0.}
+    with pytest.raises(ValueError, match="save_production_jacobians"):
+        SnapshotSampler(params, seed=4, tau=.125,
+                        baseline_stationarity=SimpleNamespace(passed=True, burnin=.25, report=report),
+                        save_production_jacobians="false")
+
+
 def test_common_baseline_is_one_unperturbed_arm_with_unchanged_hidden_state():
     result = sampler().sample_with_truth(COMMON_BASELINE)
     assert result.snapshot.matched_control is None

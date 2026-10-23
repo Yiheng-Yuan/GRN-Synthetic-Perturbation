@@ -101,6 +101,30 @@ class AnalyticRnaTests(unittest.TestCase):
 
 
 class ProductionMechanismTests(unittest.TestCase):
+    def test_modular_parameters_preserve_topology_fixed_reference_and_serialization(self):
+        params = development_parameters(20261023, n_genes=64)
+        self.assertEqual(params.A.shape, (64, 64))
+        self.assertEqual(len(params.regulators), 48)
+        self.assertEqual(len(params.isolated_genes), 4)
+        self.assertEqual(params.K, 5.081441499910911)
+        self.assertEqual(np.count_nonzero(params.A), 128)
+        restored = KineticParameters.from_dict(json.loads(json.dumps(params.to_dict())))
+        self.assertEqual(restored.isolated_genes, params.isolated_genes)
+        np.testing.assert_array_equal(restored.A, params.A)
+        self.assertNotIn("isolated_genes", development_parameters(101).to_dict())
+        values = params.to_dict()
+        values["A"][params.isolated_genes[0]][params.regulators[0]] = .5
+        with self.assertRaisesRegex(ValueError, "isolated"):
+            KineticParameters.from_dict(values)
+
+    def test_modular_isolates_have_no_production_sensitivity(self):
+        params = development_parameters(20261023, n_genes=64)
+        state = np.full((2, 64), 5.0)
+        jacobian = params.production_jacobian(state)
+        np.testing.assert_array_equal(jacobian[:, params.isolated_genes, :], 0)
+        np.testing.assert_array_equal(jacobian[:, :, params.isolated_genes], 0)
+        self.assertTrue(np.all(params.production(state) > 0))
+
     def test_target_production_multiplier_does_not_delete_edges_or_shrink_rna(self):
         params = development_parameters(31, n_genes=4)
         M = np.array([[0.2, 2.0, 5.0, 8.0], [0.1, 3.0, 6.0, 9.0]])

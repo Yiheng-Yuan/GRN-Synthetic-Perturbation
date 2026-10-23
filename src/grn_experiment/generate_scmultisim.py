@@ -30,6 +30,7 @@ from .scmultisim import KineticParameters, development_parameters, KERNEL_VERSIO
 from .scmultisim_observations import SnapshotSampler, key_id, key_record, stream_seed
 from .scmultisim_stationary import StationarityConfig, assess_stationarity, calibrate_common_K
 from .selection import uniform_sample
+from .simulation import NetworkSpec, validate_network
 
 
 def _json_bytes(value: object) -> bytes:
@@ -156,6 +157,10 @@ def _validated_config(config: dict) -> dict:
         raise ValueError("stationary must be boolean")
     if config["scope"] == "initial" and config["stationary"]:
         raise ValueError("initial scope does not include final stationary scoring")
+    if "parameter_file" in config:
+        parameter_file = config["parameter_file"]
+        if not isinstance(parameter_file, str) or not parameter_file.strip():
+            raise ValueError("parameter_file must be a nonempty path string when provided")
     StationarityConfig(**config["stationarity"])
     return config
 
@@ -168,7 +173,7 @@ def generate(config: dict, output: Path, *, config_directory: Path = Path(".")) 
     interrupted before its manifest commit is regenerated with its same seeds.
     """
     config = _validated_config(dict(config))
-    if config.get("parameter_file"):
+    if "parameter_file" in config:
         params = KineticParameters.from_dict(json.loads((config_directory / config["parameter_file"]).read_text()))
     else:
         params = development_parameters(config["network_seed"], n_genes=24)
@@ -180,11 +185,9 @@ def generate(config: dict, output: Path, *, config_directory: Path = Path(".")) 
         params = KineticParameters.from_dict(values)
     if params.n_genes != 24 or len(params.regulators) != 16:
         raise ValueError("Protocol generation requires 24 genes and 16 regulators")
-    indegree, outdegree = (params.A != 0).sum(axis=1), (params.A != 0).sum(axis=0)
-    nonregulators = sorted(set(range(24)) - set(params.regulators))
-    if (np.count_nonzero(params.A) != 40 or np.any(indegree > 3) or
-            np.any(outdegree > 5) or np.any(indegree[nonregulators] == 0)):
-        raise ValueError("Protocol network must have 40 edges and meet degree/coverage constraints")
+    # Imported and constructed parameters must satisfy the same topology rules.
+    validate_network(NetworkSpec(params.A, params.regulators, config["network_seed"]),
+                     n_edges=40, require_motifs=True)
     split = make_split(params.regulators, config["split_seed"])
     conditions = planned_conditions(split, config["scope"])
     stationary_keys = stationary_grid(split) if config["stationary"] else ()
@@ -193,7 +196,7 @@ def generate(config: dict, output: Path, *, config_directory: Path = Path(".")) 
                   "kernel_version": KERNEL_VERSION, "mechanism_reference_commit": SOURCE_COMMIT,
                   "runtime_implementation": "independent_python_scmultisim_derived_extension",
                   "R_package_called": False}
-    if not config.get("parameter_file"):
+    if "parameter_file" not in config:
         provenance["development_K_reference"] = reference
     fingerprint = hashlib.sha256(_json_bytes(provenance)).hexdigest()
     output = Path(output).resolve()
