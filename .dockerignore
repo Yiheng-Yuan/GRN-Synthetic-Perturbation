@@ -5,3 +5,14 @@
 !configs/
 !configs/scmultisim-development.json
 !Dockerfile.scmultisim
+# Legacy builders use this root allowlist instead of Dockerfile.q1.dockerignore.
+!Dockerfile.q1
+!Dockerfile.q1.dockerignore
+!tests/
+!tests/test_q1_pilot.py
+!tests/test_q1_pilot_data.py
+!tests/test_q1_pilot_evaluation.py
+!tools/
+!tools/scmultisim/
+!tools/scmultisim/run_q1_h200.sh
+!tools/scmultisim/q1_h200_smoke.py

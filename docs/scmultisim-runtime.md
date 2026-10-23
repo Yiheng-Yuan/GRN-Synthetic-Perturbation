@@ -1,5 +1,7 @@
 # 持续扰动扩展：运行与交付
 
+**历史交付范围：** 下文 `20261014-dev1` 专指源码 `22b2fd7` 的 24 基因 CPU 生成镜像，不含后续修复或 Q1 训练器。当前 64 基因／H200 任务请使用[独立的新交付说明](q1-h200-delivery.md)，不得复用旧标签或覆盖旧归档。
+
 本内核独立实现 scMultiSim 的双态启动子、未剪接 RNA（U）和已剪接 RNA（M）机制，以及本项目批准的固定背景 GRN 反馈、持续产生项敲低和不配对快照。语言是 Python，数值依赖是 NumPy；不调用官方 R 包，不把本扩展冒称官方 scMultiSim 1.8.0 的原生接口或逐值复现。主配置中的正式校准项仍保留 `null`。
 
 ## 直接运行
@@ -99,12 +101,16 @@ NPZ（压缩数组）观测文件只含 `treated` 和可选 `matched_control`，
 
 生成器端可用 `load_blind_store(output_path)` 重建现有信息门禁；长期失败的资料库不会被当作完整盲测资料加载。程序门禁和目录名称不是跨账号安全沙盒，正式盲测还需独立评分进程与文件权限隔离。
 
-## 复现构建
+## 从当前源码另建生成镜像
+
+旧镜像复现必须使用 `22b2fd7` 的源码。下面从当前源码生成新标签，避免相同版本名对应不同实现；构建前应提交或另外归档工作树修改。
 
 ```bash
+grn_image_revision=$(git rev-parse --short=12 HEAD)
 docker build --platform linux/amd64 -f Dockerfile.scmultisim \
-  -t grn-scmultisim:20261014-dev1 .
-docker save grn-scmultisim:20261014-dev1 | gzip > grn-scmultisim-20261014-dev1-linux-amd64.tar.gz
+  -t "grn-scmultisim:dev-$grn_image_revision" .
+docker save "grn-scmultisim:dev-$grn_image_revision" \
+  | gzip > "grn-scmultisim-dev-$grn_image_revision-linux-amd64.tar.gz"
 ```
 
 基础镜像固定到已拉取的摘要，Python 3.12.15，NumPy 2.2.6；运行时不联网安装依赖。`.dockerignore` 采用允许清单，排除数据、真值、结果、虚拟环境、Git 元数据及密钥文件。
