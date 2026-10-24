@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from dataclasses import replace
 from types import SimpleNamespace
 
 import numpy as np
@@ -97,10 +98,154 @@ def test_held_time_is_rejected_by_training_interface():
 
 
 @pytest.mark.parametrize("change", [{"updates": 0}, {"seed": -1}, {"step": .5},
-                                     {"learning_rate": float("nan")}, {"cells": 1}])
+                                     {"learning_rate": float("nan")}, {"cells": 1},
+                                     {"condition_microbatch": 0}, {"condition_microbatch": True},
+                                     {"condition_microbatch": 1.5}])
 def test_bad_training_config_rejected(change):
     with pytest.raises(ValueError):
         PilotConfig(**change)
+
+
+@pytest.mark.parametrize("microbatch", [1, 2, 5])
+def test_condition_microbatches_preserve_effective_update_and_random_draws(tmp_path, microbatch):
+    baseline, observations = fixture_observations()
+    for duration in (.25, 4.):
+        observations[Condition(2, .7, duration)] = observations[Condition(1, .7, duration)]
+    config = PilotConfig(updates=4, conditions_per_update=3, cells=4, hidden=8,
+                         projections=4, seed=12)
+    assert config.condition_microbatch is None  # Old callers retain the full-batch path.
+    first_path, second_path = tmp_path / "full.pt", tmp_path / "micro.pt"
+    first, history = fit_pilot(baseline, observations, config=config, checkpoint_path=first_path)
+    # Poisoning the unused check repeat must not affect microbatch fitting.
+    poisoned = {}
+    for key, snapshot in observations.items():
+        treated, control = snapshot.treated.copy(), snapshot.matched_control.copy()
+        treated[2], control[2] = 9999, 1000
+        poisoned[key] = ReplicatedSnapshot(treated, control)
+    other, other_history = fit_pilot(baseline, poisoned,
+        config=replace(config, condition_microbatch=microbatch), checkpoint_path=second_path)
+    for left, right in zip(history, other_history, strict=True):
+        assert left == pytest.approx(right, rel=2e-5, abs=2e-6)
+    for name, values in first.state_dict().items():
+        torch.testing.assert_close(values, other.state_dict()[name], rtol=2e-5, atol=2e-6)
+    saved = [torch.load(path, weights_only=True) for path in (first_path, second_path)]
+    assert saved[0]["numpy_rng"] == saved[1]["numpy_rng"]
+    torch.testing.assert_close(saved[0]["torch_rng"], saved[1]["torch_rng"], atol=0, rtol=0)
+    torch.testing.assert_close(saved[0]["directions"], saved[1]["directions"], atol=0, rtol=0)
+
+
+def test_checkpoint_resume_replays_unsaved_updates_exactly(tmp_path):
+    baseline, observations = fixture_observations()
+    config = PilotConfig(updates=6, cells=4, hidden=8, projections=4, seed=12,
+                         condition_microbatch=1)
+    expected, history = fit_pilot(baseline, observations, config=config)
+    path = tmp_path / "training.pt"
+
+    def interrupt(row):
+        if row["update"] == 3:
+            raise RuntimeError("simulated interruption after an unsaved update")
+
+    with pytest.raises(RuntimeError, match="simulated interruption"):
+        fit_pilot(baseline, observations, config=config, checkpoint_path=path,
+                  checkpoint_every=2, on_update=interrupt, checkpoint_metadata={"dataset": "a"})
+    assert torch.load(path, weights_only=True)["completed_updates"] == 2
+    logged = []
+    restored, actual = fit_pilot(baseline, observations, config=config, checkpoint_path=path,
+        checkpoint_every=2, resume=True, on_update=logged.append, checkpoint_metadata={"dataset": "a"})
+    assert history == actual
+    assert [row["update"] for row in logged] == [3, 4, 5, 6]
+    for name, value in expected.state_dict().items():
+        torch.testing.assert_close(value, restored.state_dict()[name], rtol=0, atol=0)
+    assert torch.load(path, weights_only=True)["completed_updates"] == 6
+    assert not path.with_name(path.name + ".tmp").exists()
+
+
+@pytest.mark.parametrize("mismatch", ["config", "budget", "data", "metadata", "source"])
+def test_incompatible_checkpoint_resume_is_rejected_without_overwrite(tmp_path, monkeypatch, mismatch):
+    from grn_experiment import q1_pilot as pilot
+    baseline, observations = fixture_observations()
+    config = PilotConfig(updates=2, cells=4, hidden=8, projections=4)
+    path = tmp_path / "training.pt"
+    fit_pilot(baseline, observations, config=config, checkpoint_path=path)
+    original = path.read_bytes()
+    metadata = None
+    if mismatch == "config":
+        config = replace(config, seed=config.seed + 1)
+    elif mismatch == "budget":
+        config = replace(config, updates=1)  # Never silently shorten the registered budget.
+    elif mismatch == "data":
+        baseline[0, 0] += 1
+    elif mismatch == "metadata":
+        metadata = {"dataset": "other"}
+    else:
+        monkeypatch.setattr(pilot, "_sha256", lambda _: "different-source")
+    with pytest.raises(ValueError, match="incompatible"):
+        fit_pilot(baseline, observations, config=config, checkpoint_path=path,
+                  resume=True, checkpoint_metadata=metadata)
+    assert path.read_bytes() == original
+
+
+def test_cli_resume_validates_registration_before_writes_and_recovers_failure(tmp_path, monkeypatch):
+    from grn_experiment import q1_pilot as pilot
+    from grn_experiment.q1_pilot_data import OpenedInitialData
+    baseline, fitting = fixture_observations()
+    data = OpenedInitialData(np.concatenate((baseline.reshape(2, 8, 4), baseline[:8][None])),
+                             fitting, {"phase": "development"})
+    held = {Condition(2, .7, .25): next(iter(fitting.values()))}
+
+    def prepare(args):
+        return data, fitting, held, PilotConfig(updates=args.updates, seed=args.seed,
+            cells=4, hidden=8, projections=4, condition_microbatch=args.condition_microbatch)
+
+    monkeypatch.setattr(pilot, "_prepare_experiment", prepare)
+    monkeypatch.setattr(pilot, "predict_population", lambda model, baseline, *_args, **_kwargs:
+                        (baseline.copy(), baseline.copy()))
+    real_fit = pilot.fit_pilot
+
+    def interrupted_fit(*args, **kwargs):
+        log = kwargs["on_update"]
+
+        def interrupt(row):
+            log(row)
+            if row["update"] == 2:
+                raise RuntimeError("simulated CLI interruption")
+        return real_fit(*args, **{**kwargs, "on_update": interrupt})
+
+    monkeypatch.setattr(pilot, "fit_pilot", interrupted_fit)
+    output = tmp_path / "run"
+    argv = ["--archive", str(tmp_path / "unused.tar.gz"), "--output", str(output),
+            "--updates", "3", "--threads", "1", "--condition-microbatch", "1",
+            "--checkpoint-every", "1"]
+    with pytest.raises(RuntimeError, match="simulated CLI interruption"):
+        pilot.main(argv)
+    assert (output / "failure.json").is_file()
+    assert not (output / "model.pt").exists()
+    original = {p.relative_to(output): p.read_bytes() for p in output.rglob("*") if p.is_file()}
+    changed = argv.copy()
+    changed[changed.index("--updates") + 1] = "2"
+    with pytest.raises(ValueError, match="run_plan differs"):
+        pilot.main(changed + ["--resume"])
+    assert original == {p.relative_to(output): p.read_bytes() for p in output.rglob("*") if p.is_file()}
+    copied_source = output / "source_snapshot" / "grn_experiment" / "protocol.py"
+    source_before = copied_source.read_bytes()
+    copied_source.write_bytes(source_before + b"\n# unexpected change\n")
+    changed_snapshot = {p.relative_to(output): p.read_bytes() for p in output.rglob("*") if p.is_file()}
+    with pytest.raises(ValueError, match="source snapshot mismatch"):
+        pilot.main(argv + ["--resume"])
+    assert changed_snapshot == {p.relative_to(output): p.read_bytes() for p in output.rglob("*") if p.is_file()}
+    copied_source.write_bytes(source_before)
+    monkeypatch.setattr(pilot, "fit_pilot", real_fit)
+    assert pilot.main(argv + ["--resume"]) == 0
+    report = json.loads((output / "report.json").read_text())
+    assert report["resumed_from_update"] == 2
+    assert report["evaluation_device"] == "cpu"
+    assert not (output / "failure.json").exists()
+    assert len(list(output.glob("failure-before-resume-*.json"))) == 1
+    progress = [json.loads(line) for line in (output / "progress.jsonl").read_text().splitlines()]
+    assert [row["update"] for row in progress] == [1, 2, 3]
+    assert progress == json.loads((output / "history.json").read_text())
+    with pytest.raises(SystemExit):
+        pilot.main(argv + ["--resume"])  # Completed reports are not overwritten.
 
 
 def test_import_does_not_load_generator_modules():
