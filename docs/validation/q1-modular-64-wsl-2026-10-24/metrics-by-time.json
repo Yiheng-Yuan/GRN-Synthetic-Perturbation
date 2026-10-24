@@ -1,0 +1,214 @@
+{
+  "schema": "q1-held-target-metrics-by-time-v1",
+  "review_date": "2026-10-24",
+  "scope": "one development network, 16 held targets, three replicates per condition; no network-level significance",
+  "aggregation": "arithmetic mean of per-condition/per-replicate scores; lower is better",
+  "non_target_definition": "all genes except the perturbed gene; not synonymous with downstream genes",
+  "time_64_interpretation": "held-target prediction at a time used on training targets, not unseen-time extrapolation",
+  "rows": [
+    {
+      "time": 0.25,
+      "unique_held_conditions": 16,
+      "score_rows_per_model": 48,
+      "metrics": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.368583230567197,
+          "delta_rmse_all": 0.31788001498948715,
+          "delta_rmse_target": 0.22348868711752898,
+          "target_effect_mae": 0.22348868711752898,
+          "delta_rmse_non_target": 0.31784747657299883,
+          "treated_marginal_wasserstein1": 0.3911517841514322,
+          "control_marginal_wasserstein1": 0.38829803466796875
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.39935932636711774,
+          "delta_rmse_all": 0.31964767166315083,
+          "delta_rmse_target": 0.32946090372456044,
+          "target_effect_mae": 0.32946090372456044,
+          "delta_rmse_non_target": 0.3178632070366049,
+          "treated_marginal_wasserstein1": 0.4487493698011507,
+          "control_marginal_wasserstein1": 0.44538758735735096
+        },
+        "no_response": {
+          "mean_rmse": 0.36852181768774495,
+          "delta_rmse_all": 0.3178467566114371,
+          "delta_rmse_target": 0.22281901041666666,
+          "target_effect_mae": 0.22281901041666666,
+          "delta_rmse_non_target": 0.31784747657299883,
+          "treated_marginal_wasserstein1": 0.39093271891276044,
+          "control_marginal_wasserstein1": 0.38829803466796875
+        }
+      }
+    },
+    {
+      "time": 1,
+      "unique_held_conditions": 16,
+      "score_rows_per_model": 48,
+      "metrics": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.37314078081549873,
+          "delta_rmse_all": 0.32215369953619283,
+          "delta_rmse_target": 0.2542020174223311,
+          "target_effect_mae": 0.2542020174223311,
+          "delta_rmse_non_target": 0.321938521801654,
+          "treated_marginal_wasserstein1": 0.3952750078021385,
+          "control_marginal_wasserstein1": 0.3931376139322917
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.5117479993493687,
+          "delta_rmse_all": 0.3263485731739573,
+          "delta_rmse_target": 0.4272038634403543,
+          "target_effect_mae": 0.4272038634403543,
+          "delta_rmse_non_target": 0.32197057060706724,
+          "treated_marginal_wasserstein1": 0.5380739895016404,
+          "control_marginal_wasserstein1": 0.5391574434716845
+        },
+        "no_response": {
+          "mean_rmse": 0.37781879487466297,
+          "delta_rmse_all": 0.33214090623999976,
+          "delta_rmse_target": 0.6389973958333334,
+          "target_effect_mae": 0.6389973958333334,
+          "delta_rmse_non_target": 0.321938521801654,
+          "treated_marginal_wasserstein1": 0.39617156982421875,
+          "control_marginal_wasserstein1": 0.3931376139322917
+        }
+      }
+    },
+    {
+      "time": 2,
+      "unique_held_conditions": 16,
+      "score_rows_per_model": 48,
+      "metrics": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.36811086931758114,
+          "delta_rmse_all": 0.32119820959600526,
+          "delta_rmse_target": 0.34144270233743396,
+          "target_effect_mae": 0.34144270233743396,
+          "delta_rmse_non_target": 0.31871512362319704,
+          "treated_marginal_wasserstein1": 0.3951172177667888,
+          "control_marginal_wasserstein1": 0.3929392496744792
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.5988434742188757,
+          "delta_rmse_all": 0.32796356863836557,
+          "delta_rmse_target": 0.5459221475611713,
+          "target_effect_mae": 0.5459221475611713,
+          "delta_rmse_non_target": 0.3193962615655322,
+          "treated_marginal_wasserstein1": 0.604802317565683,
+          "control_marginal_wasserstein1": 0.6088643916853694
+        },
+        "no_response": {
+          "mean_rmse": 0.41118198036328474,
+          "delta_rmse_all": 0.3790864648284667,
+          "delta_rmse_target": 1.5947265625,
+          "target_effect_mae": 1.5947265625,
+          "delta_rmse_non_target": 0.31871512362319704,
+          "treated_marginal_wasserstein1": 0.4073232014973958,
+          "control_marginal_wasserstein1": 0.3929392496744792
+        }
+      }
+    },
+    {
+      "time": 4,
+      "unique_held_conditions": 16,
+      "score_rows_per_model": 48,
+      "metrics": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.37005686787212283,
+          "delta_rmse_all": 0.3328455255897154,
+          "delta_rmse_target": 0.41133174272739587,
+          "target_effect_mae": 0.41133174272739587,
+          "delta_rmse_non_target": 0.32942231073768613,
+          "treated_marginal_wasserstein1": 0.40037252339782614,
+          "control_marginal_wasserstein1": 0.394989013671875
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.746475734190278,
+          "delta_rmse_all": 0.34747257483649885,
+          "delta_rmse_target": 0.7246246910710852,
+          "target_effect_mae": 0.7246246910710852,
+          "delta_rmse_non_target": 0.3319781135415893,
+          "treated_marginal_wasserstein1": 0.711173785704171,
+          "control_marginal_wasserstein1": 0.7125736663557513
+        },
+        "no_response": {
+          "mean_rmse": 0.4752199234801207,
+          "delta_rmse_all": 0.45531342882113607,
+          "delta_rmse_target": 2.4622395833333335,
+          "target_effect_mae": 2.4622395833333335,
+          "delta_rmse_non_target": 0.32942231073768613,
+          "treated_marginal_wasserstein1": 0.4237874348958333,
+          "control_marginal_wasserstein1": 0.394989013671875
+        }
+      }
+    },
+    {
+      "time": 8,
+      "unique_held_conditions": 16,
+      "score_rows_per_model": 48,
+      "metrics": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.3800689543948717,
+          "delta_rmse_all": 0.3406734018699061,
+          "delta_rmse_target": 0.5577676708193369,
+          "target_effect_mae": 0.5577676708193369,
+          "delta_rmse_non_target": 0.3330541477460071,
+          "treated_marginal_wasserstein1": 0.40583097941341534,
+          "control_marginal_wasserstein1": 0.39787546793619794
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.992563909530849,
+          "delta_rmse_all": 0.37335481826700545,
+          "delta_rmse_target": 0.9461044894753551,
+          "target_effect_mae": 0.9461044894753551,
+          "delta_rmse_non_target": 0.3506658801391687,
+          "treated_marginal_wasserstein1": 0.8884300888274753,
+          "control_marginal_wasserstein1": 0.8822505736797884
+        },
+        "no_response": {
+          "mean_rmse": 0.5081785698718574,
+          "delta_rmse_all": 0.49084899998376885,
+          "delta_rmse_target": 2.8343098958333335,
+          "target_effect_mae": 2.8343098958333335,
+          "delta_rmse_non_target": 0.3330541477460071,
+          "treated_marginal_wasserstein1": 0.43423207600911456,
+          "control_marginal_wasserstein1": 0.39787546793619794
+        }
+      }
+    },
+    {
+      "time": 64,
+      "unique_held_conditions": 16,
+      "score_rows_per_model": 48,
+      "metrics": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.3709807520393122,
+          "delta_rmse_all": 0.33849650187468,
+          "delta_rmse_target": 0.5309533262957683,
+          "target_effect_mae": 0.5309533262957683,
+          "delta_rmse_non_target": 0.3310461189148633,
+          "treated_marginal_wasserstein1": 0.39888980259713175,
+          "control_marginal_wasserstein1": 0.3928731282552083
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 2.3497976053842495,
+          "delta_rmse_all": 0.4684875342841752,
+          "delta_rmse_target": 1.8805760304109207,
+          "target_effect_mae": 1.8805760304109207,
+          "delta_rmse_non_target": 0.39033460657196944,
+          "treated_marginal_wasserstein1": 1.9401561437361377,
+          "control_marginal_wasserstein1": 1.9345432849010127
+        },
+        "no_response": {
+          "mean_rmse": 0.5000671302047861,
+          "delta_rmse_all": 0.48640845327447996,
+          "delta_rmse_target": 2.81103515625,
+          "target_effect_mae": 2.81103515625,
+          "delta_rmse_non_target": 0.3310461189148633,
+          "treated_marginal_wasserstein1": 0.4270070393880208,
+          "control_marginal_wasserstein1": 0.3928731282552083
+        }
+      }
+    }
+  ]
+}

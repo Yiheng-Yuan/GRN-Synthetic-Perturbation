@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Callable
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 import hashlib
 import json
 import math
@@ -38,6 +38,7 @@ class PilotConfig:
     target_weight: float = 1.0
     seed: int = 20261022
     fit_times: tuple[float, ...] = (0.25, 4.0)
+    condition_microbatch: int | None = None
 
     def __post_init__(self):
         for name in ("updates", "conditions_per_update", "cells", "projections", "hidden"):
@@ -46,6 +47,10 @@ class PilotConfig:
                 raise ValueError(f"{name} must be a positive integer")
         if self.cells < 2 or self.hidden < 2:
             raise ValueError("At least two cells and hidden units are required")
+        if (self.condition_microbatch is not None and
+                (isinstance(self.condition_microbatch, bool) or
+                 not isinstance(self.condition_microbatch, int) or self.condition_microbatch < 1)):
+            raise ValueError("condition_microbatch must be a positive integer or None")
         if isinstance(self.seed, bool) or not isinstance(self.seed, int) or self.seed < 0:
             raise ValueError("seed must be a nonnegative integer")
         for name in ("step", "learning_rate"):
@@ -164,16 +169,79 @@ def _training_losses(pred_t, pred_c, observed_t, observed_c, effects,
     }
 
 
+def _checkpoint_context(baseline, observations, config, device, metadata):
+    """Fingerprint only fit inputs; the third repeat never enters fitting."""
+    digest = hashlib.sha256()
+    array = np.ascontiguousarray(baseline, dtype=np.float32)
+    digest.update(str(array.shape).encode())
+    digest.update(array.tobytes())
+    for key in sorted(observations, key=lambda c: (c.time, c.target, c.dose)):
+        digest.update(json.dumps([key.target, key.dose, key.time]).encode())
+        snapshot = observations[key]
+        for values in (snapshot.fit_treated, snapshot.fit_control):
+            array = np.ascontiguousarray(values, dtype=np.float32)
+            digest.update(str(array.shape).encode())
+            digest.update(array.tobytes())
+    runtime = {"torch": str(torch.__version__), "numpy": np.__version__,
+               "python": platform.python_version(), "machine": platform.machine()}
+    if torch.device(device).type == "cuda":
+        runtime.update(cuda=torch.version.cuda, cudnn=torch.backends.cudnn.version(),
+                       gpu=torch.cuda.get_device_name(device),
+                       capability=torch.cuda.get_device_capability(device))
+    # Normalize tuples and JSON primitives identically in fresh/resumed runs.
+    return json.loads(json.dumps({"config": asdict(config), "device": str(device),
+                                 "fit_input_sha256": digest.hexdigest(),
+                                 "learner_sha256": _sha256(Path(__file__)),
+                                 "runtime": runtime,
+                                 "metadata": metadata}, allow_nan=False))
+
+
+def _load_training_checkpoint(path, context, updates):
+    """Only load trusted local checkpoints; refuse incompatible continuations."""
+    payload = torch.load(path, map_location="cpu", weights_only=True)
+    if payload.get("schema") != "q1-training-v1" or payload.get("context") != context:
+        raise ValueError("training checkpoint is incompatible with config, data, source or device")
+    completed, history = payload.get("completed_updates"), payload.get("history")
+    if (isinstance(completed, bool) or not isinstance(completed, int) or
+            not 0 <= completed <= updates or not isinstance(history, list) or len(history) != completed):
+        raise ValueError("training checkpoint has invalid completed-update history")
+    times = context["config"]["fit_times"]
+    for index, row in enumerate(history):
+        if (row.get("update") != index + 1 or row.get("time") != times[index % len(times)] or
+                any(not isinstance(row.get(name), (float, int)) or not math.isfinite(row[name])
+                    for name in ("loss", "distribution", "control", "effect", "target_effect"))):
+            raise ValueError("training checkpoint has invalid completed-update history")
+    return payload
+
+
+def _save_training_checkpoint(path, context, model, optimizer, rng, directions, history, device):
+    """Atomic replacement leaves the last completed update usable after failure."""
+    payload = {"schema": "q1-training-v1", "context": context,
+               "completed_updates": len(history), "history": history,
+               "model": model.state_dict(), "optimizer": optimizer.state_dict(),
+               "numpy_rng": rng.bit_generator.state, "torch_rng": torch.get_rng_state(),
+               "cuda_rng": torch.cuda.get_rng_state_all() if torch.device(device).type == "cuda" else [],
+               "directions": directions.detach().cpu()}
+    temporary = path.with_name(path.name + ".tmp")
+    torch.save(payload, temporary)
+    temporary.replace(path)
+
+
 def fit_pilot(baseline_fit: np.ndarray,
               observations: dict[Condition, ReplicatedSnapshot], *,
               config: PilotConfig = PilotConfig(), device: str = "cpu",
-              on_update: Callable[[dict], None] | None = None) -> tuple[LatentPerturbationODE, list[dict]]:
+              on_update: Callable[[dict], None] | None = None,
+              checkpoint_path: Path | None = None, checkpoint_every: int = 0,
+              resume: bool = False, checkpoint_metadata: dict | None = None
+              ) -> tuple[LatentPerturbationODE, list[dict]]:
     """Fixed-budget fitting on explicitly allowed times and fit-only targets.
 
     The population loss has no cell-row correspondence. Finite minibatch
     resampling need not be identical after reordering the input. Third
     repeats are never read. Predicted arms share initial states only to
     reduce Monte Carlo variance, not to claim observed cells are paired.
+    Condition microbatches accumulate their condition-weighted losses before
+    one clipping/Adam step; cell counts and the effective update stay fixed.
     """
     baseline_fit = np.asarray(baseline_fit, dtype=np.float32)
     if (baseline_fit.ndim != 2 or min(baseline_fit.shape) < 2 or
@@ -182,6 +250,14 @@ def fit_pilot(baseline_fit: np.ndarray,
     n_genes = baseline_fit.shape[-1]
     if not observations or any(c.target is None or c.time not in config.fit_times for c in observations):
         raise ValueError("pilot fitting accepts only targeted observations at configured fit_times")
+    if (isinstance(checkpoint_every, bool) or not isinstance(checkpoint_every, int) or checkpoint_every < 0 or
+            (checkpoint_every and checkpoint_path is None) or (resume and checkpoint_path is None)):
+        raise ValueError("checkpoint_every must be nonnegative and checkpoint/resume needs checkpoint_path")
+    checkpoint_path = Path(checkpoint_path) if checkpoint_path is not None else None
+    if checkpoint_path is not None and not checkpoint_path.parent.is_dir():
+        raise ValueError("checkpoint parent must already exist")
+    if checkpoint_path is not None and checkpoint_path.exists() and not resume:
+        raise ValueError("existing training checkpoint requires explicit resume")
     torch.manual_seed(config.seed)
     rng = np.random.default_rng(config.seed)
     model = LatentPerturbationODE(n_genes, config.hidden).to(device)
@@ -206,8 +282,22 @@ def fit_pilot(baseline_fit: np.ndarray,
     directions = F.normalize(torch.randn(n_genes, config.projections, device=device), dim=0)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
     history = []
+    context = (_checkpoint_context(baseline_fit, observations, config, device, checkpoint_metadata)
+               if checkpoint_path is not None else None)
+    if resume:
+        saved = _load_training_checkpoint(checkpoint_path, context, config.updates)
+        model.load_state_dict(saved["model"], strict=True)
+        optimizer.load_state_dict(saved["optimizer"])
+        directions = saved["directions"].to(device)
+        history = saved["history"]
+        rng.bit_generator.state = saved["numpy_rng"]
+        torch.set_rng_state(saved["torch_rng"])
+        if torch.device(device).type == "cuda":
+            if len(saved["cuda_rng"]) != torch.cuda.device_count():
+                raise ValueError("training checkpoint CUDA device count changed")
+            torch.cuda.set_rng_state_all(saved["cuda_rng"])
     model.train()
-    for update in range(config.updates):
+    for update in range(len(history), config.updates):
         # Equal update frequency per time, including the finite long endpoint.
         duration = config.fit_times[update % len(config.fit_times)]
         pool = groups[duration]
@@ -216,30 +306,44 @@ def fit_pilot(baseline_fit: np.ndarray,
         indices = rng.integers(0, len(start), (batch, config.cells))
         initial_counts = start[torch.as_tensor(indices, device=device)]
         noise = torch.randn(initial_counts.shape, device=device)
-        initial = model.initial_state(initial_counts, noise)
         intervention = torch.zeros_like(initial_counts)
         for index, key in enumerate(chosen):
             intervention[index, :, key.target] = key.dose
-        joint_initial = torch.cat((initial, initial), dim=0)
-        joint_input = torch.cat((intervention, torch.zeros_like(intervention)), dim=0)
-        prediction = model.decode(model.integrate(joint_initial, joint_input, duration, step=config.step))
-        pred_t, pred_c = prediction[:batch], prediction[batch:]
         observed_t, observed_c, effects = _observed_batch(
             chosen, treated, control, rng, config.cells, device)
         target = torch.tensor([key.target for key in chosen], device=device)
-        losses = _training_losses(pred_t, pred_c, observed_t, observed_c, effects,
-                                  target, scale, directions)
-        loss = (losses["distribution"] + losses["control"]
-                + config.effect_weight * losses["effect"]
-                + config.target_weight * losses["target_effect"])
-        if not torch.isfinite(loss):
-            raise RuntimeError("nonfinite training loss; no successful training result may be reported")
         optimizer.zero_grad(set_to_none=True)
-        loss.backward()
+        totals = {name: 0.0 for name in ("loss", "distribution", "control", "effect", "target_effect")}
+        microbatch = config.condition_microbatch or batch
+        for offset in range(0, batch, microbatch):
+            end = min(batch, offset + microbatch)
+            part = slice(offset, end)
+            count, weight = end - offset, (end - offset) / batch
+            # Re-encode per chunk: sharing an encoder graph across backward()
+            # calls would retain the long integration graph or reuse it unsafely.
+            initial = model.initial_state(initial_counts[part], noise[part])
+            joint_initial = torch.cat((initial, initial), dim=0)
+            inputs = intervention[part]
+            joint_input = torch.cat((inputs, torch.zeros_like(inputs)), dim=0)
+            prediction = model.decode(model.integrate(joint_initial, joint_input, duration, step=config.step))
+            losses = _training_losses(prediction[:count], prediction[count:], observed_t[part],
+                                      observed_c[part], effects[part], target[part], scale, directions)
+            loss = (losses["distribution"] + losses["control"]
+                    + config.effect_weight * losses["effect"]
+                    + config.target_weight * losses["target_effect"])
+            if not torch.isfinite(loss):
+                raise RuntimeError("nonfinite training loss; no successful training result may be reported")
+            (weight * loss).backward()
+            totals["loss"] += weight * float(loss.detach())
+            for name, value in losses.items():
+                totals[name] += weight * float(value.detach())
+            del prediction, losses, loss, initial, joint_initial, joint_input
         nn.utils.clip_grad_norm_(model.parameters(), 5.0, error_if_nonfinite=True)
         optimizer.step()
-        history.append({"update": update + 1, "time": duration, "loss": float(loss.detach()),
-                        **{name: float(value.detach()) for name, value in losses.items()}})
+        history.append({"update": update + 1, "time": duration, **totals})
+        if checkpoint_path is not None and (update + 1 == config.updates or
+                checkpoint_every and (update + 1) % checkpoint_every == 0):
+            _save_training_checkpoint(checkpoint_path, context, model, optimizer, rng, directions, history, device)
         if on_update is not None:
             on_update(history[-1])
     model.eval()
@@ -298,6 +402,7 @@ def _prepare_experiment(args):
         data = load_opened_initial(args.archive, args.prefix)
         fitting, held = split_fit_interpolation(data)
         config = PilotConfig(updates=args.updates or 400, seed=args.seed)
+    config = replace(config, condition_microbatch=getattr(args, "condition_microbatch", None))
     return data, fitting, held, config
 
 
@@ -407,18 +512,60 @@ def _run_experiment(args, data, fitting, held, config):
             "source_snapshot": {"directory": "source_snapshot/grn_experiment",
                                 "files": snapshot_hashes,
                                 "scope": "learner and public protocol sources only; not Python or installed dependencies"}}
-    _write_json(args.output / "run_plan.json", plan)
-    _snapshot_sources(args.output, snapshot_hashes)
+    checkpoint_every = getattr(args, "checkpoint_every", 0)
+    resume = getattr(args, "resume", False)
+    checkpoint_path = args.output / "training_checkpoint.pt" if checkpoint_every or resume else None
+    plan["training_checkpoint"] = {"file": "training_checkpoint.pt" if checkpoint_path else None,
+                                   "every_updates": checkpoint_every,
+                                   "scope": "completed optimizer updates; resume requires identical registration"}
+    # Round-trip tuples just as the saved plan does, before equality checks.
+    plan = json.loads(json.dumps(plan, allow_nan=False))
+    previous_history = []
+    if resume:
+        if json.loads((args.output / "run_plan.json").read_text()) != plan:
+            raise ValueError("resume run_plan differs from current config, data provenance or source")
+        for name, checksum in snapshot_hashes.items():
+            if _sha256(args.output / "source_snapshot" / "grn_experiment" / name) != checksum:
+                raise ValueError(f"resume source snapshot mismatch: {name}")
+        context = _checkpoint_context(baseline, fitting, config, args.device, plan)
+        previous_history = _load_training_checkpoint(checkpoint_path, context, config.updates)["history"]
+    else:
+        _write_json(args.output / "run_plan.json", plan)
+        _snapshot_sources(args.output, snapshot_hashes)
     started = time.monotonic()
-    with (args.output / "progress.jsonl").open("w") as progress:
-        def log_update(row):
-            progress.write(json.dumps(row, allow_nan=False) + "\n")
-            progress.flush()
-            if row["update"] == 1 or row["update"] % 60 == 0:
-                print(json.dumps({"update": row["update"], "total": config.updates,
-                                  "loss": row["loss"], "seconds": round(time.monotonic() - started, 2)}), flush=True)
+    progress = None
+
+    def open_progress():
+        # A failed update after the last checkpoint is replayed, never counted
+        # twice. Regenerate the log from the validated checkpoint history.
+        stream = (args.output / "progress.jsonl").open("w")
+        for row in previous_history:
+            stream.write(json.dumps(row, allow_nan=False) + "\n")
+        return stream
+
+    def log_update(row):
+        nonlocal progress
+        # Delay writes until checkpoint model/optimizer/RNG restoration and
+        # a complete update succeed. An invalid resume leaves files untouched.
+        if progress is None:
+            progress = open_progress()
+        progress.write(json.dumps(row, allow_nan=False) + "\n")
+        progress.flush()
+        if row["update"] == 1 or row["update"] % 60 == 0:
+            print(json.dumps({"update": row["update"], "total": config.updates,
+                              "loss": row["loss"], "seconds": round(time.monotonic() - started, 2)}), flush=True)
+    try:
         model, history = fit_pilot(baseline, fitting, config=config,
-                                   device=args.device, on_update=log_update)
+                                   device=args.device, on_update=log_update,
+                                   checkpoint_path=checkpoint_path, checkpoint_every=checkpoint_every,
+                                   resume=resume, checkpoint_metadata=plan)
+        if progress is None:
+            progress = open_progress()  # All updates were already checkpointed.
+    finally:
+        if progress is not None:
+            progress.close()
+    if resume and (args.output / "failure.json").is_file():
+        (args.output / "failure.json").rename(args.output / f"failure-before-resume-{time.time_ns()}.json")
     # Freeze the fitted weights before any held-target scoring.
     torch.save({"state_dict": model.cpu().state_dict(), "n_genes": model.n_genes,
                 "hidden": config.hidden, "config": asdict(config),
@@ -439,6 +586,8 @@ def _run_experiment(args, data, fitting, held, config):
               "training_device": args.device, "evaluation_device": "cpu", "torch": torch.__version__,
               "numpy": np.__version__, "python": platform.python_version(), "machine": platform.machine(),
               "seconds": time.monotonic() - started, "parameter_count": sum(p.numel() for p in model.parameters()),
+              "resumed_from_update": len(previous_history) if resume else None,
+              "seconds_scope": "this process only; excludes any prior interrupted attempts",
               "held_out_responses_and_controls_used_for_fitting": False,
               "loss_by_time": loss_by_time, "metrics": metrics,
               "held_metrics_by_target": _summarize_scores([r for r in scores if r["split"].startswith("held")], group_by="target"),
@@ -480,18 +629,31 @@ def main(argv=None) -> int:
     parser.add_argument("--split-seed", type=int, default=20261022)
     parser.add_argument("--device", choices=("cpu", "mps", "cuda"), default="cpu")
     parser.add_argument("--threads", type=int, default=2)
+    parser.add_argument("--condition-microbatch", type=int,
+                        help="conditions per backward pass; effective update size and cells are unchanged")
+    parser.add_argument("--checkpoint-every", type=int, default=0,
+                        help="save resumable optimizer/RNG state every N updates (0 disables checkpoints)")
+    parser.add_argument("--resume", action="store_true",
+                        help="continue the same registered output from its last completed-update checkpoint")
     args = parser.parse_args(argv)
-    if args.output.exists():
+    if args.output.exists() and not args.resume:
         parser.error("output must be a new directory; previous runs are never overwritten")
+    if args.resume and (not args.output.is_dir() or (args.output / "report.json").exists()):
+        parser.error("resume requires an existing unfinished run directory")
     if args.threads < 1 or args.split_seed < 0 or (args.updates is not None and args.updates < 1):
         parser.error("threads/updates must be positive and split-seed nonnegative")
+    if args.checkpoint_every < 0 or (args.condition_microbatch is not None and args.condition_microbatch < 1):
+        parser.error("checkpoint-every must be nonnegative and condition-microbatch positive")
     torch.set_num_threads(args.threads)
     data, fitting, held, config = _prepare_experiment(args)
-    args.output.mkdir(parents=True)
+    if not args.resume:
+        args.output.mkdir(parents=True)
     try:
         return _run_experiment(args, data, fitting, held, config)
     except Exception as error:
-        _write_json(args.output / "failure.json", {"status": "failed", "error": repr(error)})
+        # Incompatible resumes are read-only: preserve all prior evidence.
+        if not args.resume:
+            _write_json(args.output / "failure.json", {"status": "failed", "error": repr(error)})
         raise
 
 
