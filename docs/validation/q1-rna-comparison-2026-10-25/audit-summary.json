@@ -1,0 +1,2263 @@
+{
+  "archive": {
+    "file": "q1-rna-comparison-seed20261022.tar",
+    "sha256": "dd8f2b0158aa46b05d0e22584799b3698375e2946512491241085f38865ce608",
+    "bytes": 49340416,
+    "regular_files": 35
+  },
+  "data": {
+    "phase": "development",
+    "schema": "scmultisim-q1-modular-v1",
+    "manifest_sha256": "7ce56f42b9b3ebe3206cb6591dba2536dfdb6511128cfce143a83751c97d50de",
+    "verified_observation_sha256": {
+      "observations/q1/00579107266f2b150f656177.npz": "942fcf5cbf69fce929203f7c0fb82bb7965b39b732f95cd5a69455654a8f9f1a",
+      "observations/q1/00a7b4d86f58bd77ff0d4f2b.npz": "106a09b17d826f335649084f5aa69dee0df02f6d6af28778e5f8a9cd5b804d01",
+      "observations/q1/00cfdb550084b360e25b0568.npz": "25bfdb4aefd8e6f0eef09b9503e3cd89e3ebb2b5ae130b776de035d06b99c789",
+      "observations/q1/01d7b8336b909e5c92740478.npz": "c78d2c0cad498be935c14b62a50147fee54284a8a7e563706bca296f337e0240",
+      "observations/q1/02fad14a1e960c79c8478b17.npz": "cb3c28488561bdc273c0d522b13230f2d571a4dd067d133cb75d452dc47c6a4c",
+      "observations/q1/0329615868bb358978300a58.npz": "4e5562e3b4cbbf1fc6bd81ba01f4767fd4073ce65ee75fee4fb1b4b25cac8f51",
+      "observations/q1/046bae6f23c73ce0bb6c012f.npz": "e06343797ea0a40574f3e63a6dabd4d36fb261cbc147422b75f82e4067e2a013",
+      "observations/q1/048c63ed08b5ca648e003b50.npz": "5e52c8dd3e274aa7b4d331764edbf3c5b784b5131e246916f67d311dcae3a456",
+      "observations/q1/0555a4059de8b5931d148b7f.npz": "81ea8c8716ebe0fba7846dab346aa580450e1a38bb8f388f6543bbba5cf229de",
+      "observations/q1/07517d0cda9ffca6f9fe49a7.npz": "a11e1a55790ed466453c0a5e92727131a421c98955198f1dba1f8802ee7611d7",
+      "observations/q1/07d4e7e093221a8d51a92ad4.npz": "e6805e909879f9c21ab40c7ca9c1476399c0a468a0b2e5802268a043c2473f16",
+      "observations/q1/0946c489d3168fe398be7ac5.npz": "ebbd65211e0d9c5211d36cbdb42b7a523a183cd5723b1c27f34b95414585ff06",
+      "observations/q1/09b8390f91e7b46496f10a29.npz": "7ebde6a67a5baae6d7a14e016635940c7d10b08de0844e4f97e3f6c58819df57",
+      "observations/q1/09d53fb756950ca7effdde64.npz": "63de0713057820a5f0d4d40445e2b41d60f5e7975cdac74f58e3e60fcbcf163d",
+      "observations/q1/0b15f468338e38f471330f23.npz": "3553d2a42cf626a6459c35bf1d44e122d6d8e71eaeb4c145582e4cf7165d09b8",
+      "observations/q1/0be632d954bb5bf938f32794.npz": "9edb579268c7dfcd1fd25bccbab30d17d1af8e3f60b00e9b7eff523045365c8a",
+      "observations/q1/0d08cfa11d3166fa9c148021.npz": "0dcb654e595d4be4e800fb1adc719f690fd7578bc7d2b969de388cfd8a5ecd49",
+      "observations/q1/0d219f6bd136a6bfab9b96b4.npz": "7e98b10f8277e374e4e4e2b1a45c82a160826302af42b5bd5c9c139c7a46cf60",
+      "observations/q1/0d38c6e4ce1e70fe66a8fc13.npz": "4ebf51930b91a017add6193c77396d858b77068fa85f14504497126cb7702622",
+      "observations/q1/0dbc991624e3683a47a36ff9.npz": "cbcb37b0c4bdd70c5e09a167df472a41bb75cca448cb70b02bec9aa2bbe72e6b",
+      "observations/q1/0e21e0e265e4e815fe603b8c.npz": "75143958c273908fb7988d3debce0f3d3cb59f93e4783ac748b245c1721ef396",
+      "observations/q1/11da4aa57999d1415d6a364d.npz": "7f6d0473ff92dc0b732dc9baa073d567204e05e9d77802ac975cfcc0c3aff3d9",
+      "observations/q1/13f6a41157af8ee933978b9a.npz": "f67742d1a9bd6252c1057a1efec60062bb73f51dae8ddf2f2e3627c2a9d63553",
+      "observations/q1/141ecb43b1538e7142db6045.npz": "9a01db473f1102c37fcca2d71a6e55098e8dcea805d7a83e94dc89f4d3dacb6f",
+      "observations/q1/15fe08ad56519b2177e3a881.npz": "db0e6d5fdb9011967cfa1ee8666896d67498ddc325f05f0ca68ff1ff38a60de1",
+      "observations/q1/1799a481ceea1ad6768b17ab.npz": "52d4d59ba7063620afc2a17e47dfd94d66d63ea0b5720851c28d1ac5ac6cd620",
+      "observations/q1/17ea9dff32dea20a1e5fab8f.npz": "61911a4c127f86e8b03290fc07e7003dd4752bed9d3dce6641b7d34c0f6f2152",
+      "observations/q1/17ebc0a39a9133d5d086d587.npz": "74e2fa858b6fccd1ab65d8712e516791e34ea91584ce5fc20e8cf64c26178b52",
+      "observations/q1/19d59ad8882d8215adc994d5.npz": "2cc8dbba62afd53af3f35b85a495dd6adc75c563a7c81646b771d931d495af99",
+      "observations/q1/1c45eb5b8b13bbdf75663b76.npz": "ee9a5443fba4873cd5e1f6f1caffa3cefd8768fa99cf0b28d4db0c4639b17cae",
+      "observations/q1/1dcf5a298078e509c9ed20db.npz": "14175b1a88f083fa2d711927693ccf956f086824330945382f0631e207767301",
+      "observations/q1/1f14d140b92a1584aa97e03e.npz": "bd4e903f6f1368f90eacf712c4dc96a56b3c4b2043bc6fd230719f554531768c",
+      "observations/q1/1fe4aacf6db065081b8cb061.npz": "fe5c52e60a48a4a5bff325b8ea8c747ae4b75149f1d575c900c580aab67190e9",
+      "observations/q1/21c01440153afc323b999b86.npz": "7b829eb476ecd3b2509bd685bc164a08c81f49a4b58092fc0c44395e97dd65e2",
+      "observations/q1/2404208e921f99c26c5db816.npz": "1ef1c5830600e837c5538b30f3dcfdac298bdb5e886ef1415fb4d5406fe3a3ec",
+      "observations/q1/24fb55c0c7e70a3b6fdead4f.npz": "1e446096019d4057220dbb9b22bf8db2c6f750524058f6ac50dd998ab7773cf8",
+      "observations/q1/2562daf8ef9568d8cc5fe51f.npz": "1dbfb16e55fb753a4fdbb64f852d771b6be7126f34a3dc412b4707ddeb676527",
+      "observations/q1/269e707073023122336c4dd0.npz": "daf4006b8f3b886deb27a5a4f7c921f31a4c3da4c9f0bb70569a05ce1a74cdbf",
+      "observations/q1/26ff3c50dbbb6e2a93e7aa90.npz": "6984d9fd8295d8f38bf0edc583beb6e770e99d592dfac4588ba9290aa0ce0617",
+      "observations/q1/27ae5ed0c5328de54d22b5a9.npz": "03224f2fab4aa1f83a78b06a9d863640d7062167e039a58a08ef04b5d0b81359",
+      "observations/q1/2817e14db995e919399d0441.npz": "f457221a09e71fbdec3536ed676b96abae9be95acb5833eb990c577e71efd051",
+      "observations/q1/282ac541944d52bb363c1e48.npz": "494e1511eca71c1e489eda2327a952932fc892ee5311e43addc5e6e614df5dce",
+      "observations/q1/2889a7c50061d63676339a1b.npz": "cf91a7579f937a00417dbc8f47c677e34a313a9808975cb41026e8ba2ddbb3d8",
+      "observations/q1/29a1168aa8e225fda847b860.npz": "ad1f73f564338f15f3cf0e7f97ccbe6d4c2cea6c89e0048c5d0a6ce6821a1cbb",
+      "observations/q1/29eace77c965d3937ea00a02.npz": "bf1cba968b1a1fb1395a4020b679bd36bd84b5993d75187113ef2b0443b9a5c4",
+      "observations/q1/2aef38891618e95721f192aa.npz": "0dab33cfdcf8d0303186ed0cb291047e262a9194945a81ad8f2f0a79b8d3e68b",
+      "observations/q1/2c4cdac235d6166c6b979c8d.npz": "98b519bf712deddd38a8c36a41b00bc38255f252058cd948f99ab35acda87c63",
+      "observations/q1/2fc87d383fc0557617b98d63.npz": "63f9d3aab202cc9ab485c9ba4a73731c0c3bac920a66b9d51d16d970bd86e909",
+      "observations/q1/30184c820bdf1988eed82838.npz": "ecd7163d79ecb26ed85b0a54952515ac3673915fb7b0c4848f87962280420d57",
+      "observations/q1/306e50bf9754baf99a76b42a.npz": "1383bc3d8f6eb60a89092794df3d147672688594420ab4779bd439022d368848",
+      "observations/q1/31ee15eebc33eb74fcf6c296.npz": "8f5c590448920b66200d9b9ef52ef68545c7adf993e76bd658b00688e8570a58",
+      "observations/q1/3338823c0d46d720a26775f7.npz": "c2c641a7033b664099548522b414f12ed26775244a7a17941cac60dd1d86dbfb",
+      "observations/q1/3386325e53a999909a26f1e1.npz": "5810fc9f3b58d9dffd3f465b2eca365a35c614b6c8c618a7d7d22c2dbbc72307",
+      "observations/q1/346a2087e785b627927a6b39.npz": "cb56efcf1f919d669c3b317d61c569577e72a1ced5ce7804351c3e649929e8f2",
+      "observations/q1/3657b56e7a36a6ff08145f3a.npz": "db72c578195880ed5684327a09223986674963b8bea82bc0830682ed1c0e52e5",
+      "observations/q1/37ce1c1ac9b18b80a9d87439.npz": "7ec8feffc782a567dbc593a05ed2aacfc6a1fcfca87e7ffede83702fe3effebb",
+      "observations/q1/384cb8ea6d58790c408d7f08.npz": "48886bbfecb8a2213963be64cf9e83b4af2a599dd8c6897ffaaf6e7010cb98b7",
+      "observations/q1/3857a1e8f4d8b99ec2dee6af.npz": "b2f7a08d720dfb03930bf9dc77eafc763c9b8c0681a29d87c0e0d24baa524a6c",
+      "observations/q1/3887542d9a5d8199614d1bad.npz": "143dbd1699fe929656ed150dee79f6d4c481a22bdffb682c0ce09c1bc88f2028",
+      "observations/q1/39c2b294addd9727949b3689.npz": "52127d3eaa3c1a935e4cfa266a584eb54bb4dd3f868deac57643f11ba6dd4ee6",
+      "observations/q1/3a327517f660c50b8da3fa2d.npz": "32202e7e3f9894d86c8ee6afb00a6679cdc7ff4158da4a5041ff5a479b004070",
+      "observations/q1/3a88f5a53d42c92536ae9fac.npz": "684915b928c1a850819c06130e4c6083321411b22f07b18b7d07395c7772689b",
+      "observations/q1/3ab82903ecf5eb07e577c9e2.npz": "334c1df2ae5fafd89469e660626a435a094369d1b7b0b800b318101f13134ab0",
+      "observations/q1/3b6608268ee476252be09b36.npz": "407f65e0b2827bc48aaca1d45fb676697e20e64b2cafff3202dacf18af16eb12",
+      "observations/q1/3caf86c1034e1208222683ea.npz": "9ff2c8ff5f83116efead5bd8f942ae4fbc548da5c47fca4317b30097ea3cc995",
+      "observations/q1/3d78492a79fcde7b7517bce5.npz": "1d4693c596ff1890c1c5d2f8a9e309c0615923f52b062e7adaf48792280cc0b7",
+      "observations/q1/3dabc56ed3433ecfe24e8d48.npz": "41bf20e0a0b531c2a1bd1343930b69198cae09e5a616ae9e1b929a33d216b8e7",
+      "observations/q1/3e68ada090d4d0736edd62ce.npz": "cc058ee8a81eb7b2a2c1f6eef9226e857ff59b36d3c15560e5503725a5e34ea8",
+      "observations/q1/404079772d18271c984f2ce3.npz": "4a72d5158aede6a09a2f907ec8f503bfcd0ac844358b562f83f0a5baba04b5e8",
+      "observations/q1/448d297bc99bc7a16618ac07.npz": "421c7ac16127b482fb9fc19ae2b97bdb92cac82b349904fdb3e805954e71691d",
+      "observations/q1/44dd2666fee7775db8f1ad90.npz": "28db277012ff98336777c18fe3ffa4c962059b55dbdd89c5210ed2e19f134fcb",
+      "observations/q1/44e152331191590a0fee8236.npz": "1db7873c13f7184eac4e01977fdfb972971431b0d492c07a00c5241489bac427",
+      "observations/q1/453f751a4cc1bb202d276722.npz": "9f9626201b038c30357a217fa9161d6fab2e27366ee48f37024b274dc2801a82",
+      "observations/q1/459cb48799a87e18a874aa23.npz": "a087858799e0351f6c8dda59a137824a3224ae7e6b2fe33dfd72ee2b2f5e7da0",
+      "observations/q1/45d0768eaf311eccd25d4c93.npz": "a990845527f9ee66b90f90cfc9247ded333fe020cc92f1b3f93a3358e5a61f0e",
+      "observations/q1/4879d04945b696d57bec79b0.npz": "8b8b801ff2fe357051efa06f31781f6c8579ba3862cfc863ee47042bd35b54e3",
+      "observations/q1/4984d8fd47c683636a7a8bb7.npz": "00ca2d9768f5891eaf0f4e145a1d1d7bb9b60b2506c367972dedb09ca5083f01",
+      "observations/q1/4a00d88d7418b3512d8e69ea.npz": "c4ca191720c7e8faf935b7ab602856134dbc7c450676427ed6d170d87b498704",
+      "observations/q1/4a353371eb9f64d5e2fe2bc7.npz": "fab0abfe34a91aa4bb2cd6133d9de1df84fd50c931cee026d735dbaf35de5c41",
+      "observations/q1/4a35aea26b09dff0f94e780f.npz": "6eadc0f7ad820843c9d92676b42f836fe72cd1ff19bc7e0623d8e6d0ba1a7a21",
+      "observations/q1/4acac0eeddce4c19b04100a7.npz": "a6d02e38498d3fd8041eebef4fa634bdd0db2dc728b43b249b33eba8364c0d9f",
+      "observations/q1/4b302727266befb1a0afd634.npz": "c10ba2db87d89ad66574dafd814bf673f4f9871217b117b9e7bc526e71307c2a",
+      "observations/q1/4b559fb1f96e8c52925cb486.npz": "4e3b55edd277e91d47f2a5eb64c5308d560a8b8a1ce801efb6d6405ecb0d9ee7",
+      "observations/q1/4c962ec8dc88558bdf01b4aa.npz": "13af1c51ad9e1f563655db154961e765f3c4bf43292d07a94bb08d3ce656fe1e",
+      "observations/q1/4c96fb1678f7e8bf872edf42.npz": "f31661548c3ca8328fe90d6d5dd5a04b86001f45a741aad519d2523599fd3e18",
+      "observations/q1/4c99a5f31f5d1ffa9d3a03e2.npz": "eb6e35f566129cefd4cf3e54d9ee31aa0687a54036f7060862b02ef3fb388cf5",
+      "observations/q1/4c9bc35824977703b0d0935e.npz": "38e352c283a7b2b0c7c6a245270a094ec281b82926dc949d125c98ba4acc4294",
+      "observations/q1/4d66c36e4fd2ee13e497a057.npz": "fca60783615c517d32962e2ced1c1824a3652476127d6aa6aefa7291e333cae6",
+      "observations/q1/4e604af63189e8361c489383.npz": "79f558a838b58e7f5a3bf3769f7e6025333291ef700e90b1262ac3f768a56b8d",
+      "observations/q1/4f54ceb6af1cf9dadeb4753c.npz": "06f467b3fd980bd2630acee7eb469990e914905b3f6611a95a161dda38503ea0",
+      "observations/q1/50ceef87c89253a1a2d0fe4a.npz": "454221b3d6dfe8b8d7a224bd6d2ab6dead30a6c284a1b6367069ea4db6d24cbf",
+      "observations/q1/52a4a845cedd3b4828462939.npz": "4895fbb74a6ade064be3c22a36918d2063236e6314c6d1b2dbedcbd759fda970",
+      "observations/q1/5397a98416eee89d11163df1.npz": "2365216b67deb10a8cefd1c8f8923699a763931ca9de69055d0fd14b66d1c06e",
+      "observations/q1/5423d8b3a65d4c926efe7078.npz": "d8f21ab3fef16df32ea786c2a3727f9f43b36c2fc6f37967df06cc28cf302098",
+      "observations/q1/55e43430a794d27ccfccf278.npz": "38282a07b0f2403e9f1daa6d5170f6f3fe07501cb318fb86886288a16db1c366",
+      "observations/q1/5693fbaf668e61bac1b0ebd8.npz": "592ff2ed5475819bbccd731c19457283e8fcc8ebbd74680725e51eb2d52829b1",
+      "observations/q1/58fb9ab8c413399263d00bff.npz": "f68dc55b05ab0c9bf2fb34e808771d671f0035098ec512a7b77d8ff69195c532",
+      "observations/q1/59ad327c9c7c7e1a46c5d706.npz": "cee1c81fde2bd516b7ac0505ba7d9b7bf61bf4ec8b962127e294d9ceab5e07d9",
+      "observations/q1/5a150cc5659559fa1870fa0c.npz": "6c749e0373f5ca8f76d3377acbcf16c08de244f98fa4705db817f559eca2116e",
+      "observations/q1/5a63057ff1848ba47afa5280.npz": "efb7ab8d40660484dd94678de039e6903fe538ce6c24ad81e1f1479ec6baba31",
+      "observations/q1/5ac89b7a95b708a05fa3215f.npz": "f2db95792f802c8433e6371b58640b37a27453f5b91f5cba56cbe26198568979",
+      "observations/q1/5afbeac20d168c92ec7325c7.npz": "a84463eabc9a344b82b3d803e5d95e87bca50515047e642cf1b4698fefe047c0",
+      "observations/q1/5b43126364bd8aa74b7968e4.npz": "a9725f341fcf0924d56bd67a687b3ee2c7c40ca4ab2c75958bdbcbedadd479b1",
+      "observations/q1/5b93e6c4dea1ff43ea3e2594.npz": "7baddf956936dbca04db3af9576ffd1eb5043fe779a7a1abde4bd8661262c94a",
+      "observations/q1/5b9aeeb7ed15fbf34a2b4523.npz": "6d2450a8835c3f3acc5752eecb0949ef5d6b61978f4eaea06bb2823389458884",
+      "observations/q1/5bd977e65d5b014cbaffe9f8.npz": "c5284019122f82b3e4b067454f2e0f2190698ef49ac074cca51ed03a244826e6",
+      "observations/q1/5d27a57dab69034b8a18cf90.npz": "06ecf322b1e4628b8db54ecf3fe3334ded6d3fbada5a32eb7188c7b577ba11f8",
+      "observations/q1/60c4edb1ac695a382af79fe1.npz": "adafbe6b95e47fb60e1ff18f4913ecb0d955074365733f3f812f1ed93602d3fc",
+      "observations/q1/610e61c0f9d061b4f496e151.npz": "9199119585a6c5bf2921b634e5cc7141d135ade7ea9521d70f3d087624cead7e",
+      "observations/q1/61c1ecd40b9495c2fada8259.npz": "95acdddb4aed832675db1e0ff6ebd85fc69ebc0f85665e308a4d6c49fee42e9f",
+      "observations/q1/6390bacee7a72c4986d3d6ee.npz": "421c8854e50df6bf6f1178664dfdb6460de795b68523071dfa0bf926fd45ae23",
+      "observations/q1/63d24900d78b5b133109801f.npz": "2e8d72c00914ac11f38d1c3f24bf43e06f363a33484c95ecde36128225cefb66",
+      "observations/q1/63f7c83fb306a1a21336d7e8.npz": "14ac0b4a17499c321ecb3f4af7f29d1604519ccd0d7abbe9a06672392eeae2eb",
+      "observations/q1/66296b897b31e8937267fd38.npz": "a306d3d1cc3f16b29a94106b7f3e3d9eb7569e9244f0c2fe6b28f766fc09204b",
+      "observations/q1/67e08d75f1f2e8611cb208bd.npz": "00ca0baf674c2c0d55038df1c52d477e6c9560f761b548dce3fd9a0c153dc23d",
+      "observations/q1/685c8ae98641e0ec95c23fef.npz": "10066205d921737890c26b4dacaa3d49c3f6fc2c84f4f83c01d551a8eeba3748",
+      "observations/q1/68d799f0803124816baec0dd.npz": "37560e566645cd3f9d1d022b61bb3c75293db4cc06a2293128fb62876e231db2",
+      "observations/q1/69127aeccbf20e37b8d8a1ce.npz": "b69e3ef0587847d540607eeb1b7f0e71f5250b5258037134208f1807d082a35f",
+      "observations/q1/6998a4f5b3b49a91bbe1fc6d.npz": "50be2da27c2ecd5b14f91e89b4cae35d5f1fad7a132cd7bfe28f9ea622df5c0a",
+      "observations/q1/69f62da644451ad87364a6a6.npz": "ed7f2e5ee70c3bcb195ea6e912105b6735364f127ed05cbdf1629f1506c86644",
+      "observations/q1/6a4eca4524d22fe3eecb36c4.npz": "de079c4186d5eda2c348e62571c58565fc94e8e2821119134b579fde46955d05",
+      "observations/q1/6b552d1ad0003b0b764313d7.npz": "1fcb9c535b48d21c73a2abf2fc884a4f3f2590b805cd2ce6c81b0b619ac71623",
+      "observations/q1/6cb356a078c6bb5e110b14dd.npz": "e1329980f18c2d683579c5c1e01af246e01531098c17ccab5aac3cbeb58d7947",
+      "observations/q1/6d277aa1a1c5b941d068926d.npz": "6cf92de179f2cdeda9c132dc0d8e2efcbf78f136189e2d7a06cb9f7a55ea5fda",
+      "observations/q1/6d62e594c91d31360fc6f430.npz": "3e24657c8db09ec314fb92975f29c520830c7b8bb7d38bc341d5c895900dffbc",
+      "observations/q1/6e3d19e9cf82d520d0acb715.npz": "830905374fd7bc2c9160b0f28f040e36c2a975388090df88a1fdadddb4a789d2",
+      "observations/q1/6e6941d1aee57a0446cfcf6f.npz": "98c30c4c4fbffa1e6d5186564c3c0a9bb522c27a7614801e31ca0e52fb83fb0b",
+      "observations/q1/6f5eb3aae2db6885d60be544.npz": "d231a8e60f76cfd485fb1629eee84388d0f83b5def63fab9a695a469b5fafd2d",
+      "observations/q1/7169a39132c27afd199170b1.npz": "5c8ba00507a218b5f799c95c358fe936d565f1aaca4a74d96768b6fd238bb5b1",
+      "observations/q1/72661c2c043448dc0c4e3a5f.npz": "0c3b3f0d1a5e3c1611f83bc562efc1af6467233e2ef824890be44c7c87b94670",
+      "observations/q1/72eafbf92d2207f3476db2a9.npz": "2b9840138921c2ff592e8244460f56a33554387e0581871d1f942cf1483fe26c",
+      "observations/q1/7517fd198aa2ffdd488f6b5c.npz": "47fecf7b276a330f8bf7e4f393abb4ae19ea432e2dfb26c34b3826c6de639e37",
+      "observations/q1/759001a168a1a9227807d76f.npz": "e56b4fdf7dd9e2f29415d99afee6b2aca99439495206a7023345550fd2d4e203",
+      "observations/q1/75cf1500e8bb49b4d833e401.npz": "104c83c662d0127b252b59a7da6a24b8a8b51e88519ec43477edef98f20bd043",
+      "observations/q1/7614c6c8eb9fdc6680008812.npz": "19520dcf2b9a0df154457b2c0893383b199c36d29e4565e8bfbc92dd7eb25b24",
+      "observations/q1/76a7392a701ac9aead21c9c2.npz": "60864c25957d4cd914f5f4c229e8dfc8e5ad13df44ee6e767fd5a885b4d75f92",
+      "observations/q1/775d6848881490618613d07c.npz": "661ff1b7edf68b1f1839dd0739c94f7edbc57b6ffc840b28c571b2240f1fa581",
+      "observations/q1/77dc3e0e178b6057e699a027.npz": "e12cf4ef6637397e908a11b4a22cce8b22b127d9d49f45565d51a4178768ab20",
+      "observations/q1/783ee18140fd9d0e9415361d.npz": "b0eacd0fa3e2d9b588e47fcc5fd4fb63330ee8dcbe19fff5eb01aedd9193f185",
+      "observations/q1/78dbc3dd39c38c0f2074d69c.npz": "5ea4991b2a8fdc1d0c9855c43ce7bcfad91f3410b94633d6a4a480e5e451bd65",
+      "observations/q1/7917a0538662cb0a094ce7f8.npz": "cf3af556127a94eb725b8f0642b3098a6f61acddb9195dc944eab32ae04ec4c2",
+      "observations/q1/7a46b00a783932bf11c63eb9.npz": "4212f4cdbd15512ad455a9e5fc65420a800fc7ee61a9b1116a6574107c84da63",
+      "observations/q1/7aaa6432497d56af0933f538.npz": "da3ef762e176bd5c242430d1810132b3798ee63ce8b34cc08b69474557224c19",
+      "observations/q1/7b42744a377731c3b3191f2b.npz": "068be7df52c2b414ea418b552d45f504f21e5a8414066afdad7b144992d254da",
+      "observations/q1/7bc2d22b891c4523137b88f5.npz": "a048703a8b42a4c0bbebe08df937fea3e22a8246da42238a3dc98ed4ad354b20",
+      "observations/q1/7d54c6cdeafa00900c7dba1e.npz": "5172594850930fbb0c55d3ea1d7b24776fedf06f469792726cedebabe8e5494b",
+      "observations/q1/7dc3452174c4d4ae302bb520.npz": "6bbb82c6f38aec13fffe1ebc0c1ad19a66a35664c04c0b586159915632f204c0",
+      "observations/q1/7e1b43debf2ddb728c3529a2.npz": "f4ee69f995cb856eb34ffdfc6babfa4510042bafc3ad7768ba0c7a3379796d20",
+      "observations/q1/813ba25cb0b6977064c9b7ab.npz": "1416f1094b053c3a063b6575d5f65475151b45af057c6192cc40d11cbf5c8053",
+      "observations/q1/82715bbb1431b637099f0c67.npz": "3fc1e289f9de6314735015b6b76e7198f2fee36404965e2c0202113fc51dd473",
+      "observations/q1/82cc7806e4af1aa4e539e1f7.npz": "9daafc6698611a1f54f1bce0a3a62a5db7d2251e67adc0713d3b5de4e0662082",
+      "observations/q1/8311d3b36690981638109131.npz": "b9497a56af3be3bbdf46c3d9c7aa76226b30a7d1cb700e880ab0d50d3ebcd43f",
+      "observations/q1/85c9df7acfb5fba062f8533b.npz": "bef065975113189373e330d24d14a68353d35239b509be93d86ad6f59bb0ffcf",
+      "observations/q1/883a64cc6c437ab58cfe6729.npz": "411b4ffb6645c55a922ec334bd2b16dcb2ac6af1f3bb8314acf8ba2686977cb8",
+      "observations/q1/89d40cecff7c932c0a22301a.npz": "e5ba45467c7dce0f21a87cbf7f3736442b20305a396145f469bcbc591a235b57",
+      "observations/q1/8a4add7027cdc4b08c1b85b2.npz": "bdd45fd10f90ebff9d95a61441ed02c6fe6e140da9d23c7d015656a59b893f93",
+      "observations/q1/8abbc3ed967144660e66c2fe.npz": "9169b3342b83bfd3853932a87b0b3a5875324c2a5b62bcc44d4d63f369c8aa48",
+      "observations/q1/8ac2c7137319e9477465dcd7.npz": "dc412da692c97b3d57e3fb18de74421ec70d32f9cb746ecd8a27d2eed0e6750f",
+      "observations/q1/8c4748ea22f8b2ab3f8f6702.npz": "c21ef46d8c830ad9674e844e3f88f3574584de78936cf16efe76ac1f060df717",
+      "observations/q1/8c9f1c4c2ba560e6d5afef46.npz": "046074fea62e105e2faee780efdbf2eff909272bae3e85ef827baeb5578d1812",
+      "observations/q1/8cf4b9148c0a357d007f001c.npz": "ccb6a517e8371171a9c685f40ecf4f6c71b47464d53d14129a750085b7052690",
+      "observations/q1/912335b92caf0aeb80444648.npz": "1bbb9ec5a3c2f1702c184981a37d493fc0b9ba4e6ecd68f458c28a183a416d4b",
+      "observations/q1/91a8897eef8e114274b2427d.npz": "0f38bd08e9ed493e23170ef4db247b7242e22b00babf1d36c92b4e94256a8ee6",
+      "observations/q1/91e9a8223ba71ccda12f9aa3.npz": "a49375be778fb742844a3e4f63d4db632d1b0c3c3d7ca39447e6e5aca605376d",
+      "observations/q1/94a07e55553e046f70476683.npz": "b2c13b3f0a6fd4dd4861ea4e65a25836f758aa14e23984425eab95c6d1567e6d",
+      "observations/q1/95ecb9d2621e89b47e300012.npz": "bdace1a3eabe8f558c9fc224413fe3d963ede01112faeb53d71d13fd0d34bc5f",
+      "observations/q1/97d25f6ee2a7103bb895ebb1.npz": "5de1009c3a3810316d902b7e9c5ce8ca485e0cc14bcfa4e1c059a08624ce0298",
+      "observations/q1/987af385116f5cf1c391d8aa.npz": "2712c84a16928cbb9bbdacf76d1ecf533e0cb63aaea35ad39d7f8b47f53dcf2d",
+      "observations/q1/9884bb722d817b961994815b.npz": "add556a2a426116aa0c96b3e2251726222b07d57dbba94a7e672a6bd1d619e70",
+      "observations/q1/995442dce725b8671e1664fa.npz": "7c71ef6fcf6bbed7e75f21cadab7642231359b914f1e4434043858d9832aa025",
+      "observations/q1/9a1d8bccef6f5c8329c7a429.npz": "f6a2dff8f407cdeba501065eeca71a4071c23fe201b51d3cee1d788381faf2ab",
+      "observations/q1/9ab5def1339e664a54992cd8.npz": "1ad288de2ce2b2b0ad0a2430ae91880de9e416e06394a8cb412cbc6638555672",
+      "observations/q1/9abfd416ea61c93904d2b362.npz": "219a5f1da2accf2bb94dcd51cef121ff9427d2fcecbdedaeb9a11572afc2d8a3",
+      "observations/q1/9b4a164fd5ea8b49d2c274f6.npz": "f14013e865dd6dae8bdf4ebf7cb3a8307c9a30bf6f59fc432aa1257fdc5b39d1",
+      "observations/q1/9baa288768cc31dca5ef5747.npz": "09b87486cb23e75afb2678d90de95bc1dd684cb6485440fcfdfcd12f5670b6c8",
+      "observations/q1/9bafe66219a741956b478ff1.npz": "9501246a12b75afb83bb176fff326801a3d53b17100c2e17309839c92679229a",
+      "observations/q1/9bbe70808968fc3dcafcbfb0.npz": "5ebcf9fde748b24ae8f3c2c5150476ff821502c38ed8d2ca83e3b6454445368c",
+      "observations/q1/9c75944f440c47b60ee85b95.npz": "610d780ee22c586695db4c5abbe3ec2e16091f954b700aeac8827960ff2da226",
+      "observations/q1/9d9ed8da67f4c283c6ab5767.npz": "715b95aabe0f7c0c24819c04c97b41ac674a8b7c14063b405b00d8ae32cdbbe3",
+      "observations/q1/9ee9b4001af23072fb935676.npz": "2ec3313cef06051b988c47541573812eeddf1369546c65444dba71a4f5d6c2f2",
+      "observations/q1/9f8c132310bd7272d77aa9fa.npz": "f17aeb36155cf5a15bfda48ff81878d3531f565676b5dad4ff95c97c40a0d004",
+      "observations/q1/a024f2587ab34795fafe65f7.npz": "9efb428368ad668b24d4a2620336c36ece17583466cd8eee9b94007db3f90267",
+      "observations/q1/a1099de990d45ab916cdcea4.npz": "1a736e5359c683a27c429cdd4e93750487b2e963ba0651b1e1d2213dc4215d3e",
+      "observations/q1/a28f204cdb68fb28ebe19583.npz": "e12d5a08de48b8a7149fb1dccfd5fdbeaa4c8c9521228271cf567d6f03ecd8cf",
+      "observations/q1/a3140f74a22f1aee9d9769ff.npz": "9e85d5ef4f536fc2598f6a504b41564bcda200bc84ec38afc15478f31ab2f7c2",
+      "observations/q1/a3bb4a16254035f1b00ff935.npz": "bb7852d47dd99f3392a51363d3a3a4adbe14a7cc5e5bd8349a93ca06b093f5db",
+      "observations/q1/a3d31db7dacef4249f51cfd9.npz": "cc4ea6b8c18ef25c3dc2d8b70bee4a87e9f170cbacff241afeac4f7164597e00",
+      "observations/q1/a4f961b86c8dd504dda8b0c5.npz": "f69cc1990afc0267e494ee0e1be90f3defd798d2b34f05f5932f866b3163c983",
+      "observations/q1/a5a157c5f26ba6f9bc13005e.npz": "308210c14e8aac32426048e5c6301f14e88ad9e03c44a9219308dd2406605961",
+      "observations/q1/a6ea88d734265d00baab0a0f.npz": "5e70978801121180ac73264123df37ab755f69daf53d3229937801d76a85a204",
+      "observations/q1/a856f5af9f6271d4bf7ef1ef.npz": "30168faeb2048563d3b0ff82631fa2a8976a05d348c50ee1bf40d44b92ec959f",
+      "observations/q1/a8842cbe76479df30fec1bdd.npz": "024fe33335625a8c222a96721f4d2d2518fdfed7f2c53834f920aea6d6f7fc06",
+      "observations/q1/a912b52c48da128cb238ea1e.npz": "4cbeb5671cfdce7b743762e382f6fdd52927fab827bec65eb4705a67aad76101",
+      "observations/q1/a9bacf048d1fc2e27635a63f.npz": "4857d5b792b65884e4d389267208af9399ed32a6427ad160e3d23eeb53ff1d34",
+      "observations/q1/ab4890c6a9cf81038931f567.npz": "c99ca369ea396e4f288eb4bef25d3a5f8e6a3bafb9fd7eec764b8cc4418834f4",
+      "observations/q1/ab550b1b43f1d537cb0f3c85.npz": "24230c07adb011b751495c172dc03c6eff723d80b3f88e456f63337b5b89035b",
+      "observations/q1/ac807b252a4bc9b621c001a2.npz": "058199d19f14c194979f39292ecee97a3d36ceaba6430a27e801012355b29911",
+      "observations/q1/acce3f3a0a3b0660fa02faa1.npz": "34fff686fcb11b55f27d390bfbfaf76ed6f60d04b59b5ce35f7e08884ee15d06",
+      "observations/q1/aeeecf3ea179cd3c27490902.npz": "702439195a6c6739a9e5b3e7e71b2ac24912fc9e426dd6162803c583db493dfa",
+      "observations/q1/af1ddd6149dd6c402c7a5bfb.npz": "4113a30c6c0c307972af8508eaeb8ec7516477167b8149b43bc7b89d224cae3e",
+      "observations/q1/afbe972f6bff1a71d4e853de.npz": "ca80019e0eca29183c305d8bd712d42c44485ca15695b834fc626ef20f3ba6a9",
+      "observations/q1/b025408266c7cbafa1910176.npz": "500bebb9b09a9ed650e88b2d58498768090b497651555c38132dfb2763535636",
+      "observations/q1/b1ee8042d9fc5b4c6ac0e64c.npz": "f9393ba53a0a77131c2a2d14a0253e2c5e788b23d8cb4db160745c09b397825b",
+      "observations/q1/b1eeda41543b18ea0032151f.npz": "7b9472eea186cce1b3bb65939d661909d592037dfd7944bb65a83634572419f8",
+      "observations/q1/b35112fa2676090e3f97e4c5.npz": "e5ab374716f4f5ec9bc99b8890820bea04b8433aff4e885da10a01c460068730",
+      "observations/q1/b3681ce0d85f9bc5f45f9b23.npz": "d336903b31c15cbbed2252a9af6823e9875a14fb5fa124353fd9ee8ae504f7bf",
+      "observations/q1/b5be8d674b267caca6a7e1d1.npz": "dede5478f5e14efa6fd8da87db2e507d810e16efcfbccbeb364117479769335c",
+      "observations/q1/b67e2e2ce63022423e2502b2.npz": "ba811109ba5c66ec8617d0b0e9b3bc800a125506881184f5ac6cfb048f337b47",
+      "observations/q1/b6cb79835fd98e4a3c07d451.npz": "b27cb92dc6bb4ab904d9dcb98aba7f24902397363f56fd4780fbcf6653ec00b0",
+      "observations/q1/b6df13c5627a0a3d713b2ff1.npz": "b6251e0471320293934258edea0f456b3201e0778dab14799b7e26461a6e0c29",
+      "observations/q1/b80f531a92de5f16ce771cd1.npz": "a2ddb31284615bd65314e03f8fd23b9fb60adcd87e35808788f56042155f3fba",
+      "observations/q1/b8d85a5a14fb1acd4ae526cb.npz": "8d77eec5b0c323f92753c8c5fd9bf27e770b3117dbc0e31f571bade2aea5ebc1",
+      "observations/q1/b9504b90cc085314f65e2464.npz": "c738516083d12533eb5c3534ab99ef8d1bbc589ea39d9e468718f4c08566f88e",
+      "observations/q1/b954a3c5d6d533b526b7b46e.npz": "a0b722e57b4d178d84d7377ec18fb9ad1482619130d5321e039287b36a73c7f1",
+      "observations/q1/b96d58481639de335457c2a6.npz": "f0ce1613c39a309eb8ae221143ba5c26598ef1e28f4344931568363530dca632",
+      "observations/q1/bafd0ef0106f860187ad67bf.npz": "bf356c3fce1c1be402fa41de20ecb68c1a3458ea9e332d0ec9161a0a6d0fa51e",
+      "observations/q1/bb58e27f34ed07ec855311cc.npz": "d33eb8ac4f6452ab897b1cf2e668b9636de185bceb6b0842115a446ab1b4b33a",
+      "observations/q1/bb89a61dcb3634997656d4c7.npz": "486209258ccd3e76e32a64067c03d38995cc3599c27e48470ba4732c8de354c6",
+      "observations/q1/bb9c04a3ca841c3ae6c49d93.npz": "3b1b51c1356e0deafd472f8f701b17ccf5a9b09703537f41f7ab70f796ce545a",
+      "observations/q1/bba08cc862b7f4fdfad1f4b2.npz": "d9501c090d49e10f792bc80b155a5dfade1408a7b88522a1f6466f7f21500f5d",
+      "observations/q1/bd41c49f5f1de8d703d789fe.npz": "9702507543499948b14967ba896e1b70f99465352463b3a021b7ee8e1158b393",
+      "observations/q1/be0c7592560a236f675566c3.npz": "df108184d3693d02dcdafb034da0d877edbca4cdf0299325096b13b895350a1d",
+      "observations/q1/be27edf5666782de1c260b06.npz": "3c526232dd60a312326c15bbdf1ba648b3d3f6e1ed815abf61924b1519a5b036",
+      "observations/q1/be608d803cd952da26649533.npz": "cc214f453f8301d07c3b10004b47b8ac7013cae0a5880b4edaf2488e38cf34db",
+      "observations/q1/bf6020caa6de0bba72248d7d.npz": "88f63d271da447204e35d13d11cac4ada8f1e939eb27fa81f4024e27af46dff3",
+      "observations/q1/c030b89870e1bf7689eb50f6.npz": "d045e2ebc005a13c309758399836a8a570bc792617bcaf4100d911ef3eb6fcb5",
+      "observations/q1/c068712f76eef4a4ec811ad5.npz": "e3e99708479001e9fa8a96e82b831d1e95a7d54e7bf19c3cdfffba1c5a2e52f3",
+      "observations/q1/c08eb0e1a5197883211ee58b.npz": "5a8f0f41d85fea33e6375ac619a37d300620e6332ebf93224fedd6f80906be26",
+      "observations/q1/c2666def8b07f2754d9f8b27.npz": "a6387b9f2d8ad8dead0efdb645eb1ec98ec2ee4a97a38033de071b2ec21367bb",
+      "observations/q1/c279d0e156b4360323b98d1d.npz": "f75cb36acc9c44e90a3c0ee58fb3e465c84f5860e2fab622ca275de78943bee6",
+      "observations/q1/c391cd1b42876aa85c8e0f9c.npz": "c475b266adf590adb46a1308e20080ccf4b6c91f67f32012089264dfe954cc39",
+      "observations/q1/c3ba67b7d78d7a007df3bac2.npz": "71f45d428ff3f35056c28fd9ee34440abd700d14d9280b6291c8eba77be57794",
+      "observations/q1/c3c4ed13b813ddf05f2f56b8.npz": "46c7810041d5ed3f77a469ae79d89910b7663ebbe2da325961fd7f36336d21ce",
+      "observations/q1/c40a762b7d22f0f1638a453a.npz": "b9db58a03114f1a031f10fb13a2822f5a5ba58353befa229076ea888c345a67b",
+      "observations/q1/c468575ffe8972f5946b4729.npz": "06629d4aa25a3118ab23adbb5ae47048dc57ea4d42f006e096d8523289d6ee34",
+      "observations/q1/c5e2a225724d0168c7300359.npz": "0ec43f93f6866da976d8c84187766493a0b75351914732346a284b1d6bcca64e",
+      "observations/q1/c60a69d368a02616d62ebf35.npz": "b0cd7593b69fa815e5e5a172ae5d712f99631bb574a6d02c4d4e5de76fbf7998",
+      "observations/q1/c6334109b14a0cd873dfdd09.npz": "f4e3d4ba7400d4b3b8a6b117b8abaa44df2b3bebe4e53586fdfdd1eff160b87c",
+      "observations/q1/c65193bf5313d2d0a3e671f9.npz": "20586ba329395055401fd7a39c0adec67c8ab7eb4d59a5a364cb965b79f077dd",
+      "observations/q1/c6688c5747f908b586a1295f.npz": "82f0bf3ef02765a383203eb2b199c9aa4cd2ef4f769cfbf381c57befeb53b541",
+      "observations/q1/c67326b3cffac073f4a19c34.npz": "48eabf02a51738bf7ad0aee915bc615cf95d7bc4c086ad619bf3cd7001190948",
+      "observations/q1/c6bcd796a421efbd9aa3a3b9.npz": "5f575d0d6fb16a41c0419cd8a3423c996aeb47307bb27ef83a3487d6d1258a59",
+      "observations/q1/c822b8f274eeaf22c58580c7.npz": "777d38077da5ec4803248582290e2657ca27122235605ca30577a68c68fd4339",
+      "observations/q1/c8cc01a654922f150b206560.npz": "908c87bcb2f698ad9415004c74e67610c9c3f28b7ed85bc6183cc5cea339ebcb",
+      "observations/q1/c92481ea3bc868a61a70f73e.npz": "b3f32108dd6f34ea71a1b366d52ce97485146cca9cf550d3fd18bee89aa3638b",
+      "observations/q1/c9814a8742567f97aa0eb45e.npz": "cc0c34ded22516a89c612c957c945cd52a4ebd8583dc89e4cb4eaf878727a8c5",
+      "observations/q1/ca0e80f4a860ff02c6ec2d6d.npz": "16688f0f59f6bc61017fb835ed5dd0780c26adf154c78b28ad60b27e3e41e34b",
+      "observations/q1/cd4be0909824881f97276e1a.npz": "1cabea8b0da21cf8bd6beb5de3047c454e8d295319093557ab04882fd13efcf0",
+      "observations/q1/ce3febe8364ba9339b8bed05.npz": "8bf480a38af251544bd71955f8e429ebabd117094b9e70264d180457755bc618",
+      "observations/q1/cfde959c0b8e76bb703e3975.npz": "e99e6ba82e55c3f577b1cb2129b0884f3b48d3b025859721dd75fd798e945d89",
+      "observations/q1/d56850d2d9024b952f585197.npz": "37dea0da28c490c3a47bd113652defafa20a32c89ed2efcf55c8fc693b4a7ad5",
+      "observations/q1/d735236221cc62509b1613ff.npz": "18367c6db9ace9c6335c5e5444bac1f919deb1604b90331504571e233c10b6c8",
+      "observations/q1/d75ae3127b1682f22fbe09eb.npz": "c0ceffb9cb76e324461cc6518f787f4e16f47b5da008de9ad659666652f9b462",
+      "observations/q1/d790dac2d0fa67c9c3cd6970.npz": "5009ec6d75cf5984c9cb1b5122e8272066cac4e221e744cf495073849a990496",
+      "observations/q1/d7c4f250b7861bfc55fb8159.npz": "3b0f8da0aeef8027dcb5bcddf1dc841836216dd6b5192c53acf520463bd320f3",
+      "observations/q1/d7df68d2be2a9d7bfa298770.npz": "d5d79d9e8a1e87f26b5d2e17dc9dd17ed1a987d72b6756d495346412dfc97427",
+      "observations/q1/d7f0399143107c16836b98c5.npz": "551399310a828a4eb8a2a1f145da301f1813aca3070c42f385f4f3d9f1c71269",
+      "observations/q1/d8ed1936d66852aacaf624a3.npz": "f8d8fdf83aef4933bdf7ea4240cbae28c315d618228813ca983f9baaf1487430",
+      "observations/q1/dbb094d5a729a22df518e2f3.npz": "f323448743aded00526a0029e956796e162bf0cd4aca8ef48dbe38de237f8620",
+      "observations/q1/dc291038c203127a5e79f724.npz": "0fe6d98bb3612a743aa6aa2d50af1d6d5f44976c17bae5bc079a99539cad2841",
+      "observations/q1/dc2d05e51f50bcd80c23c0d6.npz": "2802e6389d27f2ba7041e3fbcc5f5da19aa52bd3b430cb7eb21baa07493a5ab9",
+      "observations/q1/de5a03dc9a02171c26051fd6.npz": "7ee00dad60af37069ebd452576b4a962edd0a342f1ab388fe2ebc1514a76a07a",
+      "observations/q1/e023e49aec4d71bb59a03316.npz": "6cc6e365c0bfee7e5a5639c4f675dbcf542353fb2e5f3b89e819de8fca5146ef",
+      "observations/q1/e0b764943babbadf90eb588e.npz": "f07f9650d1ebbdf701989a1462870e4df901dcb67b1729bc0cc705815f4903f9",
+      "observations/q1/e3386730826503367ee1d450.npz": "7445a25a4e6930084b2cb0de8e0ddf8b5d78514fa27730771dbc30a24baed6bf",
+      "observations/q1/e38134871560a475ea72fc65.npz": "7b7aeae982f6a39a7125234da9a4377046b5f322e7a7dcd283fd059a780be4f9",
+      "observations/q1/e48f81e14ff9a01e10b7206a.npz": "45d024056ea9575deb4f290af39724832b7b6ca24d65f62594ecc703a9de4c51",
+      "observations/q1/eb0478a8e0ee427ac879e5e1.npz": "cdfe1cb117121a83df7aefc7fe8041d606ce6889316b5f77bb0576e9f6c29b6d",
+      "observations/q1/ec6f29817afa6be90fb55299.npz": "d211ca721a605b729d8a82221fe6e7602e025c9f8d4ea68e64e1311410892551",
+      "observations/q1/eca96821a70fcb0c8f9ab228.npz": "f45de0bc8f3ef11dc5e75be97f08e3febd931ea5fa98bfa7cd8034926343c72f",
+      "observations/q1/ed4a05faa1338a7207451d03.npz": "1f28cdc24c9a955722ad9e422606c963bcef6ea4f3f26a338ea17e265856476e",
+      "observations/q1/eecd8b624ba80c63c83ef51b.npz": "b1462f46e2729c65eb5d95009fd76e3f2a0ecdb2c6eff5eb49796be35ad6c92f",
+      "observations/q1/ef2447cbcbf65be0168f03cd.npz": "6a4f6f1f54aac55e3e4f10ed0a9c93dd24429350bd4a2b8a842c10f6333683dd",
+      "observations/q1/f19a2f0c82f8984bfe1692b8.npz": "37fcf8d9fa716c7b463257041e693269c9dd40fc0a5a45acb95f4a47656d4c3f",
+      "observations/q1/f206c88d0c6708fc75032722.npz": "f9c0a5b58ffe086e3d4437295292ace019fc68cb42355ea6fb6f18bb1a9ba63f",
+      "observations/q1/f33b66208dc22c2aee89d416.npz": "16e007020445cc18ea000bb3d50287e0690cd21ba8fecc3cba56db5712b1518c",
+      "observations/q1/f505e5ed5b3378a08d220536.npz": "9cd0e5ac737f28cf9661bc0b69c085185c6ea9d15826d0ec867334302b0e625a",
+      "observations/q1/f5903a171fe4d41ddf1d0f9a.npz": "5f327e36717e8e0df56654770b4fb1b48696c3261df8638fb5bacc7d0e1597ea",
+      "observations/q1/f5ca41fad8ecb58d3b6e6bf0.npz": "cd996e73a486fbb1306ed802d73809dfe8296311b048168fdd67566609e66822",
+      "observations/q1/f61fecc6a2a0c122f6c1dcbf.npz": "97369fbee892cf8c09e96ccfae08aff02c6c3f0e580609727ef4f8cdb9d035e5",
+      "observations/q1/f68e3dc005d3bc6636f3b5e8.npz": "80567f4e64a988e5e10ce3c45467f5446f9ddc834807507fd993911be71700e5",
+      "observations/q1/f7b75921ebb1b0e7166e2019.npz": "3a18d6b81d6ed36fa55fe99b4693065b2386541c4e67c92362eca849de97208f",
+      "observations/q1/f8e6c0597cda272e5a69b1c7.npz": "22ba6ac118602c02ac8060f0691b74d88cdbc8403d60746516c7d12137955eca",
+      "observations/q1/fac556fed45a183313da6f1e.npz": "bb62335201c257f7f9c2703e3693c5a26dcab05770986a46aa33dc025ab2cb8b",
+      "observations/q1/fcd67b64ba9cc6729c4cb0df.npz": "f26a3865feace5b91b65b0fe1bc263503014d65f1eb6e6963a4580b90667de4d",
+      "observations/q1/fe17c6516d8f887af17d87d7.npz": "ca4a189eaff5f7fe931b104defdf9f0d37e914f1dac419a82b45b5533cd13b59",
+      "observations/q1/ff2975b68df66eb4dc3d406e.npz": "b53e69837c0dd642970cfcf37c239f9c5f4430a136866d1e92c319649fd9b7bb",
+      "observations/q1/ff2dffc0da09999bfc8aa201.npz": "2e8014ff1bf2e42a9d6201ddfe893a38167a6f81dbd5ab0f7d72e2ef3264765a",
+      "observations/q1/ffd1022453769cf28c0e1dbc.npz": "6519b7e5bb703ad8353726ee11839c5412a5c60373b72e5807bfe30da2378d81"
+    },
+    "verified_observation_count": 289,
+    "initial_targets": [
+      49,
+      0,
+      39,
+      42,
+      48,
+      18,
+      44,
+      10,
+      30,
+      38,
+      12,
+      17,
+      35,
+      43,
+      2,
+      29,
+      21,
+      41,
+      50,
+      22,
+      31,
+      16,
+      32,
+      37,
+      25,
+      52,
+      46,
+      26,
+      8,
+      54,
+      59,
+      58,
+      33,
+      13,
+      61,
+      4,
+      51,
+      40,
+      19,
+      57,
+      45,
+      11,
+      27,
+      56,
+      14,
+      36,
+      34,
+      3
+    ],
+    "n_genes": 64,
+    "cells_per_replicate": 128,
+    "registered_split": {
+      "train": [
+        2,
+        4,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        18,
+        19,
+        22,
+        26,
+        29,
+        31,
+        32,
+        34,
+        35,
+        36,
+        37,
+        39,
+        40,
+        41,
+        43,
+        44,
+        45,
+        46,
+        49,
+        52,
+        56,
+        57,
+        58,
+        61
+      ],
+      "held": [
+        0,
+        3,
+        16,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        38,
+        42,
+        48,
+        50,
+        51,
+        54,
+        59
+      ],
+      "registration": "topology_before_rna"
+    },
+    "decoded_private_files": 0,
+    "decoded_private_or_sealed_files": 0,
+    "observation_scope": "modular_q1_all_registered_targets_dose_0.7",
+    "common_longterm_time": 64.0,
+    "longterm_interpretation": "finite_time_samples_after_passed_distribution_diagnostic_not_fixed_points",
+    "test_status": "development_pre_registered_target_holdout_not_formal_network_blind_test"
+  },
+  "arms": {
+    "rna_current": {
+      "status": "completed",
+      "seconds_including_evaluation": 4146.155101519,
+      "parameter_count": 12609,
+      "source_sha256": {
+        "q1_pilot.py": "b295281d84c4a96dceefc5c84abc75da99d01e5eb94c32803336e2271c283e71",
+        "q1_pilot_data.py": "ad4a91454e49ce44195a89f2baee956537eefb9cfe4f6bb1fbb78f5260f013b0",
+        "q1_pilot_evaluation.py": "619367c8ee352223b0d35a087b49b8444c6df476a8a1828f34d4164898568178",
+        "protocol.py": "0476ffd862142e6df5f48ffa606b417fe60baa5d28f6de3694dc2eee250db848",
+        "q1_rna.py": "186162c13ab763702d9c8a8126666192b0ef27d7b4b6d359dc313b46542333ce"
+      },
+      "score_rows_recomputed": 1440,
+      "prediction_arrays_checked": 1728,
+      "max_score_difference": 0.0,
+      "weight_reproduction": [
+        {
+          "target": 0,
+          "time": 0.25,
+          "max_absolute_difference": 9.5367431640625e-07
+        },
+        {
+          "target": 0,
+          "time": 64.0,
+          "max_absolute_difference": 3.814697265625e-06
+        }
+      ],
+      "integration_check_reported": {
+        "coarse_step": 0.25,
+        "fine_step": 0.125,
+        "conditions": 288,
+        "max_cell_absolute_difference": 0.0002953156363219023,
+        "max_gene_mean_absolute_difference": 9.298324584960938e-06,
+        "mean_tolerance": 0.01,
+        "cell_tolerance": 0.05,
+        "passed": true,
+        "scope": "finite predictions only; not proof of asymptotic stability"
+      },
+      "metrics": {
+        "fit_condition_check": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3772412060371113,
+            "delta_rmse_all": 0.3358904875276713,
+            "delta_rmse_target": 0.45633185453642966,
+            "target_effect_mae": 0.45633185453642966,
+            "delta_rmse_non_target": 0.3282773048226462,
+            "treated_marginal_wasserstein1": 0.39938901839942936,
+            "control_marginal_wasserstein1": 0.3915932973225911
+          },
+          "no_response": {
+            "mean_rmse": 0.46236426006408476,
+            "delta_rmse_all": 0.42984588110651106,
+            "delta_rmse_target": 1.9080810546875,
+            "target_effect_mae": 1.9080810546875,
+            "delta_rmse_non_target": 0.3282773048226462,
+            "treated_marginal_wasserstein1": 0.4170551300048828,
+            "control_marginal_wasserstein1": 0.3915932973225911
+          },
+          "rna_current": {
+            "mean_rmse": 0.8267540910180706,
+            "delta_rmse_all": 0.34037167876144264,
+            "delta_rmse_target": 0.4601398935393238,
+            "target_effect_mae": 0.4601398935393238,
+            "delta_rmse_non_target": 0.33327382650930387,
+            "treated_marginal_wasserstein1": 0.767300400414268,
+            "control_marginal_wasserstein1": 0.7711577772705142
+          }
+        },
+        "held_target": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3718235758344306,
+            "delta_rmse_all": 0.32887455890933115,
+            "delta_rmse_target": 0.3865310244532992,
+            "target_effect_mae": 0.3865310244532992,
+            "delta_rmse_non_target": 0.32533728323273436,
+            "treated_marginal_wasserstein1": 0.39777288585478876,
+            "control_marginal_wasserstein1": 0.39335208468967015
+          },
+          "no_response": {
+            "mean_rmse": 0.44016470274707614,
+            "delta_rmse_all": 0.4102741682932147,
+            "delta_rmse_target": 1.7606879340277777,
+            "target_effect_mae": 1.7606879340277777,
+            "delta_rmse_non_target": 0.32533728323273436,
+            "treated_marginal_wasserstein1": 0.4132423400878906,
+            "control_marginal_wasserstein1": 0.39335208468967015
+          },
+          "rna_current": {
+            "mean_rmse": 0.8347149929689824,
+            "delta_rmse_all": 0.3792628298958618,
+            "delta_rmse_target": 0.8843591012293857,
+            "target_effect_mae": 0.8843591012293857,
+            "delta_rmse_non_target": 0.34927378616036814,
+            "treated_marginal_wasserstein1": 0.7753075531066683,
+            "control_marginal_wasserstein1": 0.7692433101627705
+          }
+        }
+      },
+      "held_by_time": {
+        "0.25": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.368583230567197,
+            "delta_rmse_all": 0.31788001498948715,
+            "delta_rmse_target": 0.22348868711752898,
+            "target_effect_mae": 0.22348868711752898,
+            "delta_rmse_non_target": 0.31784747657299883,
+            "treated_marginal_wasserstein1": 0.3911517841514322,
+            "control_marginal_wasserstein1": 0.38829803466796875
+          },
+          "no_response": {
+            "mean_rmse": 0.36852181768774495,
+            "delta_rmse_all": 0.3178467566114371,
+            "delta_rmse_target": 0.22281901041666666,
+            "target_effect_mae": 0.22281901041666666,
+            "delta_rmse_non_target": 0.31784747657299883,
+            "treated_marginal_wasserstein1": 0.39093271891276044,
+            "control_marginal_wasserstein1": 0.38829803466796875
+          },
+          "rna_current": {
+            "mean_rmse": 0.36730514251944674,
+            "delta_rmse_all": 0.31917955553807664,
+            "delta_rmse_target": 0.29035296741167355,
+            "target_effect_mae": 0.29035296741167355,
+            "delta_rmse_non_target": 0.31784515921476686,
+            "treated_marginal_wasserstein1": 0.406137071718212,
+            "control_marginal_wasserstein1": 0.4023178153953772
+          }
+        },
+        "1.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37314078081549873,
+            "delta_rmse_all": 0.32215369953619283,
+            "delta_rmse_target": 0.2542020174223311,
+            "target_effect_mae": 0.2542020174223311,
+            "delta_rmse_non_target": 0.321938521801654,
+            "treated_marginal_wasserstein1": 0.3952750078021385,
+            "control_marginal_wasserstein1": 0.3931376139322917
+          },
+          "no_response": {
+            "mean_rmse": 0.37781879487466297,
+            "delta_rmse_all": 0.33214090623999976,
+            "delta_rmse_target": 0.6389973958333334,
+            "target_effect_mae": 0.6389973958333334,
+            "delta_rmse_non_target": 0.321938521801654,
+            "treated_marginal_wasserstein1": 0.39617156982421875,
+            "control_marginal_wasserstein1": 0.3931376139322917
+          },
+          "rna_current": {
+            "mean_rmse": 0.38508190747607535,
+            "delta_rmse_all": 0.3233389954725227,
+            "delta_rmse_target": 0.30705159584416225,
+            "target_effect_mae": 0.30705159584416225,
+            "delta_rmse_non_target": 0.32194023147642403,
+            "treated_marginal_wasserstein1": 0.44447013383494816,
+            "control_marginal_wasserstein1": 0.446882424074109
+          }
+        },
+        "2.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.36811086931758114,
+            "delta_rmse_all": 0.32119820959600526,
+            "delta_rmse_target": 0.34144270233743396,
+            "target_effect_mae": 0.34144270233743396,
+            "delta_rmse_non_target": 0.31871512362319704,
+            "treated_marginal_wasserstein1": 0.3951172177667888,
+            "control_marginal_wasserstein1": 0.3929392496744792
+          },
+          "no_response": {
+            "mean_rmse": 0.41118198036328474,
+            "delta_rmse_all": 0.3790864648284667,
+            "delta_rmse_target": 1.5947265625,
+            "target_effect_mae": 1.5947265625,
+            "delta_rmse_non_target": 0.31871512362319704,
+            "treated_marginal_wasserstein1": 0.4073232014973958,
+            "control_marginal_wasserstein1": 0.3929392496744792
+          },
+          "rna_current": {
+            "mean_rmse": 0.43657083521634316,
+            "delta_rmse_all": 0.32225062722692394,
+            "delta_rmse_target": 0.4029662737827948,
+            "target_effect_mae": 0.4029662737827948,
+            "delta_rmse_non_target": 0.31871359152601075,
+            "treated_marginal_wasserstein1": 0.48817279962752286,
+            "control_marginal_wasserstein1": 0.49288068690869863
+          }
+        },
+        "4.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37005686787212283,
+            "delta_rmse_all": 0.3328455255897154,
+            "delta_rmse_target": 0.41133174272739587,
+            "target_effect_mae": 0.41133174272739587,
+            "delta_rmse_non_target": 0.32942231073768613,
+            "treated_marginal_wasserstein1": 0.40037252339782614,
+            "control_marginal_wasserstein1": 0.394989013671875
+          },
+          "no_response": {
+            "mean_rmse": 0.4752199234801207,
+            "delta_rmse_all": 0.45531342882113607,
+            "delta_rmse_target": 2.4622395833333335,
+            "target_effect_mae": 2.4622395833333335,
+            "delta_rmse_non_target": 0.32942231073768613,
+            "treated_marginal_wasserstein1": 0.4237874348958333,
+            "control_marginal_wasserstein1": 0.394989013671875
+          },
+          "rna_current": {
+            "mean_rmse": 0.6034487406547506,
+            "delta_rmse_all": 0.33680881184091377,
+            "delta_rmse_target": 0.5653449002897636,
+            "target_effect_mae": 0.5653449002897636,
+            "delta_rmse_non_target": 0.32959227255017337,
+            "treated_marginal_wasserstein1": 0.5977121031552354,
+            "control_marginal_wasserstein1": 0.603123632345642
+          }
+        },
+        "8.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3800689543948717,
+            "delta_rmse_all": 0.3406734018699061,
+            "delta_rmse_target": 0.5577676708193369,
+            "target_effect_mae": 0.5577676708193369,
+            "delta_rmse_non_target": 0.3330541477460071,
+            "treated_marginal_wasserstein1": 0.40583097941341534,
+            "control_marginal_wasserstein1": 0.39787546793619794
+          },
+          "no_response": {
+            "mean_rmse": 0.5081785698718574,
+            "delta_rmse_all": 0.49084899998376885,
+            "delta_rmse_target": 2.8343098958333335,
+            "target_effect_mae": 2.8343098958333335,
+            "delta_rmse_non_target": 0.3330541477460071,
+            "treated_marginal_wasserstein1": 0.43423207600911456,
+            "control_marginal_wasserstein1": 0.39787546793619794
+          },
+          "rna_current": {
+            "mean_rmse": 0.9229054890188912,
+            "delta_rmse_all": 0.37521023057168684,
+            "delta_rmse_target": 1.1323219937989204,
+            "target_effect_mae": 1.1323219937989204,
+            "delta_rmse_non_target": 0.33902672607524126,
+            "treated_marginal_wasserstein1": 0.820128507588001,
+            "control_marginal_wasserstein1": 0.8114810313358568
+          }
+        },
+        "64.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3709807520393122,
+            "delta_rmse_all": 0.33849650187468,
+            "delta_rmse_target": 0.5309533262957683,
+            "target_effect_mae": 0.5309533262957683,
+            "delta_rmse_non_target": 0.3310461189148633,
+            "treated_marginal_wasserstein1": 0.39888980259713175,
+            "control_marginal_wasserstein1": 0.3928731282552083
+          },
+          "no_response": {
+            "mean_rmse": 0.5000671302047861,
+            "delta_rmse_all": 0.48640845327447996,
+            "delta_rmse_target": 2.81103515625,
+            "target_effect_mae": 2.81103515625,
+            "delta_rmse_non_target": 0.3310461189148633,
+            "treated_marginal_wasserstein1": 0.4270070393880208,
+            "control_marginal_wasserstein1": 0.3928731282552083
+          },
+          "rna_current": {
+            "mean_rmse": 2.292977842928387,
+            "delta_rmse_all": 0.5987887587250472,
+            "delta_rmse_target": 2.6081168762489995,
+            "target_effect_mae": 2.6081168762489995,
+            "delta_rmse_non_target": 0.46852473611959256,
+            "treated_marginal_wasserstein1": 1.8952247027160904,
+            "control_marginal_wasserstein1": 1.8587742709169397
+          }
+        }
+      },
+      "held_by_target": {
+        "0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3487356826191339,
+            "delta_rmse_all": 0.32294730813309014,
+            "delta_rmse_target": 0.30139272239790077,
+            "target_effect_mae": 0.30139272239790077,
+            "delta_rmse_non_target": 0.32168706798496516,
+            "treated_marginal_wasserstein1": 0.3835661981021632,
+            "control_marginal_wasserstein1": 0.3893161349826389
+          },
+          "no_response": {
+            "mean_rmse": 0.4029047573095517,
+            "delta_rmse_all": 0.41654970650758893,
+            "delta_rmse_target": 1.8502604166666667,
+            "target_effect_mae": 1.8502604166666667,
+            "delta_rmse_non_target": 0.32168706798496516,
+            "treated_marginal_wasserstein1": 0.3941989474826389,
+            "control_marginal_wasserstein1": 0.3893161349826389
+          },
+          "rna_current": {
+            "mean_rmse": 0.8340967681538155,
+            "delta_rmse_all": 0.5131225519252431,
+            "delta_rmse_target": 2.379704958827157,
+            "target_effect_mae": 2.379704958827157,
+            "delta_rmse_non_target": 0.3680179572101217,
+            "treated_marginal_wasserstein1": 0.784210349957519,
+            "control_marginal_wasserstein1": 0.7677148624686768
+          }
+        },
+        "3": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3766269264931099,
+            "delta_rmse_all": 0.3376956408374035,
+            "delta_rmse_target": 0.865040177286615,
+            "target_effect_mae": 0.865040177286615,
+            "delta_rmse_non_target": 0.31854104955261775,
+            "treated_marginal_wasserstein1": 0.3976435126179796,
+            "control_marginal_wasserstein1": 0.3946601019965278
+          },
+          "no_response": {
+            "mean_rmse": 0.49152082285930615,
+            "delta_rmse_all": 0.483067064354225,
+            "delta_rmse_target": 2.6901041666666665,
+            "target_effect_mae": 2.6901041666666665,
+            "delta_rmse_non_target": 0.31854104955261775,
+            "treated_marginal_wasserstein1": 0.4203762478298611,
+            "control_marginal_wasserstein1": 0.3946601019965278
+          },
+          "rna_current": {
+            "mean_rmse": 0.8751646030168369,
+            "delta_rmse_all": 0.36322130329665725,
+            "delta_rmse_target": 0.7769357121918196,
+            "target_effect_mae": 0.7769357121918196,
+            "delta_rmse_non_target": 0.3496746218551113,
+            "treated_marginal_wasserstein1": 0.8097699403870133,
+            "control_marginal_wasserstein1": 0.7681319185387253
+          }
+        },
+        "16": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3657649713288385,
+            "delta_rmse_all": 0.3169290632279634,
+            "delta_rmse_target": 0.43308051970885736,
+            "target_effect_mae": 0.43308051970885736,
+            "delta_rmse_non_target": 0.3127885679357649,
+            "treated_marginal_wasserstein1": 0.39533546554282784,
+            "control_marginal_wasserstein1": 0.3847995334201389
+          },
+          "no_response": {
+            "mean_rmse": 0.42440143297953253,
+            "delta_rmse_all": 0.3659622249919979,
+            "delta_rmse_target": 1.3940972222222223,
+            "target_effect_mae": 1.3940972222222223,
+            "delta_rmse_non_target": 0.3127885679357649,
+            "treated_marginal_wasserstein1": 0.4098917643229167,
+            "control_marginal_wasserstein1": 0.3847995334201389
+          },
+          "rna_current": {
+            "mean_rmse": 0.813303778560998,
+            "delta_rmse_all": 0.3314954717997377,
+            "delta_rmse_target": 0.5832417597028123,
+            "target_effect_mae": 0.5832417597028123,
+            "delta_rmse_non_target": 0.32308744480389284,
+            "treated_marginal_wasserstein1": 0.7607545453459159,
+            "control_marginal_wasserstein1": 0.7621755579049706
+          }
+        },
+        "17": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3830805437523839,
+            "delta_rmse_all": 0.3301633513959672,
+            "delta_rmse_target": 0.2833952231606987,
+            "target_effect_mae": 0.2833952231606987,
+            "delta_rmse_non_target": 0.33010294592034095,
+            "treated_marginal_wasserstein1": 0.40089343479489814,
+            "control_marginal_wasserstein1": 0.3895534939236111
+          },
+          "no_response": {
+            "mean_rmse": 0.4290894137547576,
+            "delta_rmse_all": 0.4229704941661549,
+            "delta_rmse_target": 1.9483506944444444,
+            "target_effect_mae": 1.9483506944444444,
+            "delta_rmse_non_target": 0.33010294592034095,
+            "treated_marginal_wasserstein1": 0.4115736219618056,
+            "control_marginal_wasserstein1": 0.3895534939236111
+          },
+          "rna_current": {
+            "mean_rmse": 0.8771253619245629,
+            "delta_rmse_all": 0.43243377598784044,
+            "delta_rmse_target": 1.3968479565923593,
+            "target_effect_mae": 1.3968479565923593,
+            "delta_rmse_non_target": 0.37069942752798757,
+            "treated_marginal_wasserstein1": 0.8030376242685286,
+            "control_marginal_wasserstein1": 0.7696025581905874
+          }
+        },
+        "21": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.36547955970969803,
+            "delta_rmse_all": 0.3260018361107535,
+            "delta_rmse_target": 0.3275421781141847,
+            "target_effect_mae": 0.3275421781141847,
+            "delta_rmse_non_target": 0.3236581484578219,
+            "treated_marginal_wasserstein1": 0.39487187724049233,
+            "control_marginal_wasserstein1": 0.3933919270833333
+          },
+          "no_response": {
+            "mean_rmse": 0.454149756169486,
+            "delta_rmse_all": 0.4548304404045925,
+            "delta_rmse_target": 2.282986111111111,
+            "target_effect_mae": 2.282986111111111,
+            "delta_rmse_non_target": 0.3236581484578219,
+            "treated_marginal_wasserstein1": 0.4111124674479167,
+            "control_marginal_wasserstein1": 0.3933919270833333
+          },
+          "rna_current": {
+            "mean_rmse": 0.8298034563189557,
+            "delta_rmse_all": 0.3447402710001384,
+            "delta_rmse_target": 0.5666634633348875,
+            "target_effect_mae": 0.5666634633348875,
+            "delta_rmse_non_target": 0.33659777436168997,
+            "treated_marginal_wasserstein1": 0.7683173967556431,
+            "control_marginal_wasserstein1": 0.7761515609182454
+          }
+        },
+        "25": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.36460170344934095,
+            "delta_rmse_all": 0.32995899746905566,
+            "delta_rmse_target": 0.23745074592226414,
+            "target_effect_mae": 0.23745074592226414,
+            "delta_rmse_non_target": 0.3303313843713231,
+            "treated_marginal_wasserstein1": 0.39509651966330256,
+            "control_marginal_wasserstein1": 0.4011162651909722
+          },
+          "no_response": {
+            "mean_rmse": 0.43982786650960776,
+            "delta_rmse_all": 0.4046800165395963,
+            "delta_rmse_target": 1.6510416666666667,
+            "target_effect_mae": 1.6510416666666667,
+            "delta_rmse_non_target": 0.3303313843713231,
+            "treated_marginal_wasserstein1": 0.4124620225694444,
+            "control_marginal_wasserstein1": 0.4011162651909722
+          },
+          "rna_current": {
+            "mean_rmse": 0.8096535573730753,
+            "delta_rmse_all": 0.4085591731606069,
+            "delta_rmse_target": 1.4601826770797035,
+            "target_effect_mae": 1.4601826770797035,
+            "delta_rmse_non_target": 0.3448428544344592,
+            "treated_marginal_wasserstein1": 0.7569109845150933,
+            "control_marginal_wasserstein1": 0.7752490222438707
+          }
+        },
+        "27": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3704531456075728,
+            "delta_rmse_all": 0.32692314694843144,
+            "delta_rmse_target": 0.3902137022709193,
+            "target_effect_mae": 0.3902137022709193,
+            "delta_rmse_non_target": 0.323722285107293,
+            "treated_marginal_wasserstein1": 0.3994542285604357,
+            "control_marginal_wasserstein1": 0.3880547417534722
+          },
+          "no_response": {
+            "mean_rmse": 0.419637977317212,
+            "delta_rmse_all": 0.362436944925221,
+            "delta_rmse_target": 1.1571180555555556,
+            "target_effect_mae": 1.1571180555555556,
+            "delta_rmse_non_target": 0.323722285107293,
+            "treated_marginal_wasserstein1": 0.4137708875868056,
+            "control_marginal_wasserstein1": 0.3880547417534722
+          },
+          "rna_current": {
+            "mean_rmse": 0.86093715774892,
+            "delta_rmse_all": 0.4280107160467875,
+            "delta_rmse_target": 1.469411710595725,
+            "target_effect_mae": 1.469411710595725,
+            "delta_rmse_non_target": 0.36552948969335247,
+            "treated_marginal_wasserstein1": 0.7934707090498035,
+            "control_marginal_wasserstein1": 0.7726150965290365
+          }
+        },
+        "30": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.35782064162460536,
+            "delta_rmse_all": 0.3334463850731951,
+            "delta_rmse_target": 0.2015626012833921,
+            "target_effect_mae": 0.2015626012833921,
+            "delta_rmse_non_target": 0.33465649629089705,
+            "treated_marginal_wasserstein1": 0.3890496722750674,
+            "control_marginal_wasserstein1": 0.3975897894965278
+          },
+          "no_response": {
+            "mean_rmse": 0.39617481836425966,
+            "delta_rmse_all": 0.37472117847039005,
+            "delta_rmse_target": 1.2035590277777777,
+            "target_effect_mae": 1.2035590277777777,
+            "delta_rmse_non_target": 0.33465649629089705,
+            "treated_marginal_wasserstein1": 0.4002278645833333,
+            "control_marginal_wasserstein1": 0.3975897894965278
+          },
+          "rna_current": {
+            "mean_rmse": 0.8194925018448159,
+            "delta_rmse_all": 0.34489094844618734,
+            "delta_rmse_target": 0.48383717027814377,
+            "target_effect_mae": 0.48383717027814377,
+            "delta_rmse_non_target": 0.3376749762900987,
+            "treated_marginal_wasserstein1": 0.762230000177075,
+            "control_marginal_wasserstein1": 0.7757825299453364
+          }
+        },
+        "33": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37597231862679964,
+            "delta_rmse_all": 0.31516212211637074,
+            "delta_rmse_target": 0.5000029550415641,
+            "target_effect_mae": 0.5000029550415641,
+            "delta_rmse_non_target": 0.3092658532563274,
+            "treated_marginal_wasserstein1": 0.4040555898883247,
+            "control_marginal_wasserstein1": 0.3964165581597222
+          },
+          "no_response": {
+            "mean_rmse": 0.501455244312691,
+            "delta_rmse_all": 0.4683663176844937,
+            "delta_rmse_target": 2.5980902777777777,
+            "target_effect_mae": 2.5980902777777777,
+            "delta_rmse_non_target": 0.3092658532563274,
+            "treated_marginal_wasserstein1": 0.4271986219618056,
+            "control_marginal_wasserstein1": 0.3964165581597222
+          },
+          "rna_current": {
+            "mean_rmse": 0.7781787860678294,
+            "delta_rmse_all": 0.3504568109890472,
+            "delta_rmse_target": 0.4498653015622646,
+            "target_effect_mae": 0.4498653015622646,
+            "delta_rmse_non_target": 0.34647573370880896,
+            "treated_marginal_wasserstein1": 0.7257747646220981,
+            "control_marginal_wasserstein1": 0.7727681903739748
+          }
+        },
+        "38": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3866754289728245,
+            "delta_rmse_all": 0.33323277867409584,
+            "delta_rmse_target": 0.6123892399866474,
+            "target_effect_mae": 0.6123892399866474,
+            "delta_rmse_non_target": 0.32110519502331325,
+            "treated_marginal_wasserstein1": 0.40704389622602916,
+            "control_marginal_wasserstein1": 0.39178466796875
+          },
+          "no_response": {
+            "mean_rmse": 0.483947229241904,
+            "delta_rmse_all": 0.45627030476673763,
+            "delta_rmse_target": 2.3072916666666665,
+            "target_effect_mae": 2.3072916666666665,
+            "delta_rmse_non_target": 0.32110519502331325,
+            "treated_marginal_wasserstein1": 0.42694091796875,
+            "control_marginal_wasserstein1": 0.39178466796875
+          },
+          "rna_current": {
+            "mean_rmse": 0.8802684913180197,
+            "delta_rmse_all": 0.36786562323837674,
+            "delta_rmse_target": 0.8147118651152899,
+            "target_effect_mae": 0.8147118651152899,
+            "delta_rmse_non_target": 0.3384035398438562,
+            "treated_marginal_wasserstein1": 0.804300906019376,
+            "control_marginal_wasserstein1": 0.7663169900348189
+          }
+        },
+        "42": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3722015016586595,
+            "delta_rmse_all": 0.34113968860530175,
+            "delta_rmse_target": 0.3179535395757733,
+            "target_effect_mae": 0.3179535395757733,
+            "delta_rmse_non_target": 0.3409283204767363,
+            "treated_marginal_wasserstein1": 0.4006321505508758,
+            "control_marginal_wasserstein1": 0.3941514756944444
+          },
+          "no_response": {
+            "mean_rmse": 0.45987625214369093,
+            "delta_rmse_all": 0.43440798621685406,
+            "delta_rmse_target": 1.9535590277777777,
+            "target_effect_mae": 1.9535590277777777,
+            "delta_rmse_non_target": 0.3409283204767363,
+            "treated_marginal_wasserstein1": 0.4196234809027778,
+            "control_marginal_wasserstein1": 0.3941514756944444
+          },
+          "rna_current": {
+            "mean_rmse": 0.814429817368301,
+            "delta_rmse_all": 0.3715340024273036,
+            "delta_rmse_target": 0.38239272763344917,
+            "target_effect_mae": 0.38239272763344917,
+            "delta_rmse_non_target": 0.3707033248414696,
+            "treated_marginal_wasserstein1": 0.7687114386359053,
+            "control_marginal_wasserstein1": 0.7597260103771093
+          }
+        },
+        "48": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37660220357928326,
+            "delta_rmse_all": 0.33181118004926674,
+            "delta_rmse_target": 0.21920673122892784,
+            "target_effect_mae": 0.21920673122892784,
+            "delta_rmse_non_target": 0.332748420455894,
+            "treated_marginal_wasserstein1": 0.3983133575313215,
+            "control_marginal_wasserstein1": 0.3914794921875
+          },
+          "no_response": {
+            "mean_rmse": 0.4599417263475596,
+            "delta_rmse_all": 0.4068340117124808,
+            "delta_rmse_target": 1.6987847222222223,
+            "target_effect_mae": 1.6987847222222223,
+            "delta_rmse_non_target": 0.332748420455894,
+            "treated_marginal_wasserstein1": 0.4172905815972222,
+            "control_marginal_wasserstein1": 0.3914794921875
+          },
+          "rna_current": {
+            "mean_rmse": 0.8702677257878377,
+            "delta_rmse_all": 0.3792945152708236,
+            "delta_rmse_target": 0.6538525278431027,
+            "target_effect_mae": 0.6538525278431027,
+            "delta_rmse_non_target": 0.36813370075399304,
+            "treated_marginal_wasserstein1": 0.7984769016606944,
+            "control_marginal_wasserstein1": 0.7654537699611303
+          }
+        },
+        "50": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37944659998211483,
+            "delta_rmse_all": 0.33194854076177693,
+            "delta_rmse_target": 0.3328116691165454,
+            "target_effect_mae": 0.3328116691165454,
+            "delta_rmse_non_target": 0.3311594579195654,
+            "treated_marginal_wasserstein1": 0.40150826649498417,
+            "control_marginal_wasserstein1": 0.3992106119791667
+          },
+          "no_response": {
+            "mean_rmse": 0.4152244899526604,
+            "delta_rmse_all": 0.3675588881436996,
+            "delta_rmse_target": 1.1814236111111112,
+            "target_effect_mae": 1.1814236111111112,
+            "delta_rmse_non_target": 0.3311594579195654,
+            "treated_marginal_wasserstein1": 0.4132080078125,
+            "control_marginal_wasserstein1": 0.3992106119791667
+          },
+          "rna_current": {
+            "mean_rmse": 0.8177759638295296,
+            "delta_rmse_all": 0.34734524708838005,
+            "delta_rmse_target": 0.5559168683059599,
+            "target_effect_mae": 0.5559168683059599,
+            "delta_rmse_non_target": 0.34097270441086003,
+            "treated_marginal_wasserstein1": 0.7622502146676923,
+            "control_marginal_wasserstein1": 0.7771373232563152
+          }
+        },
+        "51": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37925993830157134,
+            "delta_rmse_all": 0.32915133096279203,
+            "delta_rmse_target": 0.589420948588449,
+            "target_effect_mae": 0.589420948588449,
+            "delta_rmse_non_target": 0.32026501225235,
+            "treated_marginal_wasserstein1": 0.40403725189297,
+            "control_marginal_wasserstein1": 0.3951280381944444
+          },
+          "no_response": {
+            "mean_rmse": 0.44023221345056307,
+            "delta_rmse_all": 0.4071208691963312,
+            "delta_rmse_target": 1.828125,
+            "target_effect_mae": 1.828125,
+            "delta_rmse_non_target": 0.32026501225235,
+            "treated_marginal_wasserstein1": 0.4184773763020833,
+            "control_marginal_wasserstein1": 0.3951280381944444
+          },
+          "rna_current": {
+            "mean_rmse": 0.8150693072148215,
+            "delta_rmse_all": 0.34814241446308986,
+            "delta_rmse_target": 0.6210061115545815,
+            "target_effect_mae": 0.6210061115545815,
+            "delta_rmse_non_target": 0.33883964124607835,
+            "treated_marginal_wasserstein1": 0.7584431214691548,
+            "control_marginal_wasserstein1": 0.7619215327848207
+          }
+        },
+        "54": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3741752571594797,
+            "delta_rmse_all": 0.32420823049096203,
+            "delta_rmse_target": 0.34105404175720655,
+            "target_effect_mae": 0.34105404175720655,
+            "delta_rmse_non_target": 0.3225894352920972,
+            "treated_marginal_wasserstein1": 0.39657389648074937,
+            "control_marginal_wasserstein1": 0.3938191731770833
+          },
+          "no_response": {
+            "mean_rmse": 0.39282045122879006,
+            "delta_rmse_all": 0.34857552019719545,
+            "delta_rmse_target": 0.9479166666666666,
+            "target_effect_mae": 0.9479166666666666,
+            "delta_rmse_non_target": 0.3225894352920972,
+            "treated_marginal_wasserstein1": 0.40472412109375,
+            "control_marginal_wasserstein1": 0.3938191731770833
+          },
+          "rna_current": {
+            "mean_rmse": 0.8243753744282964,
+            "delta_rmse_all": 0.33752410697907176,
+            "delta_rmse_target": 0.6187073804744109,
+            "target_effect_mae": 0.6187073804744109,
+            "delta_rmse_non_target": 0.3236880605067023,
+            "treated_marginal_wasserstein1": 0.7716936686490542,
+            "control_marginal_wasserstein1": 0.7722040156911721
+          }
+        },
+        "59": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37228079048547347,
+            "delta_rmse_all": 0.3312733416928722,
+            "delta_rmse_target": 0.23197939581284124,
+            "target_effect_mae": 0.23197939581284124,
+            "delta_rmse_non_target": 0.3318468914264428,
+            "treated_marginal_wasserstein1": 0.3962908558141993,
+            "control_marginal_wasserstein1": 0.3931613498263889
+          },
+          "no_response": {
+            "mean_rmse": 0.4314307920116462,
+            "delta_rmse_all": 0.39003472441387677,
+            "delta_rmse_target": 1.4782986111111112,
+            "target_effect_mae": 1.4782986111111112,
+            "delta_rmse_non_target": 0.3318468914264428,
+            "treated_marginal_wasserstein1": 0.4108005099826389,
+            "control_marginal_wasserstein1": 0.3931613498263889
+          },
+          "rna_current": {
+            "mean_rmse": 0.8354972365471017,
+            "delta_rmse_all": 0.39956834621449766,
+            "delta_rmse_target": 0.9364674285785036,
+            "target_effect_mae": 0.9364674285785036,
+            "delta_rmse_non_target": 0.36503932707740794,
+            "treated_marginal_wasserstein1": 0.7765682835261261,
+            "control_marginal_wasserstein1": 0.7649420233855384
+          }
+        }
+      },
+      "loss_projection_rank": 24,
+      "control_diagnostic": {
+        "0.25": {
+          "predicted_control_global_mean": 4.578523467128481,
+          "observed_fit_control_global_mean": 4.617120742797852,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.289960351005651,
+          "log_mean_residual_norm": 0.44099816240027634,
+          "log_mean_residual_projection_span_norm": 0.25437116681487404,
+          "log_mean_residual_orthogonal_norm": 0.3602425415378645,
+          "orthogonal_squared_norm_fraction": 0.6672927959793062
+        },
+        "1.0": {
+          "predicted_control_global_mean": 4.5458865065887935,
+          "observed_fit_control_global_mean": 4.616481781005859,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.30554667278972397,
+          "log_mean_residual_norm": 0.45083424478578443,
+          "log_mean_residual_projection_span_norm": 0.22970555824990443,
+          "log_mean_residual_orthogonal_norm": 0.3879263754640414,
+          "orthogonal_squared_norm_fraction": 0.7403972946484677
+        },
+        "2.0": {
+          "predicted_control_global_mean": 4.503998769211698,
+          "observed_fit_control_global_mean": 4.618927001953125,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.3810853746374134,
+          "log_mean_residual_norm": 0.5712892900289315,
+          "log_mean_residual_projection_span_norm": 0.23546762232231752,
+          "log_mean_residual_orthogonal_norm": 0.5205059574487453,
+          "orthogonal_squared_norm_fraction": 0.8301168785775674
+        },
+        "4.0": {
+          "predicted_control_global_mean": 4.4273086311317815,
+          "observed_fit_control_global_mean": 4.614330291748047,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.5725550847150636,
+          "log_mean_residual_norm": 0.8993802503455395,
+          "log_mean_residual_projection_span_norm": 0.24184068987877735,
+          "log_mean_residual_orthogonal_norm": 0.8662551099015592,
+          "orthogonal_squared_norm_fraction": 0.9276943802489567
+        },
+        "8.0": {
+          "predicted_control_global_mean": 4.30257457599717,
+          "observed_fit_control_global_mean": 4.618114471435547,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.8871414750301773,
+          "log_mean_residual_norm": 1.4366108017718364,
+          "log_mean_residual_projection_span_norm": 0.290817080506788,
+          "log_mean_residual_orthogonal_norm": 1.4068674498519849,
+          "orthogonal_squared_norm_fraction": 0.9590209802550949
+        },
+        "64.0": {
+          "predicted_control_global_mean": 4.073839077364204,
+          "observed_fit_control_global_mean": 4.619159698486328,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 2.2479622807074158,
+          "log_mean_residual_norm": 3.63008523617262,
+          "log_mean_residual_projection_span_norm": 0.2989703699485667,
+          "log_mean_residual_orthogonal_norm": 3.617752830110322,
+          "orthogonal_squared_norm_fraction": 0.9932169869521431
+        }
+      }
+    },
+    "rna_history": {
+      "status": "completed",
+      "seconds_including_evaluation": 4505.032674853,
+      "parameter_count": 12720,
+      "source_sha256": {
+        "q1_pilot.py": "b295281d84c4a96dceefc5c84abc75da99d01e5eb94c32803336e2271c283e71",
+        "q1_pilot_data.py": "ad4a91454e49ce44195a89f2baee956537eefb9cfe4f6bb1fbb78f5260f013b0",
+        "q1_pilot_evaluation.py": "619367c8ee352223b0d35a087b49b8444c6df476a8a1828f34d4164898568178",
+        "protocol.py": "0476ffd862142e6df5f48ffa606b417fe60baa5d28f6de3694dc2eee250db848",
+        "q1_rna.py": "186162c13ab763702d9c8a8126666192b0ef27d7b4b6d359dc313b46542333ce"
+      },
+      "score_rows_recomputed": 1440,
+      "prediction_arrays_checked": 1728,
+      "max_score_difference": 0.0,
+      "weight_reproduction": [
+        {
+          "target": 0,
+          "time": 0.25,
+          "max_absolute_difference": 9.5367431640625e-07
+        },
+        {
+          "target": 0,
+          "time": 64.0,
+          "max_absolute_difference": 3.814697265625e-06
+        }
+      ],
+      "integration_check_reported": {
+        "coarse_step": 0.25,
+        "fine_step": 0.125,
+        "conditions": 288,
+        "max_cell_absolute_difference": 0.0003396272659301758,
+        "max_gene_mean_absolute_difference": 0.00017213821411132812,
+        "mean_tolerance": 0.01,
+        "cell_tolerance": 0.05,
+        "passed": true,
+        "scope": "finite predictions only; not proof of asymptotic stability"
+      },
+      "metrics": {
+        "fit_condition_check": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3772412060371113,
+            "delta_rmse_all": 0.3358904875276713,
+            "delta_rmse_target": 0.45633185453642966,
+            "target_effect_mae": 0.45633185453642966,
+            "delta_rmse_non_target": 0.3282773048226462,
+            "treated_marginal_wasserstein1": 0.39938901839942936,
+            "control_marginal_wasserstein1": 0.3915932973225911
+          },
+          "no_response": {
+            "mean_rmse": 0.46236426006408476,
+            "delta_rmse_all": 0.42984588110651106,
+            "delta_rmse_target": 1.9080810546875,
+            "target_effect_mae": 1.9080810546875,
+            "delta_rmse_non_target": 0.3282773048226462,
+            "treated_marginal_wasserstein1": 0.4170551300048828,
+            "control_marginal_wasserstein1": 0.3915932973225911
+          },
+          "rna_history": {
+            "mean_rmse": 0.861048663207868,
+            "delta_rmse_all": 0.33732889614576306,
+            "delta_rmse_target": 0.47776007195213027,
+            "target_effect_mae": 0.47776007195213027,
+            "delta_rmse_non_target": 0.3294329530562233,
+            "treated_marginal_wasserstein1": 0.7788940433607104,
+            "control_marginal_wasserstein1": 0.7810709796283494
+          }
+        },
+        "held_target": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3718235758344306,
+            "delta_rmse_all": 0.32887455890933115,
+            "delta_rmse_target": 0.3865310244532992,
+            "target_effect_mae": 0.3865310244532992,
+            "delta_rmse_non_target": 0.32533728323273436,
+            "treated_marginal_wasserstein1": 0.39777288585478876,
+            "control_marginal_wasserstein1": 0.39335208468967015
+          },
+          "no_response": {
+            "mean_rmse": 0.44016470274707614,
+            "delta_rmse_all": 0.4102741682932147,
+            "delta_rmse_target": 1.7606879340277777,
+            "target_effect_mae": 1.7606879340277777,
+            "delta_rmse_non_target": 0.32533728323273436,
+            "treated_marginal_wasserstein1": 0.4132423400878906,
+            "control_marginal_wasserstein1": 0.39335208468967015
+          },
+          "rna_history": {
+            "mean_rmse": 0.8652091340643188,
+            "delta_rmse_all": 0.37013265451314287,
+            "delta_rmse_target": 0.9543616327634162,
+            "target_effect_mae": 0.9543616327634162,
+            "delta_rmse_non_target": 0.33011247427431295,
+            "treated_marginal_wasserstein1": 0.7829676340967443,
+            "control_marginal_wasserstein1": 0.7797198136967314
+          }
+        }
+      },
+      "held_by_time": {
+        "0.25": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.368583230567197,
+            "delta_rmse_all": 0.31788001498948715,
+            "delta_rmse_target": 0.22348868711752898,
+            "target_effect_mae": 0.22348868711752898,
+            "delta_rmse_non_target": 0.31784747657299883,
+            "treated_marginal_wasserstein1": 0.3911517841514322,
+            "control_marginal_wasserstein1": 0.38829803466796875
+          },
+          "no_response": {
+            "mean_rmse": 0.36852181768774495,
+            "delta_rmse_all": 0.3178467566114371,
+            "delta_rmse_target": 0.22281901041666666,
+            "target_effect_mae": 0.22281901041666666,
+            "delta_rmse_non_target": 0.31784747657299883,
+            "treated_marginal_wasserstein1": 0.39093271891276044,
+            "control_marginal_wasserstein1": 0.38829803466796875
+          },
+          "rna_history": {
+            "mean_rmse": 0.3674601857455036,
+            "delta_rmse_all": 0.31901750159905923,
+            "delta_rmse_target": 0.28075532034153144,
+            "target_effect_mae": 0.28075532034153144,
+            "delta_rmse_non_target": 0.31784723004819343,
+            "treated_marginal_wasserstein1": 0.4077393565884095,
+            "control_marginal_wasserstein1": 0.4043552060451105
+          }
+        },
+        "1.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37314078081549873,
+            "delta_rmse_all": 0.32215369953619283,
+            "delta_rmse_target": 0.2542020174223311,
+            "target_effect_mae": 0.2542020174223311,
+            "delta_rmse_non_target": 0.321938521801654,
+            "treated_marginal_wasserstein1": 0.3952750078021385,
+            "control_marginal_wasserstein1": 0.3931376139322917
+          },
+          "no_response": {
+            "mean_rmse": 0.37781879487466297,
+            "delta_rmse_all": 0.33214090623999976,
+            "delta_rmse_target": 0.6389973958333334,
+            "target_effect_mae": 0.6389973958333334,
+            "delta_rmse_non_target": 0.321938521801654,
+            "treated_marginal_wasserstein1": 0.39617156982421875,
+            "control_marginal_wasserstein1": 0.3931376139322917
+          },
+          "rna_history": {
+            "mean_rmse": 0.39055917256130934,
+            "delta_rmse_all": 0.32298120596395136,
+            "delta_rmse_target": 0.2928212168228394,
+            "target_effect_mae": 0.2928212168228394,
+            "delta_rmse_non_target": 0.32193084544556044,
+            "treated_marginal_wasserstein1": 0.4541353133963439,
+            "control_marginal_wasserstein1": 0.4554132052381412
+          }
+        },
+        "2.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.36811086931758114,
+            "delta_rmse_all": 0.32119820959600526,
+            "delta_rmse_target": 0.34144270233743396,
+            "target_effect_mae": 0.34144270233743396,
+            "delta_rmse_non_target": 0.31871512362319704,
+            "treated_marginal_wasserstein1": 0.3951172177667888,
+            "control_marginal_wasserstein1": 0.3929392496744792
+          },
+          "no_response": {
+            "mean_rmse": 0.41118198036328474,
+            "delta_rmse_all": 0.3790864648284667,
+            "delta_rmse_target": 1.5947265625,
+            "target_effect_mae": 1.5947265625,
+            "delta_rmse_non_target": 0.31871512362319704,
+            "treated_marginal_wasserstein1": 0.4073232014973958,
+            "control_marginal_wasserstein1": 0.3929392496744792
+          },
+          "rna_history": {
+            "mean_rmse": 0.45399091671054537,
+            "delta_rmse_all": 0.3223109304418908,
+            "delta_rmse_target": 0.404524081689857,
+            "target_effect_mae": 0.404524081689857,
+            "delta_rmse_non_target": 0.3187315954531538,
+            "treated_marginal_wasserstein1": 0.5089931839492728,
+            "control_marginal_wasserstein1": 0.5107752371412696
+          }
+        },
+        "4.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37005686787212283,
+            "delta_rmse_all": 0.3328455255897154,
+            "delta_rmse_target": 0.41133174272739587,
+            "target_effect_mae": 0.41133174272739587,
+            "delta_rmse_non_target": 0.32942231073768613,
+            "treated_marginal_wasserstein1": 0.40037252339782614,
+            "control_marginal_wasserstein1": 0.394989013671875
+          },
+          "no_response": {
+            "mean_rmse": 0.4752199234801207,
+            "delta_rmse_all": 0.45531342882113607,
+            "delta_rmse_target": 2.4622395833333335,
+            "target_effect_mae": 2.4622395833333335,
+            "delta_rmse_non_target": 0.32942231073768613,
+            "treated_marginal_wasserstein1": 0.4237874348958333,
+            "control_marginal_wasserstein1": 0.394989013671875
+          },
+          "rna_history": {
+            "mean_rmse": 0.6484437724977518,
+            "delta_rmse_all": 0.3350347947545622,
+            "delta_rmse_target": 0.4931350278334605,
+            "target_effect_mae": 0.4931350278334605,
+            "delta_rmse_non_target": 0.3294915389041252,
+            "treated_marginal_wasserstein1": 0.6303832006840038,
+            "control_marginal_wasserstein1": 0.6315492440690846
+          }
+        },
+        "8.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3800689543948717,
+            "delta_rmse_all": 0.3406734018699061,
+            "delta_rmse_target": 0.5577676708193369,
+            "target_effect_mae": 0.5577676708193369,
+            "delta_rmse_non_target": 0.3330541477460071,
+            "treated_marginal_wasserstein1": 0.40583097941341534,
+            "control_marginal_wasserstein1": 0.39787546793619794
+          },
+          "no_response": {
+            "mean_rmse": 0.5081785698718574,
+            "delta_rmse_all": 0.49084899998376885,
+            "delta_rmse_target": 2.8343098958333335,
+            "target_effect_mae": 2.8343098958333335,
+            "delta_rmse_non_target": 0.3330541477460071,
+            "treated_marginal_wasserstein1": 0.43423207600911456,
+            "control_marginal_wasserstein1": 0.39787546793619794
+          },
+          "rna_history": {
+            "mean_rmse": 0.9953654624086878,
+            "delta_rmse_all": 0.37264572980676086,
+            "delta_rmse_target": 1.2472085673261972,
+            "target_effect_mae": 1.2472085673261972,
+            "delta_rmse_non_target": 0.3337741305510557,
+            "treated_marginal_wasserstein1": 0.8685807967986262,
+            "control_marginal_wasserstein1": 0.858379126053857
+          }
+        },
+        "64.0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3709807520393122,
+            "delta_rmse_all": 0.33849650187468,
+            "delta_rmse_target": 0.5309533262957683,
+            "target_effect_mae": 0.5309533262957683,
+            "delta_rmse_non_target": 0.3310461189148633,
+            "treated_marginal_wasserstein1": 0.39888980259713175,
+            "control_marginal_wasserstein1": 0.3928731282552083
+          },
+          "no_response": {
+            "mean_rmse": 0.5000671302047861,
+            "delta_rmse_all": 0.48640845327447996,
+            "delta_rmse_target": 2.81103515625,
+            "target_effect_mae": 2.81103515625,
+            "delta_rmse_non_target": 0.3310461189148633,
+            "treated_marginal_wasserstein1": 0.4270070393880208,
+            "control_marginal_wasserstein1": 0.3928731282552083
+          },
+          "rna_history": {
+            "mean_rmse": 2.335435294462114,
+            "delta_rmse_all": 0.5488057645126325,
+            "delta_rmse_target": 3.007725582566612,
+            "target_effect_mae": 3.007725582566612,
+            "delta_rmse_non_target": 0.35889950524378905,
+            "treated_marginal_wasserstein1": 1.8279739531638095,
+            "control_marginal_wasserstein1": 1.8178468636329252
+          }
+        }
+      },
+      "held_by_target": {
+        "0": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3487356826191339,
+            "delta_rmse_all": 0.32294730813309014,
+            "delta_rmse_target": 0.30139272239790077,
+            "target_effect_mae": 0.30139272239790077,
+            "delta_rmse_non_target": 0.32168706798496516,
+            "treated_marginal_wasserstein1": 0.3835661981021632,
+            "control_marginal_wasserstein1": 0.3893161349826389
+          },
+          "no_response": {
+            "mean_rmse": 0.4029047573095517,
+            "delta_rmse_all": 0.41654970650758893,
+            "delta_rmse_target": 1.8502604166666667,
+            "target_effect_mae": 1.8502604166666667,
+            "delta_rmse_non_target": 0.32168706798496516,
+            "treated_marginal_wasserstein1": 0.3941989474826389,
+            "control_marginal_wasserstein1": 0.3893161349826389
+          },
+          "rna_history": {
+            "mean_rmse": 0.8508766548167664,
+            "delta_rmse_all": 0.47397631465053564,
+            "delta_rmse_target": 2.1352077607880346,
+            "target_effect_mae": 2.1352077607880346,
+            "delta_rmse_non_target": 0.3263486136318092,
+            "treated_marginal_wasserstein1": 0.7765525450598689,
+            "control_marginal_wasserstein1": 0.7745344374964969
+          }
+        },
+        "3": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3766269264931099,
+            "delta_rmse_all": 0.3376956408374035,
+            "delta_rmse_target": 0.865040177286615,
+            "target_effect_mae": 0.865040177286615,
+            "delta_rmse_non_target": 0.31854104955261775,
+            "treated_marginal_wasserstein1": 0.3976435126179796,
+            "control_marginal_wasserstein1": 0.3946601019965278
+          },
+          "no_response": {
+            "mean_rmse": 0.49152082285930615,
+            "delta_rmse_all": 0.483067064354225,
+            "delta_rmse_target": 2.6901041666666665,
+            "target_effect_mae": 2.6901041666666665,
+            "delta_rmse_non_target": 0.31854104955261775,
+            "treated_marginal_wasserstein1": 0.4203762478298611,
+            "control_marginal_wasserstein1": 0.3946601019965278
+          },
+          "rna_history": {
+            "mean_rmse": 0.8657732640884892,
+            "delta_rmse_all": 0.3613908409716193,
+            "delta_rmse_target": 1.0884570737738006,
+            "target_effect_mae": 1.0884570737738006,
+            "delta_rmse_non_target": 0.32203717148114985,
+            "treated_marginal_wasserstein1": 0.7788016430283347,
+            "control_marginal_wasserstein1": 0.7781471106245825
+          }
+        },
+        "16": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3657649713288385,
+            "delta_rmse_all": 0.3169290632279634,
+            "delta_rmse_target": 0.43308051970885736,
+            "target_effect_mae": 0.43308051970885736,
+            "delta_rmse_non_target": 0.3127885679357649,
+            "treated_marginal_wasserstein1": 0.39533546554282784,
+            "control_marginal_wasserstein1": 0.3847995334201389
+          },
+          "no_response": {
+            "mean_rmse": 0.42440143297953253,
+            "delta_rmse_all": 0.3659622249919979,
+            "delta_rmse_target": 1.3940972222222223,
+            "target_effect_mae": 1.3940972222222223,
+            "delta_rmse_non_target": 0.3127885679357649,
+            "treated_marginal_wasserstein1": 0.4098917643229167,
+            "control_marginal_wasserstein1": 0.3847995334201389
+          },
+          "rna_history": {
+            "mean_rmse": 0.865067345986398,
+            "delta_rmse_all": 0.3403255593895234,
+            "delta_rmse_target": 0.90236434240473,
+            "target_effect_mae": 0.90236434240473,
+            "delta_rmse_non_target": 0.316542873110405,
+            "treated_marginal_wasserstein1": 0.7857087712762942,
+            "control_marginal_wasserstein1": 0.7742929272940666
+          }
+        },
+        "17": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3830805437523839,
+            "delta_rmse_all": 0.3301633513959672,
+            "delta_rmse_target": 0.2833952231606987,
+            "target_effect_mae": 0.2833952231606987,
+            "delta_rmse_non_target": 0.33010294592034095,
+            "treated_marginal_wasserstein1": 0.40089343479489814,
+            "control_marginal_wasserstein1": 0.3895534939236111
+          },
+          "no_response": {
+            "mean_rmse": 0.4290894137547576,
+            "delta_rmse_all": 0.4229704941661549,
+            "delta_rmse_target": 1.9483506944444444,
+            "target_effect_mae": 1.9483506944444444,
+            "delta_rmse_non_target": 0.33010294592034095,
+            "treated_marginal_wasserstein1": 0.4115736219618056,
+            "control_marginal_wasserstein1": 0.3895534939236111
+          },
+          "rna_history": {
+            "mean_rmse": 0.8756109498155948,
+            "delta_rmse_all": 0.410199389572517,
+            "delta_rmse_target": 1.3056800439937635,
+            "target_effect_mae": 1.3056800439937635,
+            "delta_rmse_non_target": 0.34349195937949006,
+            "treated_marginal_wasserstein1": 0.7898796127482554,
+            "control_marginal_wasserstein1": 0.7801091288732303
+          }
+        },
+        "21": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.36547955970969803,
+            "delta_rmse_all": 0.3260018361107535,
+            "delta_rmse_target": 0.3275421781141847,
+            "target_effect_mae": 0.3275421781141847,
+            "delta_rmse_non_target": 0.3236581484578219,
+            "treated_marginal_wasserstein1": 0.39487187724049233,
+            "control_marginal_wasserstein1": 0.3933919270833333
+          },
+          "no_response": {
+            "mean_rmse": 0.454149756169486,
+            "delta_rmse_all": 0.4548304404045925,
+            "delta_rmse_target": 2.282986111111111,
+            "target_effect_mae": 2.282986111111111,
+            "delta_rmse_non_target": 0.3236581484578219,
+            "treated_marginal_wasserstein1": 0.4111124674479167,
+            "control_marginal_wasserstein1": 0.3933919270833333
+          },
+          "rna_history": {
+            "mean_rmse": 0.8653292356050645,
+            "delta_rmse_all": 0.3362068466226566,
+            "delta_rmse_target": 0.5461582285044844,
+            "target_effect_mae": 0.5461582285044844,
+            "delta_rmse_non_target": 0.32803718687578093,
+            "treated_marginal_wasserstein1": 0.779921891895851,
+            "control_marginal_wasserstein1": 0.7891217324285957
+          }
+        },
+        "25": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.36460170344934095,
+            "delta_rmse_all": 0.32995899746905566,
+            "delta_rmse_target": 0.23745074592226414,
+            "target_effect_mae": 0.23745074592226414,
+            "delta_rmse_non_target": 0.3303313843713231,
+            "treated_marginal_wasserstein1": 0.39509651966330256,
+            "control_marginal_wasserstein1": 0.4011162651909722
+          },
+          "no_response": {
+            "mean_rmse": 0.43982786650960776,
+            "delta_rmse_all": 0.4046800165395963,
+            "delta_rmse_target": 1.6510416666666667,
+            "target_effect_mae": 1.6510416666666667,
+            "delta_rmse_non_target": 0.3303313843713231,
+            "treated_marginal_wasserstein1": 0.4124620225694444,
+            "control_marginal_wasserstein1": 0.4011162651909722
+          },
+          "rna_history": {
+            "mean_rmse": 0.8494367942824959,
+            "delta_rmse_all": 0.3517403304843514,
+            "delta_rmse_target": 0.8337703104896517,
+            "target_effect_mae": 0.8337703104896517,
+            "delta_rmse_non_target": 0.3314689303692467,
+            "treated_marginal_wasserstein1": 0.772947431865727,
+            "control_marginal_wasserstein1": 0.7873134523333819
+          }
+        },
+        "27": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3704531456075728,
+            "delta_rmse_all": 0.32692314694843144,
+            "delta_rmse_target": 0.3902137022709193,
+            "target_effect_mae": 0.3902137022709193,
+            "delta_rmse_non_target": 0.323722285107293,
+            "treated_marginal_wasserstein1": 0.3994542285604357,
+            "control_marginal_wasserstein1": 0.3880547417534722
+          },
+          "no_response": {
+            "mean_rmse": 0.419637977317212,
+            "delta_rmse_all": 0.362436944925221,
+            "delta_rmse_target": 1.1571180555555556,
+            "target_effect_mae": 1.1571180555555556,
+            "delta_rmse_non_target": 0.323722285107293,
+            "treated_marginal_wasserstein1": 0.4137708875868056,
+            "control_marginal_wasserstein1": 0.3880547417534722
+          },
+          "rna_history": {
+            "mean_rmse": 0.864884805960518,
+            "delta_rmse_all": 0.4225480159986012,
+            "delta_rmse_target": 1.6041442639673025,
+            "target_effect_mae": 1.6041442639673025,
+            "delta_rmse_non_target": 0.32989697128737977,
+            "treated_marginal_wasserstein1": 0.786463879025758,
+            "control_marginal_wasserstein1": 0.7767087368686053
+          }
+        },
+        "30": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.35782064162460536,
+            "delta_rmse_all": 0.3334463850731951,
+            "delta_rmse_target": 0.2015626012833921,
+            "target_effect_mae": 0.2015626012833921,
+            "delta_rmse_non_target": 0.33465649629089705,
+            "treated_marginal_wasserstein1": 0.3890496722750674,
+            "control_marginal_wasserstein1": 0.3975897894965278
+          },
+          "no_response": {
+            "mean_rmse": 0.39617481836425966,
+            "delta_rmse_all": 0.37472117847039005,
+            "delta_rmse_target": 1.2035590277777777,
+            "target_effect_mae": 1.2035590277777777,
+            "delta_rmse_non_target": 0.33465649629089705,
+            "treated_marginal_wasserstein1": 0.4002278645833333,
+            "control_marginal_wasserstein1": 0.3975897894965278
+          },
+          "rna_history": {
+            "mean_rmse": 0.8785496084698756,
+            "delta_rmse_all": 0.35112786631325343,
+            "delta_rmse_target": 0.5433692172842307,
+            "target_effect_mae": 0.5433692172842307,
+            "delta_rmse_non_target": 0.3402536184934076,
+            "treated_marginal_wasserstein1": 0.7921118409667167,
+            "control_marginal_wasserstein1": 0.7872880916969142
+          }
+        },
+        "33": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37597231862679964,
+            "delta_rmse_all": 0.31516212211637074,
+            "delta_rmse_target": 0.5000029550415641,
+            "target_effect_mae": 0.5000029550415641,
+            "delta_rmse_non_target": 0.3092658532563274,
+            "treated_marginal_wasserstein1": 0.4040555898883247,
+            "control_marginal_wasserstein1": 0.3964165581597222
+          },
+          "no_response": {
+            "mean_rmse": 0.501455244312691,
+            "delta_rmse_all": 0.4683663176844937,
+            "delta_rmse_target": 2.5980902777777777,
+            "target_effect_mae": 2.5980902777777777,
+            "delta_rmse_non_target": 0.3092658532563274,
+            "treated_marginal_wasserstein1": 0.4271986219618056,
+            "control_marginal_wasserstein1": 0.3964165581597222
+          },
+          "rna_history": {
+            "mean_rmse": 0.8546097451468416,
+            "delta_rmse_all": 0.3259647611788038,
+            "delta_rmse_target": 0.6082883963201008,
+            "target_effect_mae": 0.6082883963201008,
+            "delta_rmse_non_target": 0.31583808067909724,
+            "treated_marginal_wasserstein1": 0.7782571636304687,
+            "control_marginal_wasserstein1": 0.7821053327260612
+          }
+        },
+        "38": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3866754289728245,
+            "delta_rmse_all": 0.33323277867409584,
+            "delta_rmse_target": 0.6123892399866474,
+            "target_effect_mae": 0.6123892399866474,
+            "delta_rmse_non_target": 0.32110519502331325,
+            "treated_marginal_wasserstein1": 0.40704389622602916,
+            "control_marginal_wasserstein1": 0.39178466796875
+          },
+          "no_response": {
+            "mean_rmse": 0.483947229241904,
+            "delta_rmse_all": 0.45627030476673763,
+            "delta_rmse_target": 2.3072916666666665,
+            "target_effect_mae": 2.3072916666666665,
+            "delta_rmse_non_target": 0.32110519502331325,
+            "treated_marginal_wasserstein1": 0.42694091796875,
+            "control_marginal_wasserstein1": 0.39178466796875
+          },
+          "rna_history": {
+            "mean_rmse": 0.8908549390500211,
+            "delta_rmse_all": 0.3803902569938676,
+            "delta_rmse_target": 1.039487167235671,
+            "target_effect_mae": 1.039487167235671,
+            "delta_rmse_non_target": 0.3287197620224318,
+            "treated_marginal_wasserstein1": 0.7970504444676281,
+            "control_marginal_wasserstein1": 0.7751831935003425
+          }
+        },
+        "42": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3722015016586595,
+            "delta_rmse_all": 0.34113968860530175,
+            "delta_rmse_target": 0.3179535395757733,
+            "target_effect_mae": 0.3179535395757733,
+            "delta_rmse_non_target": 0.3409283204767363,
+            "treated_marginal_wasserstein1": 0.4006321505508758,
+            "control_marginal_wasserstein1": 0.3941514756944444
+          },
+          "no_response": {
+            "mean_rmse": 0.45987625214369093,
+            "delta_rmse_all": 0.43440798621685406,
+            "delta_rmse_target": 1.9535590277777777,
+            "target_effect_mae": 1.9535590277777777,
+            "delta_rmse_non_target": 0.3409283204767363,
+            "treated_marginal_wasserstein1": 0.4196234809027778,
+            "control_marginal_wasserstein1": 0.3941514756944444
+          },
+          "rna_history": {
+            "mean_rmse": 0.8717771169126145,
+            "delta_rmse_all": 0.3475770221677765,
+            "delta_rmse_target": 0.44240395630635654,
+            "target_effect_mae": 0.44240395630635654,
+            "delta_rmse_non_target": 0.34458119565804396,
+            "treated_marginal_wasserstein1": 0.7954629334401905,
+            "control_marginal_wasserstein1": 0.7728100157647884
+          }
+        },
+        "48": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37660220357928326,
+            "delta_rmse_all": 0.33181118004926674,
+            "delta_rmse_target": 0.21920673122892784,
+            "target_effect_mae": 0.21920673122892784,
+            "delta_rmse_non_target": 0.332748420455894,
+            "treated_marginal_wasserstein1": 0.3983133575313215,
+            "control_marginal_wasserstein1": 0.3914794921875
+          },
+          "no_response": {
+            "mean_rmse": 0.4599417263475596,
+            "delta_rmse_all": 0.4068340117124808,
+            "delta_rmse_target": 1.6987847222222223,
+            "target_effect_mae": 1.6987847222222223,
+            "delta_rmse_non_target": 0.332748420455894,
+            "treated_marginal_wasserstein1": 0.4172905815972222,
+            "control_marginal_wasserstein1": 0.3914794921875
+          },
+          "rna_history": {
+            "mean_rmse": 0.8776425795209783,
+            "delta_rmse_all": 0.35396810878458396,
+            "delta_rmse_target": 0.7225727446429018,
+            "target_effect_mae": 0.7225727446429018,
+            "delta_rmse_non_target": 0.33450906444702677,
+            "treated_marginal_wasserstein1": 0.7856021869587216,
+            "control_marginal_wasserstein1": 0.7766678772198959
+          }
+        },
+        "50": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37944659998211483,
+            "delta_rmse_all": 0.33194854076177693,
+            "delta_rmse_target": 0.3328116691165454,
+            "target_effect_mae": 0.3328116691165454,
+            "delta_rmse_non_target": 0.3311594579195654,
+            "treated_marginal_wasserstein1": 0.40150826649498417,
+            "control_marginal_wasserstein1": 0.3992106119791667
+          },
+          "no_response": {
+            "mean_rmse": 0.4152244899526604,
+            "delta_rmse_all": 0.3675588881436996,
+            "delta_rmse_target": 1.1814236111111112,
+            "target_effect_mae": 1.1814236111111112,
+            "delta_rmse_non_target": 0.3311594579195654,
+            "treated_marginal_wasserstein1": 0.4132080078125,
+            "control_marginal_wasserstein1": 0.3992106119791667
+          },
+          "rna_history": {
+            "mean_rmse": 0.8525657272902426,
+            "delta_rmse_all": 0.33887827612653015,
+            "delta_rmse_target": 0.40748966573571327,
+            "target_effect_mae": 0.40748966573571327,
+            "delta_rmse_non_target": 0.33641236074896086,
+            "treated_marginal_wasserstein1": 0.7722800048372602,
+            "control_marginal_wasserstein1": 0.7856303877762844
+          }
+        },
+        "51": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37925993830157134,
+            "delta_rmse_all": 0.32915133096279203,
+            "delta_rmse_target": 0.589420948588449,
+            "target_effect_mae": 0.589420948588449,
+            "delta_rmse_non_target": 0.32026501225235,
+            "treated_marginal_wasserstein1": 0.40403725189297,
+            "control_marginal_wasserstein1": 0.3951280381944444
+          },
+          "no_response": {
+            "mean_rmse": 0.44023221345056307,
+            "delta_rmse_all": 0.4071208691963312,
+            "delta_rmse_target": 1.828125,
+            "target_effect_mae": 1.828125,
+            "delta_rmse_non_target": 0.32026501225235,
+            "treated_marginal_wasserstein1": 0.4184773763020833,
+            "control_marginal_wasserstein1": 0.3951280381944444
+          },
+          "rna_history": {
+            "mean_rmse": 0.8497116291432542,
+            "delta_rmse_all": 0.37447027914346664,
+            "delta_rmse_target": 0.9884644715817154,
+            "target_effect_mae": 0.9884644715817154,
+            "delta_rmse_non_target": 0.3221684364870496,
+            "treated_marginal_wasserstein1": 0.7700565148780656,
+            "control_marginal_wasserstein1": 0.7812036441955268
+          }
+        },
+        "54": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.3741752571594797,
+            "delta_rmse_all": 0.32420823049096203,
+            "delta_rmse_target": 0.34105404175720655,
+            "target_effect_mae": 0.34105404175720655,
+            "delta_rmse_non_target": 0.3225894352920972,
+            "treated_marginal_wasserstein1": 0.39657389648074937,
+            "control_marginal_wasserstein1": 0.3938191731770833
+          },
+          "no_response": {
+            "mean_rmse": 0.39282045122879006,
+            "delta_rmse_all": 0.34857552019719545,
+            "delta_rmse_target": 0.9479166666666666,
+            "target_effect_mae": 0.9479166666666666,
+            "delta_rmse_non_target": 0.3225894352920972,
+            "treated_marginal_wasserstein1": 0.40472412109375,
+            "control_marginal_wasserstein1": 0.3938191731770833
+          },
+          "rna_history": {
+            "mean_rmse": 0.8652394727484652,
+            "delta_rmse_all": 0.3569061349099545,
+            "delta_rmse_target": 0.9935145911173701,
+            "target_effect_mae": 0.9935145911173701,
+            "delta_rmse_non_target": 0.3226726946081365,
+            "treated_marginal_wasserstein1": 0.7856168836676809,
+            "control_marginal_wasserstein1": 0.7779841960682428
+          }
+        },
+        "59": {
+          "direct_only_transfer": {
+            "mean_rmse": 0.37228079048547347,
+            "delta_rmse_all": 0.3312733416928722,
+            "delta_rmse_target": 0.23197939581284124,
+            "target_effect_mae": 0.23197939581284124,
+            "delta_rmse_non_target": 0.3318468914264428,
+            "treated_marginal_wasserstein1": 0.3962908558141993,
+            "control_marginal_wasserstein1": 0.3931613498263889
+          },
+          "no_response": {
+            "mean_rmse": 0.4314307920116462,
+            "delta_rmse_all": 0.39003472441387677,
+            "delta_rmse_target": 1.4782986111111112,
+            "target_effect_mae": 1.4782986111111112,
+            "delta_rmse_non_target": 0.3318468914264428,
+            "treated_marginal_wasserstein1": 0.4108005099826389,
+            "control_marginal_wasserstein1": 0.3931613498263889
+          },
+          "rna_history": {
+            "mean_rmse": 0.8654162761914801,
+            "delta_rmse_all": 0.39645246890224406,
+            "delta_rmse_target": 1.1084138900688332,
+            "target_effect_mae": 1.1084138900688332,
+            "delta_rmse_non_target": 0.3388206691095912,
+            "treated_marginal_wasserstein1": 0.7807683978010871,
+            "control_marginal_wasserstein1": 0.776416754280687
+          }
+        }
+      },
+      "loss_projection_rank": 24,
+      "control_diagnostic": {
+        "0.25": {
+          "predicted_control_global_mean": 4.591141891475841,
+          "observed_fit_control_global_mean": 4.617120742797852,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.29083863456477776,
+          "log_mean_residual_norm": 0.44257788905360373,
+          "log_mean_residual_projection_span_norm": 0.2568254721074131,
+          "log_mean_residual_orthogonal_norm": 0.36043843407154624,
+          "orthogonal_squared_norm_fraction": 0.6632584053275148
+        },
+        "1.0": {
+          "predicted_control_global_mean": 4.595675097534254,
+          "observed_fit_control_global_mean": 4.616481781005859,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.3122569371142272,
+          "log_mean_residual_norm": 0.47008283130081274,
+          "log_mean_residual_projection_span_norm": 0.23606525229555636,
+          "log_mean_residual_orthogonal_norm": 0.40651084234301016,
+          "orthogonal_squared_norm_fraction": 0.7478172643524726
+        },
+        "2.0": {
+          "predicted_control_global_mean": 4.6013550690977,
+          "observed_fit_control_global_mean": 4.618927001953125,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.3977816329448467,
+          "log_mean_residual_norm": 0.6235090123868948,
+          "log_mean_residual_projection_span_norm": 0.23861711243737388,
+          "log_mean_residual_orthogonal_norm": 0.5760428475206777,
+          "orthogonal_squared_norm_fraction": 0.8535404480405672
+        },
+        "4.0": {
+          "predicted_control_global_mean": 4.61143577239951,
+          "observed_fit_control_global_mean": 4.614330291748047,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.6122408563024421,
+          "log_mean_residual_norm": 1.0045343105936209,
+          "log_mean_residual_projection_span_norm": 0.24088322861763362,
+          "log_mean_residual_orthogonal_norm": 0.975225333618106,
+          "orthogonal_squared_norm_fraction": 0.9424979170200158
+        },
+        "8.0": {
+          "predicted_control_global_mean": 4.628820885882078,
+          "observed_fit_control_global_mean": 4.618114471435547,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 0.9649189855767298,
+          "log_mean_residual_norm": 1.6169715493217747,
+          "log_mean_residual_projection_span_norm": 0.3024343811181554,
+          "log_mean_residual_orthogonal_norm": 1.5884364754165459,
+          "orthogonal_squared_norm_fraction": 0.9650169585652735
+        },
+        "64.0": {
+          "predicted_control_global_mean": 4.711862255350326,
+          "observed_fit_control_global_mean": 4.619159698486328,
+          "control_gene_mean_rmse_against_pooled_fit_controls": 2.317192737237697,
+          "log_mean_residual_norm": 3.4865096903804904,
+          "log_mean_residual_projection_span_norm": 0.3113719088791445,
+          "log_mean_residual_orthogonal_norm": 3.4725779120817464,
+          "orthogonal_squared_norm_fraction": 0.9920241476613302
+        }
+      }
+    }
+  },
+  "old_latent_reference": {
+    "archive_sha256": "b9954b69d2a7dfcab5736012f1fc02ea50ad24e7e6dbbe163b2cfc80600738b1",
+    "parameter_count": 29250,
+    "metrics": {
+      "fit_condition_check": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.3772412060371113,
+          "delta_rmse_all": 0.3358904875276713,
+          "delta_rmse_target": 0.45633185453642966,
+          "target_effect_mae": 0.45633185453642966,
+          "delta_rmse_non_target": 0.3282773048226462,
+          "treated_marginal_wasserstein1": 0.39938901839942936,
+          "control_marginal_wasserstein1": 0.3915932973225911
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.9338458618474298,
+          "delta_rmse_all": 0.33789626930840244,
+          "delta_rmse_target": 0.409691573737281,
+          "target_effect_mae": 0.409691573737281,
+          "delta_rmse_non_target": 0.3329333759835421,
+          "treated_marginal_wasserstein1": 0.8537622299390888,
+          "control_marginal_wasserstein1": 0.8559235225670848
+        },
+        "no_response": {
+          "mean_rmse": 0.46236426006408476,
+          "delta_rmse_all": 0.42984588110651106,
+          "delta_rmse_target": 1.9080810546875,
+          "target_effect_mae": 1.9080810546875,
+          "delta_rmse_non_target": 0.3282773048226462,
+          "treated_marginal_wasserstein1": 0.4170551300048828,
+          "control_marginal_wasserstein1": 0.3915932973225911
+        }
+      },
+      "held_target": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.3718235758344306,
+          "delta_rmse_all": 0.32887455890933115,
+          "delta_rmse_target": 0.3865310244532992,
+          "target_effect_mae": 0.3865310244532992,
+          "delta_rmse_non_target": 0.32533728323273436,
+          "treated_marginal_wasserstein1": 0.39777288585478876,
+          "control_marginal_wasserstein1": 0.39335208468967015
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.9331313415067896,
+          "delta_rmse_all": 0.3605457901438589,
+          "delta_rmse_target": 0.8089820209472411,
+          "target_effect_mae": 0.8089820209472411,
+          "delta_rmse_non_target": 0.338701439910322,
+          "treated_marginal_wasserstein1": 0.8552309491893763,
+          "control_marginal_wasserstein1": 0.853796157908493
+        },
+        "no_response": {
+          "mean_rmse": 0.44016470274707614,
+          "delta_rmse_all": 0.4102741682932147,
+          "delta_rmse_target": 1.7606879340277777,
+          "target_effect_mae": 1.7606879340277777,
+          "delta_rmse_non_target": 0.32533728323273436,
+          "treated_marginal_wasserstein1": 0.4132423400878906,
+          "control_marginal_wasserstein1": 0.39335208468967015
+        }
+      }
+    },
+    "held_by_time": {
+      "0.25": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.368583230567197,
+          "delta_rmse_all": 0.31788001498948715,
+          "delta_rmse_target": 0.22348868711752898,
+          "target_effect_mae": 0.22348868711752898,
+          "delta_rmse_non_target": 0.31784747657299883,
+          "treated_marginal_wasserstein1": 0.3911517841514322,
+          "control_marginal_wasserstein1": 0.38829803466796875
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.39935932636711774,
+          "delta_rmse_all": 0.31964767166315083,
+          "delta_rmse_target": 0.32946090372456044,
+          "target_effect_mae": 0.32946090372456044,
+          "delta_rmse_non_target": 0.3178632070366049,
+          "treated_marginal_wasserstein1": 0.4487493698011507,
+          "control_marginal_wasserstein1": 0.44538758735735096
+        },
+        "no_response": {
+          "mean_rmse": 0.36852181768774495,
+          "delta_rmse_all": 0.3178467566114371,
+          "delta_rmse_target": 0.22281901041666666,
+          "target_effect_mae": 0.22281901041666666,
+          "delta_rmse_non_target": 0.31784747657299883,
+          "treated_marginal_wasserstein1": 0.39093271891276044,
+          "control_marginal_wasserstein1": 0.38829803466796875
+        }
+      },
+      "1.0": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.37314078081549873,
+          "delta_rmse_all": 0.32215369953619283,
+          "delta_rmse_target": 0.2542020174223311,
+          "target_effect_mae": 0.2542020174223311,
+          "delta_rmse_non_target": 0.321938521801654,
+          "treated_marginal_wasserstein1": 0.3952750078021385,
+          "control_marginal_wasserstein1": 0.3931376139322917
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.5117479993493687,
+          "delta_rmse_all": 0.3263485731739573,
+          "delta_rmse_target": 0.4272038634403543,
+          "target_effect_mae": 0.4272038634403543,
+          "delta_rmse_non_target": 0.32197057060706724,
+          "treated_marginal_wasserstein1": 0.5380739895016404,
+          "control_marginal_wasserstein1": 0.5391574434716845
+        },
+        "no_response": {
+          "mean_rmse": 0.37781879487466297,
+          "delta_rmse_all": 0.33214090623999976,
+          "delta_rmse_target": 0.6389973958333334,
+          "target_effect_mae": 0.6389973958333334,
+          "delta_rmse_non_target": 0.321938521801654,
+          "treated_marginal_wasserstein1": 0.39617156982421875,
+          "control_marginal_wasserstein1": 0.3931376139322917
+        }
+      },
+      "2.0": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.36811086931758114,
+          "delta_rmse_all": 0.32119820959600526,
+          "delta_rmse_target": 0.34144270233743396,
+          "target_effect_mae": 0.34144270233743396,
+          "delta_rmse_non_target": 0.31871512362319704,
+          "treated_marginal_wasserstein1": 0.3951172177667888,
+          "control_marginal_wasserstein1": 0.3929392496744792
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.5988434742188757,
+          "delta_rmse_all": 0.32796356863836557,
+          "delta_rmse_target": 0.5459221475611713,
+          "target_effect_mae": 0.5459221475611713,
+          "delta_rmse_non_target": 0.3193962615655322,
+          "treated_marginal_wasserstein1": 0.604802317565683,
+          "control_marginal_wasserstein1": 0.6088643916853694
+        },
+        "no_response": {
+          "mean_rmse": 0.41118198036328474,
+          "delta_rmse_all": 0.3790864648284667,
+          "delta_rmse_target": 1.5947265625,
+          "target_effect_mae": 1.5947265625,
+          "delta_rmse_non_target": 0.31871512362319704,
+          "treated_marginal_wasserstein1": 0.4073232014973958,
+          "control_marginal_wasserstein1": 0.3929392496744792
+        }
+      },
+      "4.0": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.37005686787212283,
+          "delta_rmse_all": 0.3328455255897154,
+          "delta_rmse_target": 0.41133174272739587,
+          "target_effect_mae": 0.41133174272739587,
+          "delta_rmse_non_target": 0.32942231073768613,
+          "treated_marginal_wasserstein1": 0.40037252339782614,
+          "control_marginal_wasserstein1": 0.394989013671875
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.746475734190278,
+          "delta_rmse_all": 0.34747257483649885,
+          "delta_rmse_target": 0.7246246910710852,
+          "target_effect_mae": 0.7246246910710852,
+          "delta_rmse_non_target": 0.3319781135415893,
+          "treated_marginal_wasserstein1": 0.711173785704171,
+          "control_marginal_wasserstein1": 0.7125736663557513
+        },
+        "no_response": {
+          "mean_rmse": 0.4752199234801207,
+          "delta_rmse_all": 0.45531342882113607,
+          "delta_rmse_target": 2.4622395833333335,
+          "target_effect_mae": 2.4622395833333335,
+          "delta_rmse_non_target": 0.32942231073768613,
+          "treated_marginal_wasserstein1": 0.4237874348958333,
+          "control_marginal_wasserstein1": 0.394989013671875
+        }
+      },
+      "8.0": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.3800689543948717,
+          "delta_rmse_all": 0.3406734018699061,
+          "delta_rmse_target": 0.5577676708193369,
+          "target_effect_mae": 0.5577676708193369,
+          "delta_rmse_non_target": 0.3330541477460071,
+          "treated_marginal_wasserstein1": 0.40583097941341534,
+          "control_marginal_wasserstein1": 0.39787546793619794
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 0.992563909530849,
+          "delta_rmse_all": 0.37335481826700545,
+          "delta_rmse_target": 0.9461044894753551,
+          "target_effect_mae": 0.9461044894753551,
+          "delta_rmse_non_target": 0.3506658801391687,
+          "treated_marginal_wasserstein1": 0.8884300888274753,
+          "control_marginal_wasserstein1": 0.8822505736797884
+        },
+        "no_response": {
+          "mean_rmse": 0.5081785698718574,
+          "delta_rmse_all": 0.49084899998376885,
+          "delta_rmse_target": 2.8343098958333335,
+          "target_effect_mae": 2.8343098958333335,
+          "delta_rmse_non_target": 0.3330541477460071,
+          "treated_marginal_wasserstein1": 0.43423207600911456,
+          "control_marginal_wasserstein1": 0.39787546793619794
+        }
+      },
+      "64.0": {
+        "direct_only_transfer": {
+          "mean_rmse": 0.3709807520393122,
+          "delta_rmse_all": 0.33849650187468,
+          "delta_rmse_target": 0.5309533262957683,
+          "target_effect_mae": 0.5309533262957683,
+          "delta_rmse_non_target": 0.3310461189148633,
+          "treated_marginal_wasserstein1": 0.39888980259713175,
+          "control_marginal_wasserstein1": 0.3928731282552083
+        },
+        "latent_neural_ode": {
+          "mean_rmse": 2.3497976053842495,
+          "delta_rmse_all": 0.4684875342841752,
+          "delta_rmse_target": 1.8805760304109207,
+          "target_effect_mae": 1.8805760304109207,
+          "delta_rmse_non_target": 0.39033460657196944,
+          "treated_marginal_wasserstein1": 1.9401561437361377,
+          "control_marginal_wasserstein1": 1.9345432849010127
+        },
+        "no_response": {
+          "mean_rmse": 0.5000671302047861,
+          "delta_rmse_all": 0.48640845327447996,
+          "delta_rmse_target": 2.81103515625,
+          "target_effect_mae": 2.81103515625,
+          "delta_rmse_non_target": 0.3310461189148633,
+          "treated_marginal_wasserstein1": 0.4270070393880208,
+          "control_marginal_wasserstein1": 0.3928731282552083
+        }
+      }
+    },
+    "scope": "previous audited run; different state space, parameter count and projection draws"
+  },
+  "comparators_identical_across_all_three_runs": true,
+  "limitations": [
+    "one previously inspected development network and one training seed",
+    "RNA histories are model generated, not paired observed single-cell paths",
+    "projection diagnostic is descriptive; it does not prove a unique cause or a successful fix",
+    "final step-halving report was inspected; not recomputed for all 288 conditions in this review",
+    "original audit did not fit models, generate data or change learner source; this publication records that audit"
+  ]
+}

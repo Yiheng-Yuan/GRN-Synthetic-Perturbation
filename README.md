@@ -12,6 +12,8 @@
 
 WSL 路径按条件累积梯度、保存训练断点，不重生成数据、不删长期时点、不减有效训练批量。实际学习源码与返回快照一致；低显存运行与完整训练已跑通，不等于恢复了 GRN。见[Windows／WSL 交付说明](docs/q1-wsl-delivery.md)。原 [H200 镜像](docs/q1-h200-delivery.md)仍对应此前源码，未实际执行 H200 训练，不自动包含本次 WSL 改动。
 
+**2026-10-25 结果更新：** RNA 单状态与显式 RNA 历史模型均在 Windows 的 RTX 4070 上完成 4800 次更新；回传的 2880 条评分复算最大差异为 0。历史模型相对单状态降低部分非靶响应误差，但直接靶点误差增大；两者整体仍未超过直接响应基线，长期对照漂移仍需修正。详见[本轮比较报告、评分与环境记录](docs/validation/q1-rna-comparison-2026-10-25/README.md)。此次仅发布结果；精确运行源码由记录的文件指纹和交付镜像标识，尚未提交的 RNA 模型改动不包含在此次结果提交中。
+
 - [完整实验协议](docs/protocol/scmultisim-v1.md)
 - [实施与验收清单](docs/protocol/implementation-checklist.md)
 - [可检查的主实验配置](configs/scmultisim-main.json)
