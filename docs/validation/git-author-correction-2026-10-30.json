@@ -1,0 +1,233 @@
+{
+  "schema": "git-author-identity-correction-v1",
+  "completed_date": "2026-10-30",
+  "github_login": "Yiheng-Yuan",
+  "corrected_identity": {
+    "name": "Yiheng Yuan",
+    "email": "192991045+Yiheng-Yuan@users.noreply.github.com"
+  },
+  "unique_original_commits": 16,
+  "author_identities_corrected": 12,
+  "committer_identities_corrected": 12,
+  "historical_file_trees_preserved": true,
+  "commit_messages_preserved": true,
+  "original_author_and_committer_dates_timezones_preserved": true,
+  "parent_order_preserved": true,
+  "previously_correct_identities_preserved": true,
+  "signature_notice": "Two GitHub signatures were removed because changed parents invalidate their signed payload. Their original correct author and committer identities are preserved; no replacement signature is claimed.",
+  "commit_map": [
+    {
+      "old": "ba93890c3b23b2329379aae3ab72b76acb3d7b8b",
+      "new": "1824abd8463b273c946b9c5ffd9c39c7653cda60",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Initial commit: synthetic temporal perturbation protocol"
+    },
+    {
+      "old": "b65c68ab92f2f53a0edd9bc69a1eb6be0e76c576",
+      "new": "44334df74d8dab310747989e0d35eced7125c8b9",
+      "author_corrected": false,
+      "committer_corrected": false,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Add portable run artifact ledger and locked dev environment"
+    },
+    {
+      "old": "e4d4f483f5b132c9023fb13328628c34ad634873",
+      "new": "b49130166141ba421630b4b382ec16b31a266310",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "feat: 完善库实现 v0.2.0"
+    },
+    {
+      "old": "d3e66ca1ce112edd8e3cb832de206b76142b3fa7",
+      "new": "8b21792c0850eb90bd259365d9178129433d2820",
+      "author_corrected": false,
+      "committer_corrected": false,
+      "removed_invalid_signatures": [
+        "gpgsig"
+      ],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Update README.md with Markdown for math expressions"
+    },
+    {
+      "old": "3c6f26e4577e18694480230bf1938e9e0baf8403",
+      "new": "48435e2be8fd4dc27750edd1ef1f11866a24774f",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Add native GNW Mac acceptance and Windows review bundle"
+    },
+    {
+      "old": "9a191879a319d4a7dd50bce6f5d1b0ec5881d38e",
+      "new": "a40a1fb4c29fc4f3b871cd92430166824cb14ae2",
+      "author_corrected": false,
+      "committer_corrected": false,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Approve scMultiSim protocol and preparation gates"
+    },
+    {
+      "old": "22b2fd74e1a86e0228441f1df51c65e9677fcd2b",
+      "new": "69bfa8f4b671bf01e9a1913f7f5d36b044824937",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Implement scMultiSim-derived continuous perturbation kernel and batch image"
+    },
+    {
+      "old": "89284b41f34caa26d33f8b45a0a39ae647401e62",
+      "new": "e9a096bb6b9ea9fc942b47f054ab2816ed74cdb1",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Fix scMultiSim review findings and audit development perturbation signals"
+    },
+    {
+      "old": "1b034a78a1106282e6e165db4c3a32e016d2eddc",
+      "new": "ca601256ffe7d2cc9f827be0f9da6338e17b04ea",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Add sparse modular 64-gene Q1 generation and full-course training"
+    },
+    {
+      "old": "bfcca3bf54cee96a2e5b163348c13e578ee1197e",
+      "new": "f8744884acde65693c6de60affd4cd3d52ddd52d",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Audit modular dataset and deliver offline H200 training image workflow"
+    },
+    {
+      "old": "b0fca6bcf4ff44b20f637f62af29983c114989fb",
+      "new": "3a623b3fbb024d4275f21b2af69f3b138ed7fe78",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Record audited WSL Q1 results and matching low-memory runtime"
+    },
+    {
+      "old": "78632a7adff7fa9ecbfbf16b4c64e51c2ab2dbd0",
+      "new": "afb0aba8e63d944da84e8ce5310d2754be25793d",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Publish audited RNA current and history training results"
+    },
+    {
+      "old": "990f8d825cdce0a48e967099ec9cfb144177b655",
+      "new": "e0f2ac69dc43e64948ce19ddd55753035edd1c93",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Implement explicit graph RNA ODE and fixed-weight development training"
+    },
+    {
+      "old": "6d5bd5b4729ea5757ccc81b1566dd8e42933dcd9",
+      "new": "9aac86d92e2b291071abefacbf45b2e2c9e5c965",
+      "author_corrected": false,
+      "committer_corrected": false,
+      "removed_invalid_signatures": [
+        "gpgsig"
+      ],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Merge pull request #3 from Yiheng-Yuan/codex/scmultisim-protocol"
+    },
+    {
+      "old": "dfbfcc914db88bb90f3d4365fa6103f3bd760651",
+      "new": "721f80be9ecb930c18ab287b233f52b6a8c5da18",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Merge remote-tracking branch 'origin/main' into codex/q1-modular-64"
+    },
+    {
+      "old": "c83e9e306f1b594138cb59a61de857511d25df41",
+      "new": "762f1e9b6f2b89934ccabd10cc88349b9dfaa324",
+      "author_corrected": true,
+      "committer_corrected": true,
+      "removed_invalid_signatures": [],
+      "tree_preserved": true,
+      "message_and_dates_preserved": true,
+      "subject": "Publish main training workflow and audited 64-gene data release"
+    }
+  ],
+  "rewritten_refs": {
+    "refs/heads/codex/gnw-mac-acceptance": {
+      "old": "3c6f26e4577e18694480230bf1938e9e0baf8403",
+      "new": "48435e2be8fd4dc27750edd1ef1f11866a24774f"
+    },
+    "refs/heads/codex/q1-modular-64": {
+      "old": "c83e9e306f1b594138cb59a61de857511d25df41",
+      "new": "762f1e9b6f2b89934ccabd10cc88349b9dfaa324"
+    },
+    "refs/heads/codex/scmultisim-protocol": {
+      "old": "9a191879a319d4a7dd50bce6f5d1b0ec5881d38e",
+      "new": "a40a1fb4c29fc4f3b871cd92430166824cb14ae2"
+    },
+    "refs/heads/dev": {
+      "old": "e4d4f483f5b132c9023fb13328628c34ad634873",
+      "new": "b49130166141ba421630b4b382ec16b31a266310"
+    },
+    "refs/heads/experiment": {
+      "old": "e4d4f483f5b132c9023fb13328628c34ad634873",
+      "new": "b49130166141ba421630b4b382ec16b31a266310"
+    },
+    "refs/heads/main": {
+      "old": "c83e9e306f1b594138cb59a61de857511d25df41",
+      "new": "762f1e9b6f2b89934ccabd10cc88349b9dfaa324"
+    },
+    "refs/heads/platform/artifact-ledger": {
+      "old": "b65c68ab92f2f53a0edd9bc69a1eb6be0e76c576",
+      "new": "44334df74d8dab310747989e0d35eced7125c8b9"
+    },
+    "refs/tags/q1-modular-64-data-v1": {
+      "old": "c83e9e306f1b594138cb59a61de857511d25df41",
+      "new": "762f1e9b6f2b89934ccabd10cc88349b9dfaa324"
+    }
+  },
+  "execution_provenance": "Historical reports, returned artifacts and source filenames retain the original execution commit IDs. This map supplies equivalent new IDs; source files and source fingerprints are unchanged.",
+  "running_training_source": {
+    "old": "990f8d825cdce0a48e967099ec9cfb144177b655",
+    "new": "e0f2ac69dc43e64948ce19ddd55753035edd1c93",
+    "file_tree_identical": true,
+    "windows_files_or_processes_modified": false
+  },
+  "data_release": {
+    "tag": "q1-modular-64-data-v1",
+    "old_target": "c83e9e306f1b594138cb59a61de857511d25df41",
+    "new_target": "762f1e9b6f2b89934ccabd10cc88349b9dfaa324",
+    "assets_changed": false
+  },
+  "recovery": "An all-ref Git bundle and pre-operation working-tree copies were saved locally before rewriting; backup refs are not pushed publicly.",
+  "push_policy": "Atomic published-head and tag update with an explicit old-value force-with-lease for each ref. GitHub internal pull-request refs and caches are managed separately and may retain old objects."
+}
