@@ -1,0 +1,40 @@
+{
+  "schema": "q1-graph-user-reported-wsl-progress-v1",
+  "date": "2026-10-29",
+  "evidence": "user-pasted terminal output; full returned run directory not yet independently audited",
+  "source_commit": "990f8d825cdce0a48e967099ec9cfb144177b655",
+  "runtime_reported": {
+    "torch": "2.14.0+cu126",
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "environment": "existing grn-q1 Python virtual environment, not legacy Docker image",
+    "eeg_environment_modified": false
+  },
+  "probe_reported": {
+    "status": "passed",
+    "exit_status": 0,
+    "source_checksum_entries_passed": 15,
+    "update": 1,
+    "loss": 0.36749531966634097,
+    "expression": 0.017212647246196866,
+    "distribution": 0.14891985431313515,
+    "expected_edges": 3353.906982421875,
+    "binary_edges_after_update": 4032,
+    "scope": "one longest-horizon forward/backward update; not full-run memory or scientific validation"
+  },
+  "latest_training_reported": {
+    "status": "in_progress",
+    "arm": "sparse-0",
+    "lambda_sparse": 0,
+    "updates": 120,
+    "planned_updates_per_arm": 4800,
+    "loss": 0.024415920255705714,
+    "expression": 0.009465713752433658,
+    "distribution": 0.14950206503272057,
+    "expected_edges": 3352.2197265625,
+    "binary_edges_after_update": 4032
+  },
+  "independent_recomputation": false,
+  "complete_sweep_report_received": false,
+  "graph_recovery_claim": false,
+  "note": "Initial dense candidates and early training loss are not recovered-GRN evidence. Preserve running source and data. Code/doc publication does not complete or restart the Windows task."
+}

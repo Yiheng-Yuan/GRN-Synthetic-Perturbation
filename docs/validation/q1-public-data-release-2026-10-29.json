@@ -1,0 +1,78 @@
+{
+  "schema": "q1-public-data-release-audit-v1",
+  "date": "2026-10-29",
+  "status": "passed",
+  "scope": "Archive integrity, public RNA schema and disclosure audit only; not proof of propagation learnability or stationarity",
+  "archive": {
+    "name": "q1-modular-64-public.tar.gz",
+    "bytes": 11292437,
+    "sha256": "1175528cac46befbd1a97a2e4cf0e6dfd9d52731d1c0efc384ef9314457f3d09",
+    "regular_members": 290,
+    "duplicate_or_unsafe_members": 0
+  },
+  "manifest": {
+    "sha256": "7ce56f42b9b3ebe3206cb6591dba2536dfdb6511128cfce143a83751c97d50de",
+    "schema": "scmultisim-q1-modular-v1",
+    "phase": "development",
+    "status": "complete",
+    "formal_calibration": false,
+    "independent_networks": 1,
+    "retained_metadata": [
+      "public finite-budget stationarity diagnostics, including diagnostic seeds and numerical settings",
+      "references and checksums to omitted private files",
+      "historical BrokenProcessPool error from a prior invocation"
+    ],
+    "historical_error_interpretation": "The unchanged manifest retains a prior worker failure string. All289 public observations are present, complete and checksum-verified in this audit; the error field is not a new failure."
+  },
+  "dataset": {
+    "n_genes": 64,
+    "n_edges_described_by_manifest": 128,
+    "perturbable_targets": 48,
+    "train_targets": 32,
+    "development_held_targets": 16,
+    "dose": 0.7,
+    "sampling_times": [
+      0.25,
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      64.0
+    ],
+    "common_baseline_time": 0.0,
+    "replicates": 3,
+    "cells_per_replicate_per_arm": 128,
+    "targeted_conditions": 288,
+    "observation_files": 289,
+    "rna_arrays": 577,
+    "array_shape": [
+      3,
+      128,
+      64
+    ],
+    "array_dtypes": [
+      "int64"
+    ],
+    "all_arrays_integer_finite_nonnegative": true,
+    "minimum_observed_count": 0,
+    "maximum_observed_count": 32,
+    "all_observation_checksums_match": true
+  },
+  "cell_observations": {
+    "baseline_once": 384,
+    "treated": 110592,
+    "matched_control": 110592,
+    "total": 221568,
+    "definition": "cell snapshots, not unique tracked biological cells or independent networks"
+  },
+  "excluded_payloads": {
+    "private_files": 0,
+    "true_adjacency_or_kinetic_parameter_arrays": 0,
+    "G_or_U_state_arrays": 0,
+    "cross_time_cell_pair_ids": 0,
+    "model_weights_or_checkpoints": 0,
+    "personal_absolute_paths": 0,
+    "credentials_found": 0
+  },
+  "release_boundary": "Only already-opened single-network development RNA data are included; the held-target split has previously been inspected and is not a fresh formal blind test."
+}

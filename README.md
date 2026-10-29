@@ -4,7 +4,9 @@
 
 **状态：持续扰动内核、快照适配器、开发生成入口与 Q1 开发训练已实现；正式实验仍未开始。** 当前是基于 scMultiSim 机制独立实现的 Python 扩展，不是修改后发布的官方 R 包，也不声称与原包逐值等价。正式数值校准、主模型完整验收和 20 网络盲测仍待完成。
 
-**2026-10-29 目标落实纠偏：** 最初实验一已要求恢复 GRN 与传播动力学，研究目标没有改变。已完成的潜变量、RNA 单状态和显式历史运行没有实现二值结构 `W`、边权 `H` 和 `Z=W⊙H`，保留为黑盒神经动力学开发对照。现已新增显式图 RNA 单状态模型、固定权重损失、独立图评分与 Windows 顺序运行入口；W 控制所有跨基因通路。新实现仅完成软件及小型夹具验收，尚未在真实64基因数据上训练或完成 GPU 验收，不能声称恢复正确网络。[模型、命令及结果目录](docs/q1-explicit-graph.md) · [结构验收要求](docs/protocol/q1-structure-contract.md) · [四篇论文权重核查](docs/protocol/q1-loss-literature.md)。
+**2026-10-29 目标落实纠偏：** 最初实验一已要求恢复 GRN 与传播动力学，研究目标没有改变。已完成的潜变量、RNA 单状态和显式历史运行没有实现二值结构 `W`、边权 `H` 和 `Z=W⊙H`，保留为黑盒神经动力学开发对照。现已新增显式图 RNA 单状态模型、固定权重损失、独立图评分与 Windows 顺序运行入口；W 控制所有跨基因通路。软件测试已通过；用户回传的RTX4070日志显示新模型GPU检查通过、无稀疏对照已到120/4800次更新。完整训练与独立结果验收尚未完成，不能声称恢复正确网络。[模型、D盘运行与结果目录](docs/q1-explicit-graph.md) · [结构验收要求](docs/protocol/q1-structure-contract.md) · [四篇论文权重核查](docs/protocol/q1-loss-literature.md) · [用户回传进度记录](docs/validation/q1-explicit-graph-wsl-2026-10-29.json)。
+
+**合成数据下载：** 64基因公开开发RNA数据（约11.3MB）作为[仓库发布附件](https://github.com/Yiheng-Yuan/GRN-Synthetic-Perturbation/releases/tag/q1-modular-64-data-v1)保存；包含共同基线、处理／对照、时点与划分，代码不内嵌原始数据。内容、校验值和读取方法见[数据说明](docs/q1-public-data.md)。这是一张已查看的开发网络，不是新的正式盲测数据。
 
 直接生成第一张开发网络数据：`python -m grn_experiment.generate_scmultisim --config configs/scmultisim-development.json --output results/scmultisim-dev-101`。默认输出 24 基因、16 调控者、40 边网络的初始、90 个候选、验证、最终时序及独立长期分布。命令不训练模型；生成过程使用 CPU（中央处理器），无需 GPU（图形处理器）。[镜像与运行说明](docs/scmultisim-runtime.md)
 
@@ -137,7 +139,7 @@ C_k=\{\theta:D_c(P_{\theta,c},\widehat P_c)\le\epsilon_c,
 | 开发数据生成与 Docker（容器）入口 | 已实现，支持按条件续跑和文件校验 |
 | g、K、反馈间隔、烧入、参数边界与阈值 | 待校准，配置保留 null |
 | Q1 潜变量开发模型 | 已实现并完成首轮单网时间插值训练；未完成正式模型对照与验收 |
-| Q1 显式 W/H/Z RNA 图模型 | 2026-10-29 已实现，软件及小夹具测试；真实数据训练和 GPU 探测待执行 |
+| Q1 显式 W/H/Z RNA 图模型 | 已实现并通过软件测试；用户回传GPU检查通过、首组训练启动；完整结果待回传验收 |
 | Q2 完整参数辨识 | 待实现 |
 | 正式数据、训练和 20 网络结果 | 未运行 |
 
