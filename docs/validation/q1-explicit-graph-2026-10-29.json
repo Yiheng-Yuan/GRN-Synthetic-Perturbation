@@ -1,0 +1,52 @@
+{
+  "schema": "q1-explicit-graph-software-validation-v1",
+  "date": "2026-10-29",
+  "status": "implemented_and_software_tested_not_real_data_trained",
+  "base_commit": "78632a7adff7fa9ecbfbf16b4c64e51c2ab2dbd0",
+  "full_test": {
+    "passed": 516,
+    "subtests": 1296,
+    "seconds": 26.22,
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python -m pytest -q -p no:cacheprovider"
+  },
+  "checks": [
+    "binary W and exact Z=W*H",
+    "all cross-gene inputs gated",
+    "monotone source/receiver and signed effects",
+    "shared fixed rollout gates for treatment/control",
+    "nonnegative RNA and analytic toy solver checks",
+    "mean plus population plus expected edge-count loss, fixed coefficients",
+    "third repeat cannot change fit",
+    "no held-response decoding during internal selection",
+    "exact interrupted training recovery",
+    "long-time step-halving runtime diagnostic and failure rule",
+    "subrun source/runtime verification",
+    "actual tiny CPU training-to-runner artifact integration",
+    "shell syntax and command usage"
+  ],
+  "tests_scope": "unit tests and tiny synthetic CPU fixtures, not research training",
+  "source_sha256": {
+    "src/grn_experiment/q1_graph.py": "665092359933f7c435af722e58e67969c76386d340f641bf99069dea80846c3c",
+    "src/grn_experiment/q1_graph_train.py": "3d85f00217cb580951472f0307e5da9f7f91bc62fbac362336df47db80ce3ebc",
+    "src/grn_experiment/q1_graph_evaluation.py": "2e917eb35e9bbd2f8206e044ae7540809144810b70e4933849aa40bedaeb1dfd",
+    "src/grn_experiment/q1_pilot_data.py": "4584c8e8b5e98ba7c90d831df747462d6a6eb76d1d8e073c1154777d33b99b58",
+    "src/grn_experiment/q1_pilot_evaluation.py": "619367c8ee352223b0d35a087b49b8444c6df476a8a1828f34d4164898568178",
+    "src/grn_experiment/protocol.py": "0476ffd862142e6df5f48ffa606b417fe60baa5d28f6de3694dc2eee250db848"
+  },
+  "not_executed": [
+    "new model CUDA probe",
+    "64-gene candidate training",
+    "independent true-graph scoring of a trained new model",
+    "new Docker image build",
+    "formal blind experiments",
+    "SSH remote training"
+  ],
+  "existing_data_changed": false,
+  "old_results_changed": false,
+  "assumptions": [
+    "mature RNA effective Markov closure",
+    "monotone neural functions with additive signed graph input",
+    "positive production and linear decay",
+    "unseen target efficiency remains initialized, not estimated"
+  ]
+}

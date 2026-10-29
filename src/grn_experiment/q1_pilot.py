@@ -1,8 +1,9 @@
-"""First unknown-form Q1 learner: a development-only latent neural ODE.
+"""Shared fitting/evaluation for development-only Q1 neural dynamics.
 
 Only opened RNA populations and nominal interventions enter this module.
-The two latent coordinates per gene are learned proxy coordinates, NOT the
-simulator's G/U/M, and their derivatives are not claimed to be a GRN.
+The original latent arm uses two proxy coordinates per gene. The optional
+RNA-current/history arms retain only RNA, with an explicit delayed RNA buffer
+in the history arm. No model's derivatives are claimed to be a recovered GRN.
 """
 
 from __future__ import annotations
@@ -39,8 +40,15 @@ class PilotConfig:
     seed: int = 20261022
     fit_times: tuple[float, ...] = (0.25, 4.0)
     condition_microbatch: int | None = None
+    model_kind: str = "latent_neural_ode"
+    history_lag: float = 1.0
 
     def __post_init__(self):
+        if self.model_kind not in ("latent_neural_ode", "rna_current", "rna_history"):
+            raise ValueError("unknown model_kind")
+        if (isinstance(self.history_lag, bool) or not math.isfinite(self.history_lag)
+                or self.history_lag < self.step):
+            raise ValueError("history_lag must be finite and at least the integration step")
         for name in ("updates", "conditions_per_update", "cells", "projections", "hidden"):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or value < 1:
@@ -135,6 +143,20 @@ class LatentPerturbationODE(nn.Module):
         return state
 
 
+def build_model(n_genes: int, config: PilotConfig) -> nn.Module:
+    """Construct the registered state space; RNA arms never create latent h."""
+    if config.model_kind == "latent_neural_ode":
+        return LatentPerturbationODE(n_genes, config.hidden)
+    from .q1_rna import RNAPerturbationODE
+    return RNAPerturbationODE(n_genes, config.hidden,
+        history_lag=config.history_lag if config.model_kind == "rna_history" else None)
+
+
+def _learner_sources(config: PilotConfig) -> tuple[str, ...]:
+    names = ("q1_pilot.py", "q1_pilot_data.py", "q1_pilot_evaluation.py", "protocol.py")
+    return names + (("q1_rna.py",) if config.model_kind != "latent_neural_ode" else ())
+
+
 def distribution_loss(predicted: torch.Tensor, observed: torch.Tensor,
                       directions: torch.Tensor) -> torch.Tensor:
     """Squared sliced Wasserstein distance between unpaired log populations."""
@@ -192,6 +214,9 @@ def _checkpoint_context(baseline, observations, config, device, metadata):
     return json.loads(json.dumps({"config": asdict(config), "device": str(device),
                                  "fit_input_sha256": digest.hexdigest(),
                                  "learner_sha256": _sha256(Path(__file__)),
+                                 "model_sources_sha256": {
+                                     name: _sha256(Path(__file__).with_name(name))
+                                     for name in _learner_sources(config)},
                                  "runtime": runtime,
                                  "metadata": metadata}, allow_nan=False))
 
@@ -233,7 +258,7 @@ def fit_pilot(baseline_fit: np.ndarray,
               on_update: Callable[[dict], None] | None = None,
               checkpoint_path: Path | None = None, checkpoint_every: int = 0,
               resume: bool = False, checkpoint_metadata: dict | None = None
-              ) -> tuple[LatentPerturbationODE, list[dict]]:
+              ) -> tuple[nn.Module, list[dict]]:
     """Fixed-budget fitting on explicitly allowed times and fit-only targets.
 
     The population loss has no cell-row correspondence. Finite minibatch
@@ -260,7 +285,7 @@ def fit_pilot(baseline_fit: np.ndarray,
         raise ValueError("existing training checkpoint requires explicit resume")
     torch.manual_seed(config.seed)
     rng = np.random.default_rng(config.seed)
-    model = LatentPerturbationODE(n_genes, config.hidden).to(device)
+    model = build_model(n_genes, config).to(device)
     start = torch.as_tensor(baseline_fit, device=device)
     scale = start.std(dim=0, correction=0).clamp_min(1.0)
     keys = sorted(observations, key=lambda c: (c.time, c.target, c.dose))
@@ -279,7 +304,14 @@ def fit_pilot(baseline_fit: np.ndarray,
         raise ValueError("all configured fitting times are required")
     if len({tuple((k.target, k.dose) for k in values) for values in groups.values()}) != 1:
         raise ValueError("every fitting time must cover the same target/dose groups")
-    directions = F.normalize(torch.randn(n_genes, config.projections, device=device), dim=0)
+    if config.model_kind == "latent_neural_ode":
+        directions = F.normalize(torch.randn(n_genes, config.projections, device=device), dim=0)
+    else:
+        # Architecture widths consume different initialization draws. Use an
+        # independent CPU stream so both RNA arms see exactly the same loss.
+        projection_rng = torch.Generator(device="cpu").manual_seed(config.seed + 1)
+        directions = F.normalize(torch.randn(n_genes, config.projections,
+                                             generator=projection_rng), dim=0).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
     history = []
     context = (_checkpoint_context(baseline_fit, observations, config, device, checkpoint_metadata)
@@ -305,7 +337,8 @@ def fit_pilot(baseline_fit: np.ndarray,
         batch = len(chosen)
         indices = rng.integers(0, len(start), (batch, config.cells))
         initial_counts = start[torch.as_tensor(indices, device=device)]
-        noise = torch.randn(initial_counts.shape, device=device)
+        noise = (torch.randn(initial_counts.shape, device=device)
+                 if config.model_kind == "latent_neural_ode" else None)
         intervention = torch.zeros_like(initial_counts)
         for index, key in enumerate(chosen):
             intervention[index, :, key.target] = key.dose
@@ -321,7 +354,8 @@ def fit_pilot(baseline_fit: np.ndarray,
             count, weight = end - offset, (end - offset) / batch
             # Re-encode per chunk: sharing an encoder graph across backward()
             # calls would retain the long integration graph or reuse it unsafely.
-            initial = model.initial_state(initial_counts[part], noise[part])
+            initial = (model.initial_state(initial_counts[part], noise[part])
+                       if noise is not None else model.initial_state(initial_counts[part]))
             joint_initial = torch.cat((initial, initial), dim=0)
             inputs = intervention[part]
             joint_input = torch.cat((inputs, torch.zeros_like(inputs)), dim=0)
@@ -351,7 +385,7 @@ def fit_pilot(baseline_fit: np.ndarray,
 
 
 @torch.no_grad()
-def predict_population(model: LatentPerturbationODE, baseline_fit: np.ndarray,
+def predict_population(model: nn.Module, baseline_fit: np.ndarray,
                        condition: Condition, *, cells: int = 128, seed: int = 0,
                        step: float = 0.25) -> tuple[np.ndarray, np.ndarray]:
     """Draw predictions from a fit-only baseline; no future observations input."""
@@ -362,8 +396,11 @@ def predict_population(model: LatentPerturbationODE, baseline_fit: np.ndarray,
     baseline_fit = np.asarray(baseline_fit)
     indices = rng.integers(0, len(baseline_fit), cells)
     counts = torch.as_tensor(baseline_fit[indices], dtype=torch.float32, device=device)
-    noise = torch.as_tensor(rng.standard_normal(counts.shape), dtype=torch.float32, device=device)
-    initial = model.initial_state(counts, noise)
+    if isinstance(model, LatentPerturbationODE):
+        noise = torch.as_tensor(rng.standard_normal(counts.shape), dtype=torch.float32, device=device)
+        initial = model.initial_state(counts, noise)
+    else:
+        initial = model.initial_state(counts)
     intervention = torch.zeros_like(counts)
     if condition.target is not None:
         intervention[:, condition.target] = condition.dose
@@ -402,7 +439,10 @@ def _prepare_experiment(args):
         data = load_opened_initial(args.archive, args.prefix)
         fitting, held = split_fit_interpolation(data)
         config = PilotConfig(updates=args.updates or 400, seed=args.seed)
-    config = replace(config, condition_microbatch=getattr(args, "condition_microbatch", None))
+    config = replace(config, condition_microbatch=getattr(args, "condition_microbatch", None),
+                     model_kind=getattr(args, "model_kind", "latent_neural_ode"),
+                     history_lag=getattr(args, "history_lag", 1.0),
+                     hidden=config.hidden if getattr(args, "hidden", None) is None else args.hidden)
     return data, fitting, held, config
 
 
@@ -426,8 +466,8 @@ def _evaluate(model, baseline, fitting, held, config, fullcourse):
         # All held-target replicates are untouched by this fit; fit targets
         # are checked on replicate 2 only. Counts are not network replicates.
         replicates = range(3) if fullcourse and key in held else (2,)
-        for name in ("latent_neural_ode", *comparators):
-            if name == "latent_neural_ode":
+        for name in (config.model_kind, *comparators):
+            if name == config.model_kind:
                 a, b = predict_population(model, baseline, key, seed=config.seed, step=config.step)
             else:
                 a, b = comparators[name].predict(key)
@@ -458,7 +498,7 @@ def _integration_check(model, baseline, conditions, predictions, config):
     for key in conditions:
         finer = predict_population(model, baseline, key, seed=config.seed, step=config.step / 2)
         for arm, value in zip(("treated", "control"), finer, strict=True):
-            coarse = predictions[f"latent_neural_ode_{_prediction_id(key)}_{arm}"]
+            coarse = predictions[f"{config.model_kind}_{_prediction_id(key)}_{arm}"]
             max_cell_error = max(max_cell_error, float(np.max(np.abs(value - coarse))))
             max_mean_error = max(max_mean_error, float(np.max(np.abs(value.mean(0) - coarse.mean(0)))))
     return {"coarse_step": config.step, "fine_step": config.step / 2,
@@ -491,13 +531,21 @@ def _run_experiment(args, data, fitting, held, config):
     baseline = data.baseline[:2].reshape(-1, data.baseline.shape[-1]).copy()
     fit_targets = sorted({key.target for key in fitting})
     test_targets = sorted({key.target for key in held})
-    source_hashes = {name: _sha256(Path(__file__).with_name(name)) for name in
-                     ("q1_pilot.py", "q1_pilot_data.py", "q1_pilot_evaluation.py", "protocol.py")}
+    source_hashes = {name: _sha256(Path(__file__).with_name(name))
+                     for name in _learner_sources(config)}
     snapshot_hashes = {**source_hashes, "__init__.py": _sha256(Path(__file__).with_name("__init__.py"))}
     modular = data.provenance.get("schema") == "scmultisim-q1-modular-v1"
     mode = ("modular_fullcourse_target_holdout" if modular else
             "fullcourse_target_holdout" if args.fullcourse else "legacy_time_holdout")
-    plan = {"mode": mode,
+    plan = {"mode": mode, "model_kind": config.model_kind,
+            "state_contract": ({"state": "log-RNA plus learned latent coordinate per gene",
+                                 "integrator": "RK4"} if config.model_kind == "latent_neural_ode" else
+                                {"state": "nonnegative RNA only; identity decoder",
+                                 "integrator": ("projected RK4; linear interpolation of generated history"
+                                                if config.model_kind == "rna_history" else "projected RK4"),
+                                 "history_lag": config.history_lag if config.model_kind == "rna_history" else None,
+                                 "pre_zero_history": "constant initial RNA" if config.model_kind == "rna_history" else None,
+                                 "observed_history_inputs": False, "latent_noise": False}),
             "config": asdict(config), "split_seed": None if modular else args.split_seed,
             "split_rule": ("generator public registration fixed from topology before RNA"
                            if modular else "response-independent seeded target split" if args.fullcourse
@@ -568,7 +616,7 @@ def _run_experiment(args, data, fitting, held, config):
         (args.output / "failure.json").rename(args.output / f"failure-before-resume-{time.time_ns()}.json")
     # Freeze the fitted weights before any held-target scoring.
     torch.save({"state_dict": model.cpu().state_dict(), "n_genes": model.n_genes,
-                "hidden": config.hidden, "config": asdict(config),
+                "hidden": config.hidden, "config": asdict(config), "model_kind": config.model_kind,
                 "note": "development proxy, not simulator parameters or inferred GRN"}, args.output / "model.pt")
     scores, predictions = _evaluate(model, baseline, fitting, held, config, args.fullcourse)
     check = (_integration_check(model, baseline, tuple({**fitting, **held}), predictions, config)
@@ -602,6 +650,12 @@ def _run_experiment(args, data, fitting, held, config):
                               "one network; cell counts and conditions are not independent network samples"]}
     if modular:
         report["limitations"].append("dose 0.7 only; no unseen-dose evaluation in this development run")
+        if config.model_kind != "latent_neural_ode":
+            report["limitations"].extend([
+                "held-target results were inspected in the earlier latent-model run; this is a development comparison",
+                "shared original population/effect loss retained; improved accuracy is not guaranteed",
+                "positivity projection and interpolated delay require the reported step-halving check",
+                "unpaired snapshots do not establish true cell histories or biological Markov order"])
     elif args.fullcourse:
         report["limitations"].append("dose 0.7 only; dose 0.3 lacks long-term observations")
     _write_json(args.output / "history.json", history)
@@ -625,6 +679,11 @@ def main(argv=None) -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--updates", type=int)
     parser.add_argument("--seed", type=int, default=20261022)
+    parser.add_argument("--model-kind", choices=("latent_neural_ode", "rna_current", "rna_history"),
+                        default="latent_neural_ode")
+    parser.add_argument("--history-lag", type=float, default=1.0,
+                        help="fixed delay in simulation time units, not a count of sampling times")
+    parser.add_argument("--hidden", type=int, help="MLP width; temporary features, not persistent memory")
     parser.add_argument("--fullcourse", action="store_true", help="dose 0.7, all available times, 4/2 target split")
     parser.add_argument("--split-seed", type=int, default=20261022)
     parser.add_argument("--device", choices=("cpu", "mps", "cuda"), default="cpu")

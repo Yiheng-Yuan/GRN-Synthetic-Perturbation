@@ -84,7 +84,8 @@ def _gpu_memory(report: dict, device: torch.device) -> None:
     report["total_bytes"] = total
 
 
-def run_probe(dataset: Path, output: Path) -> dict:
+def run_probe(dataset: Path, output: Path, *, model_kind="latent_neural_ode",
+              hidden=64, history_lag=1.0) -> dict:
     """Reserve a fresh report, require CUDA, and measure one optimizer update.
 
     The reported elapsed time includes model/optimizer setup and the complete
@@ -92,6 +93,8 @@ def run_probe(dataset: Path, output: Path) -> dict:
     stability guarantee for all subsequent updates of a complete fit.
     """
     # Exclusive creation happens before work. Never overwrite a prior report.
+    sources = LEARNER_SOURCES + (("src/grn_experiment/q1_rna.py",)
+                                 if model_kind != "latent_neural_ode" else ())
     with Path(output).open("x", encoding="utf-8") as stream:
         report = {
             "schema": "q1-gpu-probe-v1", "status": "running",
@@ -100,7 +103,7 @@ def run_probe(dataset: Path, output: Path) -> dict:
             "python_version": platform.python_version(), "numpy_version": np.__version__,
             "torch_version": torch.__version__, "torch_cuda_version": torch.version.cuda,
             "source_sha256": {name: hashlib.sha256((PROJECT / name).read_bytes()).hexdigest()
-                              for name in LEARNER_SOURCES},
+                              for name in sources},
             "probe_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
             "condition_microbatch": 1, "effective_conditions": 4, "cells_per_condition": 64,
             "elapsed_seconds": None,
@@ -115,9 +118,10 @@ def run_probe(dataset: Path, output: Path) -> dict:
             baseline, observations, provenance = load_probe_data(dataset)
             report.update(provenance)
             config = PilotConfig(updates=1, conditions_per_update=4, condition_microbatch=1,
-                                 cells=64, projections=24, hidden=64, step=.25,
+                                 cells=64, projections=24, hidden=hidden, step=.25,
                                  learning_rate=.001, effect_weight=1., target_weight=0.,
-                                 seed=20261022, fit_times=(provenance["actual_time"],))
+                                 seed=20261022, fit_times=(provenance["actual_time"],),
+                                 model_kind=model_kind, history_lag=history_lag)
             report["config"] = {**asdict(config), "fit_times": list(config.fit_times)}
             torch.set_num_threads(4)
             torch.cuda.synchronize(device)
@@ -154,8 +158,13 @@ def main(argv=None) -> int:
     parser.add_argument("--dataset", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True,
                         help="A new JSON file in an existing writable directory")
+    parser.add_argument("--model-kind", choices=("latent_neural_ode", "rna_current", "rna_history"),
+                        default="latent_neural_ode")
+    parser.add_argument("--hidden", type=int, default=64)
+    parser.add_argument("--history-lag", type=float, default=1.0)
     args = parser.parse_args(argv)
-    result = run_probe(args.dataset, args.output)
+    result = run_probe(args.dataset, args.output, model_kind=args.model_kind,
+                       hidden=args.hidden, history_lag=args.history_lag)
     print(json.dumps(result, indent=2, allow_nan=False), flush=True)
     return 0 if result["status"] == "passed" else 1
 

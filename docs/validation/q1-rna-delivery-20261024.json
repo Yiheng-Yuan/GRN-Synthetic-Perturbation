@@ -1,0 +1,137 @@
+{
+  "schema": "q1-rna-delivery-validation-v1",
+  "date": "2026-10-24",
+  "status": "delivery_built_and_cpu_verified",
+  "scope": "software and limited numerical checks, not new full GPU training or scientific efficacy",
+  "source_base_commit": "b0fca6bcf4ff44b20f637f62af29983c114989fb",
+  "source_identity": "exact source_sha256 below; optional image/working-tree commit is not used to replace file fingerprints",
+  "image": {
+    "file": "grn-q1-rna-20261024-dev1-image.tar",
+    "bytes": 3988773376,
+    "sha256": "7ab5da0fd0a6c400dadf33628fc70a10c0ecb03c0bb1157faa93ac681f5c7edb",
+    "architecture": "amd64",
+    "os": "linux",
+    "image_config_sha256": "447d3d196b4f0ae4bfcbea6376abfb6af686de080b688a71fab883777d02bf80",
+    "entrypoint": [
+      "/bin/bash",
+      "/app/tools/scmultisim/run_q1_rna.sh"
+    ],
+    "cmd": null,
+    "verified_blobs": 15,
+    "layers": 13
+  },
+  "image_manifest_id": "2270709829a0337cb04c1a24fb937be4cba58e1c1f9662e0eaa1783c9a98d5fe",
+  "tests": {
+    "mac_full": {
+      "passed": 462,
+      "subtests": 1288,
+      "seconds": 26.23
+    },
+    "native_delivery": {
+      "passed": 230,
+      "seconds": 12.33
+    },
+    "amd64_image_build": {
+      "passed": 218,
+      "seconds": 139.14
+    }
+  },
+  "mac_actual_longtime": {
+    "conditions_per_update": 4,
+    "cells": 64,
+    "microbatch": 1,
+    "updates_per_arm": 1,
+    "time": 64,
+    "device": "cpu",
+    "rna_current": {
+      "loss": 0.0841958113014698,
+      "step_halving_max_cell_difference": 0.000148773193359375
+    },
+    "rna_history": {
+      "loss": 0.10335854813456535,
+      "step_halving_max_cell_difference": 0.0000782012939453125
+    }
+  },
+  "image_actual_longtime": {
+    "conditions_per_update": 2,
+    "cells": 8,
+    "updates_per_arm": 1,
+    "scope": "amd64 CPU small-batch actual-data longest-time update; not CUDA validation",
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cu126",
+    "cuda_runtime": "12.6",
+    "cuda_available": false,
+    "provenance": {
+      "manifest_sha256": "7ce56f42b9b3ebe3206cb6591dba2536dfdb6511128cfce143a83751c97d50de",
+      "verified_observation_sha256": {
+        "observations/q1/82715bbb1431b637099f0c67.npz": "3fc1e289f9de6314735015b6b76e7198f2fee36404965e2c0202113fc51dd473",
+        "observations/q1/bd41c49f5f1de8d703d789fe.npz": "9702507543499948b14967ba896e1b70f99465352463b3a021b7ee8e1158b393",
+        "observations/q1/72661c2c043448dc0c4e3a5f.npz": "0c3b3f0d1a5e3c1611f83bc562efc1af6467233e2ef824890be44c7c87b94670",
+        "observations/q1/b6df13c5627a0a3d713b2ff1.npz": "b6251e0471320293934258edea0f456b3201e0778dab14799b7e26461a6e0c29",
+        "observations/q1/0d08cfa11d3166fa9c148021.npz": "0dcb654e595d4be4e800fb1adc719f690fd7578bc7d2b969de388cfd8a5ecd49"
+      },
+      "verified_observation_count": 5,
+      "n_genes": 64,
+      "actual_time": 64,
+      "target_ids": [
+        2,
+        4,
+        8,
+        10
+      ],
+      "fit_replicates": [
+        0,
+        1
+      ],
+      "held_targets_read": false,
+      "third_replicate_used_for_fitting": false,
+      "private_files_read": false
+    },
+    "source_sha256": {
+      "__init__.py": "3f23bffc86c49638d7e2e9d4d1e81275d66226981f585fd0904db0214b655ab8",
+      "protocol.py": "0476ffd862142e6df5f48ffa606b417fe60baa5d28f6de3694dc2eee250db848",
+      "q1_pilot.py": "b295281d84c4a96dceefc5c84abc75da99d01e5eb94c32803336e2271c283e71",
+      "q1_pilot_data.py": "ad4a91454e49ce44195a89f2baee956537eefb9cfe4f6bb1fbb78f5260f013b0",
+      "q1_pilot_evaluation.py": "619367c8ee352223b0d35a087b49b8444c6df476a8a1828f34d4164898568178",
+      "q1_rna.py": "186162c13ab763702d9c8a8126666192b0ef27d7b4b6d359dc313b46542333ce"
+    },
+    "arms": {
+      "rna_current": {
+        "loss": 0.33955420553684235,
+        "seconds": 58.08055994699998,
+        "parameter_count": 12609
+      },
+      "rna_history": {
+        "loss": 0.3332141935825348,
+        "seconds": 59.250902702000076,
+        "parameter_count": 12720
+      }
+    }
+  },
+  "independent_delay_check": {
+    "systems": 12,
+    "passed": 12,
+    "fine_step_max_absolute_error": 0.0002313657230059718,
+    "scope": "controlled analytic delayed equation and its parameter gradient; read-only second-agent check"
+  },
+  "no_gpu_entry": {
+    "tested": true,
+    "exit_status": 1,
+    "expected": "explicit CUDA refusal; failure JSON and log preserved"
+  },
+  "artifact_audit": {
+    "image_blobs_verified": 15,
+    "code_archive_regular_files": 18,
+    "public_data_regular_files": 290,
+    "image_sources_equal_native_bundle": true,
+    "forbidden_payloads_found": false
+  },
+  "unverified": [
+    "New full CUDA training, peak CUDA memory and training duration",
+    "Whether either new model improves response prediction",
+    "GRN recovery and biological memory",
+    "Reload of exported image into a second Docker installation"
+  ]
+}

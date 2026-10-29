@@ -16,3 +16,12 @@
 !tools/scmultisim/
 !tools/scmultisim/run_q1_h200.sh
 !tools/scmultisim/q1_h200_smoke.py
+# RNA-current/history delivery for legacy builders.
+!Dockerfile.q1-rna
+!Dockerfile.q1-rna.dockerignore
+!tests/test_q1_rna.py
+!tests/test_q1_rna_training.py
+!tests/test_q1_rna_delivery.py
+!tools/scmultisim/q1_gpu_probe.py
+!tools/scmultisim/q1_rna_run.py
+!tools/scmultisim/run_q1_rna.sh

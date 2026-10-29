@@ -1,0 +1,20 @@
+# Separate immutable tag/archive from the already trained latent-h image.
+FROM pytorch/pytorch:2.14.0-cuda12.6-cudnn9-runtime@sha256:a77983eb7a3042ccf41a94da547a7f54a47fb70da15c36d67a8e8a329ebaa098
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app/src \
+    OPENBLAS_NUM_THREADS=4 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4
+WORKDIR /app
+RUN python -m venv --without-pip --system-site-packages /opt/q1-venv
+ENV PATH=/opt/q1-venv/bin:${PATH}
+RUN python -m pip install --no-cache-dir --only-binary=:all: numpy==2.5.3 pytest==9.1.1 \
+    && python -c "import sys,numpy,torch; assert sys.version_info >= (3,12); assert numpy.__version__ == '2.5.3'; assert torch.__version__.split('+')[0] == '2.14.0'; assert torch.version.cuda.startswith('12.6')"
+COPY src/grn_experiment/__init__.py src/grn_experiment/protocol.py \
+     src/grn_experiment/q1_pilot.py src/grn_experiment/q1_pilot_data.py \
+     src/grn_experiment/q1_pilot_evaluation.py src/grn_experiment/q1_rna.py /app/src/grn_experiment/
+COPY tools/scmultisim/q1_gpu_probe.py tools/scmultisim/q1_rna_run.py \
+     tools/scmultisim/run_q1_rna.sh /app/tools/scmultisim/
+COPY tests/test_q1_pilot.py tests/test_q1_pilot_data.py tests/test_q1_pilot_evaluation.py \
+     tests/test_q1_rna.py tests/test_q1_rna_training.py tests/test_q1_rna_delivery.py /app/tests/
+RUN python -m pytest -q -p no:cacheprovider tests/test_q1_rna.py \
+    tests/test_q1_rna_training.py tests/test_q1_pilot.py tests/test_q1_pilot_data.py \
+    tests/test_q1_pilot_evaluation.py tests/test_q1_rna_delivery.py
+ENTRYPOINT ["/bin/bash", "/app/tools/scmultisim/run_q1_rna.sh"]

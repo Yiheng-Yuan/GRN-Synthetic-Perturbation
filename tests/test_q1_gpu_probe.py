@@ -166,6 +166,27 @@ def test_probe_requires_gpu_and_never_overwrites_a_report(tmp_path, monkeypatch)
     assert path.read_bytes() == original
 
 
+@pytest.mark.parametrize("kind,hidden", [("rna_current", 64), ("rna_history", 51)])
+def test_rna_probe_registers_exact_model_and_new_source(tmp_path, monkeypatch, kind, hidden):
+    module = _module()
+    _dataset(tmp_path / "data")
+    _fake_cuda(module, monkeypatch)
+
+    def fake_fit(_baseline, _observations, *, config, device):
+        assert config.model_kind == kind and config.hidden == hidden
+        assert config.history_lag == 1. and config.fit_times == (64.,)
+        assert device == "cuda:0"
+        return None, [{"update": 1, "time": 64., "loss": .1}]
+
+    monkeypatch.setattr(module, "fit_pilot", fake_fit)
+    report = module.run_probe(tmp_path / "data", tmp_path / "probe.json",
+                              model_kind=kind, hidden=hidden)
+    assert report["status"] == "passed"
+    assert report["config"]["model_kind"] == kind
+    assert report["source_sha256"]["src/grn_experiment/q1_rna.py"] == hashlib.sha256(
+        (PROJECT / "src/grn_experiment/q1_rna.py").read_bytes()).hexdigest()
+
+
 @pytest.mark.parametrize("failure", ["oom", "nonfinite"])
 def test_probe_preserves_failure_report_instead_of_claiming_pass(tmp_path, monkeypatch, failure):
     module = _module()

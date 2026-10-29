@@ -366,7 +366,7 @@ def _modular_layout(manifest: dict) -> tuple[tuple[int, ...], tuple[int, int, in
     return targets, (3, cells, genes), conditions, registration
 
 
-def load_modular_q1(directory: Path) -> OpenedInitialData:
+def load_modular_q1(directory: Path, *, scope: str = "all") -> OpenedInitialData:
     """Load the 64-gene public Q1 RNA grid and its pre-RNA target split.
 
     The common long endpoint is an actual finite sampling time, not a forced
@@ -374,11 +374,17 @@ def load_modular_q1(directory: Path) -> OpenedInitialData:
     diagnostic by that time. Checksums ensure consistency with the supplied
     manifest; they do not authenticate the publisher or prove stationarity.
     The learner receives no matrix, module identity, latent G/U, or efficiency.
+    ``scope='train'`` decodes only the registered training targets, so internal
+    hyperparameter validation can run with held-target files entirely absent.
     """
     directory = Path(directory).resolve()
     payload = _directory_payload(directory, "manifest.json", _MAX_MANIFEST_BYTES)
     manifest = _json(payload)
     targets, shape, conditions, registration = _modular_layout(manifest)
+    if scope not in ("all", "train"):
+        raise ValueError("modular Q1 scope must be all or train")
+    if scope == "train":
+        targets = tuple(registration["train"])
     _, baseline_report = _diagnostic(manifest.get("baseline_stationarity"), None, 0.)
     long_time = manifest.get("common_longterm_time")
     if type(long_time) not in (int, float) or not np.isfinite(long_time) or long_time <= 8:
@@ -414,7 +420,8 @@ def load_modular_q1(directory: Path) -> OpenedInitialData:
         "n_genes": shape[2], "cells_per_replicate": shape[1],
         "registered_split": registration, "decoded_private_files": 0,
         "decoded_private_or_sealed_files": 0,
-        "observation_scope": "modular_q1_all_registered_targets_dose_0.7",
+        "observation_scope": ("modular_q1_all_registered_targets_dose_0.7" if scope == "all"
+                              else "modular_q1_registered_train_targets_only_dose_0.7"),
         "common_longterm_time": float(long_time),
         "longterm_interpretation": "finite_time_samples_after_passed_distribution_diagnostic_not_fixed_points",
         "test_status": "development_pre_registered_target_holdout_not_formal_network_blind_test",
