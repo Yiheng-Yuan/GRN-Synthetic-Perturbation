@@ -1,0 +1,282 @@
+{
+  "schema": "q2-four-gene-forward-check-v1",
+  "status": "completed",
+  "scope": "scorer-side development oracle with true parameters; no fitted parameters",
+  "runtime": {
+    "platform": "Darwin",
+    "machine": "arm64",
+    "python": "3.14.3",
+    "numpy": "2.5.3",
+    "device": "cpu"
+  },
+  "seeds": {
+    "network": 101,
+    "stationarity": 501,
+    "observed": 505,
+    "oracle": 506
+  },
+  "parameter_sha256": "380ce49140c3563e25222e38191637ac807478e207a2b1b69f9944f85f1df3a7",
+  "tau": 0.03125,
+  "cells_per_replicate_per_arm": 128,
+  "stationarity": {
+    "status": "diagnostic_passed",
+    "burnin": 48.0,
+    "config": {
+      "min_time": 16.0,
+      "max_time": 128.0,
+      "window": 8.0,
+      "consecutive_windows": 3,
+      "mean_rtol": 0.15,
+      "variance_rtol": 0.25,
+      "distribution_tol": 0.2,
+      "atol": 0.1,
+      "diagnostic_cells": 256,
+      "samples_per_window": 3
+    }
+  },
+  "used_mature_rna_counts_only": true,
+  "replicates_zero_based": {
+    "oracle_prediction": [
+      0,
+      1
+    ],
+    "observed_reference": [
+      0,
+      1
+    ],
+    "observed_scoring": [
+      2
+    ]
+  },
+  "scoring_groups_by_target": {
+    "direct_target": {
+      "0": [
+        0
+      ],
+      "1": [
+        1
+      ]
+    },
+    "one_hop": {
+      "0": [
+        1,
+        2
+      ],
+      "1": [
+        2
+      ]
+    },
+    "isolated": {
+      "0": [
+        3
+      ],
+      "1": [
+        3
+      ]
+    }
+  },
+  "baseline": {
+    "observed_third_repeat_mean": [
+      7.203125,
+      6.296875,
+      3.265625,
+      2.5078125
+    ],
+    "oracle_first_two_repeat_mean": [
+      7.2109375,
+      6.69921875,
+      3.6171875,
+      2.57421875
+    ],
+    "rmse": 0.26923387127441123
+  },
+  "conditions": [
+    {
+      "split": "development_times",
+      "target": 0,
+      "dose": 0.7,
+      "time": 1.0,
+      "check_response": [
+        -1.21875,
+        -0.0390625,
+        0.046875,
+        -0.1015625
+      ],
+      "observed_fit_response": [
+        -1.21875,
+        -0.41015625,
+        0.19921875,
+        -0.08984375
+      ],
+      "oracle_response": [
+        -0.59765625,
+        0.03515625,
+        0.12109375,
+        0.0234375
+      ]
+    },
+    {
+      "split": "development_times",
+      "target": 1,
+      "dose": 0.7,
+      "time": 1.0,
+      "check_response": [
+        -0.8046875,
+        -0.2265625,
+        -0.1171875,
+        0.2890625
+      ],
+      "observed_fit_response": [
+        0.296875,
+        -0.73828125,
+        -0.28125,
+        0.0
+      ],
+      "oracle_response": [
+        -0.1171875,
+        -0.625,
+        -0.01171875,
+        -0.18359375
+      ]
+    },
+    {
+      "split": "development_times",
+      "target": 0,
+      "dose": 0.7,
+      "time": 4.0,
+      "check_response": [
+        -4.21875,
+        -0.015625,
+        -0.0625,
+        0.0234375
+      ],
+      "observed_fit_response": [
+        -3.65625,
+        -0.17578125,
+        -0.1796875,
+        -0.1328125
+      ],
+      "oracle_response": [
+        -3.78515625,
+        -0.21484375,
+        0.1484375,
+        0.40625
+      ]
+    },
+    {
+      "split": "development_times",
+      "target": 1,
+      "dose": 0.7,
+      "time": 4.0,
+      "check_response": [
+        -0.109375,
+        -2.8046875,
+        -0.1875,
+        0.0390625
+      ],
+      "observed_fit_response": [
+        0.07421875,
+        -2.6796875,
+        0.08984375,
+        -0.140625
+      ],
+      "oracle_response": [
+        0.2578125,
+        -2.78125,
+        -0.03515625,
+        -0.140625
+      ]
+    },
+    {
+      "split": "held_time",
+      "target": 0,
+      "dose": 0.7,
+      "time": 2.0,
+      "check_response": [
+        -2.0859375,
+        0.578125,
+        -0.2890625,
+        0.2734375
+      ],
+      "observed_fit_response": [
+        -2.28125,
+        0.21484375,
+        -0.0625,
+        -0.1953125
+      ],
+      "oracle_response": [
+        -2.5546875,
+        -0.38671875,
+        -0.0859375,
+        -0.01171875
+      ]
+    },
+    {
+      "split": "held_time",
+      "target": 1,
+      "dose": 0.7,
+      "time": 2.0,
+      "check_response": [
+        0.3671875,
+        -2.375,
+        0.390625,
+        -0.3203125
+      ],
+      "observed_fit_response": [
+        -0.4375,
+        -1.91015625,
+        0.19140625,
+        0.15625
+      ],
+      "oracle_response": [
+        0.35546875,
+        -1.80859375,
+        -0.421875,
+        0.01953125
+      ]
+    }
+  ],
+  "scores": {
+    "development_times": {
+      "direct_target": {
+        "pairs": 4,
+        "oracle_rmse": 0.42809541697518355,
+        "observed_first_two_repeats_rmse": 0.38532042805357547,
+        "zero_response_rmse": 2.6077195815531287
+      },
+      "one_hop": {
+        "pairs": 6,
+        "oracle_rmse": 0.14693074352199775,
+        "observed_first_two_repeats_rmse": 0.2251437257967119,
+        "zero_response_rmse": 0.09726484060928697
+      },
+      "isolated": {
+        "pairs": 4,
+        "oracle_rmse": 0.3232112074466797,
+        "observed_first_two_repeats_rmse": 0.1873473499706244,
+        "zero_response_rmse": 0.15487677813749226
+      }
+    },
+    "held_time": {
+      "direct_target": {
+        "pairs": 2,
+        "oracle_rmse": 0.5198762364924283,
+        "observed_first_two_repeats_rmse": 0.35652958122034734,
+        "zero_response_rmse": 2.2351465560345534
+      },
+      "one_hop": {
+        "pairs": 3,
+        "oracle_rmse": 0.737640264071646,
+        "observed_first_two_repeats_rmse": 0.27263647552456793,
+        "zero_response_rmse": 0.4360326956992446
+      },
+      "isolated": {
+        "pairs": 2,
+        "oracle_rmse": 0.31369400801427894,
+        "observed_first_two_repeats_rmse": 0.472672391253313,
+        "zero_response_rmse": 0.29779872738352997
+      }
+    }
+  },
+  "elapsed_seconds": 36.446799291996285
+}
